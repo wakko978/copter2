@@ -7,6 +7,8 @@ gem 'rails', '3.2.13'
 
 gem 'mysql2'
 gem 'devise'
+gem 'paperclip', "~> 3.0"
+gem 'will_paginate', '~> 3.0.0'
 
 
 # Gems used only for assets and not required
