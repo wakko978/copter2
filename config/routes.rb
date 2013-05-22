@@ -3,6 +3,7 @@ Copter2::Application.routes.draw do
 
   resources :soldiers, :only => [:index, :show]
   resources :weapons, :only => [:index, :show]
+  resources :powers, :only => [:index, :show]
   
   namespace :admin do
     root :controller => "base", :action => "index"
@@ -10,6 +11,7 @@ Copter2::Application.routes.draw do
     resources :users
     resources :soldiers, :except => [:show]
     resources :weapons, :except => [:show]
+    resources :powers, :except => [:show]
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.

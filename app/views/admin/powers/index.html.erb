@@ -1,0 +1,38 @@
+<h1 class="pagetitle">Magic</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @powers %>
+	<caption><%= link_to 'Add Magic', new_admin_power_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @powers.each do |power| %>
+		<tr>
+			<th scope="row">
+				<% unless power.avatar_file_name.nil? %>
+					<%= image_tag power.avatar.url(:thumb), :alt  => "#{power.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to power.name, power_path(power) %>
+			</th>
+			<td><%= power.attack %></td>
+			<td><%= power.defense %></td>
+			<td><%= power.e_attack %></td>
+			<td><%= power.e_defense %></td>
+			<td><%= number_to_currency(power.base_cost) %></td>
+			<td><%= number_to_currency(power.upkeep) %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_power_path(power) %>
+        <%= link_to '[Destroy]', admin_power_path(power), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

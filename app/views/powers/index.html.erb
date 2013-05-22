@@ -1,0 +1,32 @@
+<h1>Listing Magic available in Castle Age</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @powers %>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+	</thead>
+	
+	<% @powers.each do |power| %>
+		<tr>
+			<th scope="row">
+				<% unless power.avatar_file_name.nil? %>
+					<%= image_tag power.avatar.url(:thumb), :alt  => "#{power.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to power.name, power_path(power) %>
+			</th>
+			<td><%= power.attack %></td>
+			<td><%= power.defense %></td>
+			<td><%= power.e_attack %></td>
+			<td><%= power.e_defense %></td>
+			<td><%= number_to_currency(power.base_cost) %></td>
+			<td><%= number_to_currency(power.upkeep) %></td>
+		</tr>
+	<% end %>
+</table>
