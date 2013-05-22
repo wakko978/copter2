@@ -1,0 +1,14 @@
+<% if user_signed_in? -%>
+  <ul id="user-bar-action">
+    <li><%= link_to "[Log out]", destroy_user_session_path, :method => :delete, :title => "Log out" %></li>
+  </ul>
+  <ul id="user-bar-greeting">
+    <li><%= link_to "[My Account]", edit_user_registration_path %></li>
+    <li><%= link_to "[About]", root_path %></li>
+  </ul>
+<% else -%>
+  <ul id="user-bar-greeting">
+    <li><%= link_to "[About]", root_path %></li>
+  </ul>
+<% end -%>
+

@@ -1,0 +1,83 @@
+<% if @messages %>
+  <h2 style="color:red">
+	  <%= @messages.message_text %>
+  </h2>
+<% end %>
+
+<h1 class="pagetitle">Castle Age Optimizer: Introduction</h1>
+
+<p>
+  If you got here, you probably already know what <%= link_to "Castle Age", "http://apps.facebook.com/castle_age", :target => "_blank" %> is,
+  but just in case... Castle Age is a MMORPG <%= link_to 'Facebook', "http://facebook.com", :target => "_blank" %> game in which you can
+  battle other players, monsters and other nasty beasts gathering equipment along the way. I am not associated with Facebook or the makers
+  of Castle Age.  I designed this software application to optimize my gameplay and decided to share it with others.  It does not play the
+  game for you and it does not connect to the game through scripts or any other method to gather information or simulate gameplay.
+</p>
+
+<h1 class="block">How do I get started?</h1>
+
+<p>
+  <ul>
+    <%# unless logged_in? %>
+      <li>
+        Start by <%#= link_to 'Signing Up', signup_path %> for an account. You will get an email to activate your account. You cannot
+        log in until your account is active.  If you do not get an email, check your spam or wait a while, as it may take some time to   
+        reach you.
+      </li>
+      <br/>
+    <%# end %>
+    <li>
+      Create one a profile which represents your Castle Age profile energy, stamina, health, attack and defense.
+    <br/>
+    <li>
+      Next, you may enter generals, soldiers, lands, magic and blacksmith items manually.  I've designed a method for uploading specific
+      files which can be downloaded Castle Age and subsequently uploaded into COPTER.  You can upload the files as often as you like,
+      easy-peasy-lemon-squeezy.  If you want to play pretend, you can alter all of your inventory to be the ultimate warrior and then come
+      back to reality by uploading your inventory and getting a real representation of your character.
+    </li>
+    <br/>
+    <li>
+      Next, look over your soldier list when invading or being invaded. Look over your weapon list. Check out your top attack and
+      top defense items.  See what better items exist and click the item to see what monsters drop that item.  Find out what land to buy
+      next to get the greatest return on your investment (ROI).
+    </li>
+    <br/>
+    <li>
+      Lastly, this is a work in progress, so if you see a bug, or think you see a bug, kill it by contacting me (email is in the
+      footer). Also, if you have an idea, share it with me and I'll see if I can get it implemented.
+    </li>
+  </ul>
+</p>
+
+<h1 class="block">Can I contribute to the upkeep of the site?</h1>
+
+<p>
+  Yes you can and it is greatly appreciated.  The site is hosted by <%= link_to 'Bomhof Integrated, LLC', "http://bomhofintegrated.com", :target => "_blank" %>.
+  This means I do have some hosting fees, so thank you in advance.
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+  ">
+    <%= submit_tag 'Contribute $5.00' %>
+    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+  </form>
+  
+  <br/>
+  
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+  <input type="hidden" name="cmd" value="_s-xclick">
+  <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+  ">
+  <%= submit_tag 'Contribute more!' %>
+  <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+  </form>
+</p>
+
+<h1 class="block">Who Am I?</h1>
+
+<p>
+  My name is Matthew Larson, and I am a database administrator and software developer at Michigan State University.  I write
+  software in Ruby on Rails and use several different databases including Oracle and MySQL.
+</p>
+
+

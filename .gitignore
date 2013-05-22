@@ -1,6 +1,7 @@
 *.rbc
 *.sassc
 .sass-cache
+.rvmrc
 capybara-*.html
 .rspec
 /.bundle
@@ -9,6 +10,7 @@ capybara-*.html
 /tmp/*
 /db/*.sqlite3
 /public/system/*
+/lib/assets/mbs_file
 /coverage/
 /spec/tmp/*
 **.orig

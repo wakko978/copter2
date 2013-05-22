@@ -1,4 +1,14 @@
 Copter2::Application.routes.draw do
+  devise_for :users
+
+  resources :soldiers, :only => [:index, :show]
+  
+  namespace :admin do
+    root :controller => "base", :action => "index"
+    
+    resources :users
+    resources :soldiers, :except => [:show]
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +58,7 @@ Copter2::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'intros#index'
 
   # See how all your routes lay out with "rake routes"
 

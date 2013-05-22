@@ -1,0 +1,38 @@
+<h1 class="pagetitle">Soldiers</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @soldiers %>
+	<caption><%= link_to 'Add Soldier', new_admin_soldier_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @soldiers.each do |soldier| %>
+		<tr>
+			<th scope="row">
+				<% unless soldier.avatar_file_name.nil? %>
+					<%= image_tag soldier.avatar.url(:thumb), :alt  => "#{soldier.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to soldier.name, soldier_path(soldier) %>
+			</th>
+			<td><%= soldier.attack %></td>
+			<td><%= soldier.defense %></td>
+			<td><%= soldier.e_attack %></td>
+			<td><%= soldier.e_defense %></td>
+			<td><%= number_to_currency(soldier.base_cost) %></td>
+			<td><%= number_to_currency(soldier.upkeep) %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_soldier_path(soldier) %>
+        <%= link_to '[Destroy]', admin_soldier_path(soldier), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

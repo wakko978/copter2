@@ -1,14 +1,151 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Copter2</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
-<%= yield %>
+  <!--	Version: Multiflex-4.2 / Layout-1					  -->
+  <!--	Date:	 January 20, 2008							  -->
+  <!--	Design:	 www.1234.info								  -->
+  <!--	License: Fully open source without restrictions.	  -->
+  <!--			 Please keep footer credits with the words	  -->
+  <!--			 "Design by 1234.info" Thank you!			  -->
 
-</body>
+  <head>
+	<%= render :partial => "common/header" %>
+  </head>
+
+  <!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+  <!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+  <body onload="if ($$('.focus-first')[0]) $$('.focus-first')[0].focus();">
+	<!-- Main Page Container -->
+	<div class="page-container">
+
+	  <!--	To implement new header in your existing Multiflex-3 website -->
+	  <!-- START COPY here -->
+
+	  <!-- A. HEADER -->	  
+	  <div class="header">
+		<div class="header-top">
+		  <div class="round-border-topleft"></div><div class="round-border-topright"></div>
+		  <div class="sitename">		    
+  		  <h1 style="font-size:300%"><a href="<%= root_path %>">COPTER</a></h1>
+  		  <h2>The Castle Age Optimizer</h2>
+		  </div>
+		  <div class="nav1">
+			<%= render :partial => "common/user_bar" %>
+		  </div>
+		</div>
+		<div class="header-bottom">
+		  <div class="nav2">
+				<% if user_signed_in? %>
+					<ul>
+						<li><a href="#">My Profiles<!--[if IE 7]><!--></a><!--<![endif]-->
+							<!--[if lte IE 6]><table><tr><td><![endif]-->
+							<ul>
+					  		<%# current_user.fb_accounts.each do |account| %>
+									<li><%#= link_to account.full_name, fb_account_path(account) %></li>
+					  		<%# end %>
+							</ul>
+							<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+				  	</li>
+					</ul>
+	        <% if current_user.is_admin? || current_user.has_role?('Manager') %>
+						<ul>
+				  		<li><%= link_to "Admin", admin_root_path %></li>
+						</ul>
+					<% end %>
+			  <% end %>
+			  <%#= render :partial => 'common/search' %>
+		  </div>
+		</div>
+	  </div>
+	  <div class="header-breadcrumbs">
+			<div style="z-index:1000;">
+				<% flash.each do |name, msg| %>
+					<div id="<%= name %>_flash_msg" style="cursor:pointer" onclick="$('#<%= name %>_flash_msg').hide();">
+						<%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+					</div>
+				<% end %>
+			</div>
+	  </div>
+	  <div class="main" style="background:transparent url('bg_main.gif') top left repeat-y;">
+  		<div class="main-navigation">
+  		  <div class="round-border-topright"></div>
+  		  <% if !user_signed_in? %>
+    		  <h1 class="first">Login</h1>
+          <div class="loginform">
+            <%= form_for("user", :url => user_session_path) do |f| %>
+							<p><%= f.label :email, 'Login' %>
+							<%= link_to "[Need an account?]", new_registration_path('user') %><br />
+					  	<%= f.email_field :email, :autofocus => true %></p>
+						  <p><%= f.label :password %><br />
+						  <%= f.password_field :password %></p>
+						  <%= f.check_box :remember_me %>
+						  <%= f.label :remember_me %>
+						  <%= f.submit 'Sign in' %>
+						  <%= link_to "Forgot your password?", new_password_path('user') %>
+						<% end %>
+          </div>
+          <br/>
+        <% end %>
+        
+  		  <dl class="nav3-grid">
+  		    <% if user_signed_in? %>
+						<% if current_user.is_admin? || current_user.has_role?('Manager') %>
+							<h1 class="first">Administrative Tasks</h1>
+							<% if current_user.is_admin? %>
+		          	<dt><%= link_to "Users", admin_users_path %></dt>
+							<% end %>
+		          <dt><%#= link_to "MOTD", admin_messages_path %></dt>
+		          <dt><%#= link_to "Monsters", admin_monsters_path %></dt>
+		          <dt><%#= link_to "Generals", admin_generals_path %></dt>
+		          <dt>
+								<%#= link_to "Item", admin_items_path %>
+		            <dd><%#= link_to "Amulets", admin_items_path(:item_type => 'Amulet') %></dd>
+		            <dd><%#= link_to "Armors", admin_items_path(:item_type => 'Armor') %></dd>
+		            <dd><%#= link_to "Boots", admin_items_path(:item_type => 'Boot') %></dd>
+		            <dd><%#= link_to "Helmets", admin_items_path(:item_type => 'Helmet') %></dd>
+		            <dd><%#= link_to "Gloves", admin_items_path(:item_type => 'Glove') %></dd>
+		            <dd><%#= link_to "Shields", admin_items_path(:item_type => 'Shield') %></dd>
+		          </dt>
+		          <dt><%#= link_to "Lands", admin_lands_path %></dt>
+		          <dt><%#= link_to "Location", admin_locations_path %></dt>
+		          <dt><%#= link_to "Magic", admin_powers_path %></dt>
+		          <dt><%= link_to "Soldiers", admin_soldiers_path %></dt>
+		          <dt><%#= link_to "Weapons", admin_weapons_path %></dt>
+		          <dt><%#= link_to "Others", admin_others_path %></dt>
+						<% end %>
+  				  <h1 class="first">User Tasks</h1>
+  				  <dt><%#= link_to "Manage Profiles", fb_accounts_path %></dt>
+  			    <%# if @fb_account.kind_of?(FbAccount) && !@fb_account.new_record? %>
+  				    <%#= render :partial => "/account_tasks" %>
+  			    <%# end %>
+  			  <% end %>
+  		    <h1>Information</h1>
+  		    <dt><%#= link_to "Monster Drop Data", damage_results_path %></dt>
+		      <dt><%#= link_to "Generals/Heros", generals_path %></dt>
+		      <dt><%= link_to "Soldiers", soldiers_path %></dt>
+		      <dt><%#= link_to "Items", items_path %></dt>
+		      <dt><%#= link_to "Weapons", weapons_path %></dt>
+		      <dt><%#= link_to "Magic", powers_path %></dt>
+		      <dt><%#= link_to "Lands", lands_path %></dt>
+		      <dt><%#= link_to "Miscellaneous Items", others_path %></dt>
+		      <dt><%#= link_to "Monsters", monsters_path %></dt>
+  			</dl>
+  			<br/>
+  			<%#= render :partial => 'common/ad1' %>
+        <br/><br/>
+        <%#= render :partial => 'common/ad2' %>
+			</div>
+		  <div class="main-content" style="width:790px">
+		    <div align="center">
+          <%#= render :partial => 'common/ad3' %>
+        </div>
+		    <%= yield :layout %>
+		  </div>
+	  </div>
+	  <div class="footer">
+		<%= render :partial => 'common/footer' %>
+	  </div>
+	</div>
+  </body>
 </html>
