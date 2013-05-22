@@ -16,8 +16,8 @@
 		<tr>
 			<th scope="row">
 				<% unless soldier.avatar_file_name.nil? %>
-					<%= image_tag soldier.avatar.url, :alt  => "#{soldier.name}",
-						:style => 'max-width:50px; float:left' %>
+					<%= image_tag soldier.avatar.url(:thumb), :alt  => "#{soldier.name}",
+						:style => 'float:left' %>
 				<% end %>
 				<%= link_to soldier.name, soldier_path(soldier) %>
 			</th>

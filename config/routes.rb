@@ -2,12 +2,14 @@ Copter2::Application.routes.draw do
   devise_for :users
 
   resources :soldiers, :only => [:index, :show]
+  resources :weapons, :only => [:index, :show]
   
   namespace :admin do
     root :controller => "base", :action => "index"
     
     resources :users
     resources :soldiers, :except => [:show]
+    resources :weapons, :except => [:show]
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.

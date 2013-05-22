@@ -1,0 +1,36 @@
+<h1>Listing Weapons available in Castle Age</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @weapons %>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+	</thead>
+	
+	<% @weapons.each do |weapon| %>
+		<tr>
+			<th scope="row">
+				<% unless weapon.avatar_file_name.nil? %>
+					<%= image_tag weapon.avatar.url(:thumb), :alt  => "#{weapon.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to weapon.name, weapon_path(weapon) %>
+			</th>
+			<td><%= weapon.attack %></td>
+			<td><%= weapon.defense %></td>
+			<td><%= weapon.e_attack %></td>
+			<td><%= weapon.e_defense %></td>
+			<td><%= number_to_currency(weapon.base_cost) %></td>
+			<td><%= number_to_currency(weapon.upkeep) %></td>
+			<td><%= weapon.div_power %></td>
+			<td><%= weapon.forgeable.to_s.titleize %></td>
+		</tr>
+	<% end %>
+</table>

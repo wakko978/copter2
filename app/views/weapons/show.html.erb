@@ -1,0 +1,49 @@
+<h1 class="pagetitle"><%= @weapon.name %></h1>
+
+<% unless @weapon.avatar_file_name.nil? %>
+  <%= image_tag @weapon.avatar.url, :alt  => "#{@weapon.name}",
+    :style => 'float:right' %>
+<% else %>
+	<div style="float:right">
+		No Image Available
+	</div>
+<% end %>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@weapon.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Type:</b> <%= @weapon.class.name.titleize %>
+</p>
+
+<p>
+	<b>Attack:</b> <%= @weapon.attack %>
+</p>
+
+<p>
+	<b>Defense:</b> <%= @weapon.defense %>
+</p>
+
+<p>
+	<b>eAttack:</b> <%= @weapon.e_attack %>
+</p>
+
+<p>
+	<b>eDefense:</b> <%= @weapon.e_defense %>
+</p>
+
+<p>
+	<b>Base Cost:</b> <%= number_to_currency(@weapon.base_cost) %>
+</p>
+
+<p>
+	<b>Upkeep:</b> <%= number_to_currency(@weapon.upkeep) %>
+</p>
+
+<p>
+	<b>Divine Power:</b> <%= @weapon.div_power %>
+</p>
+
+<%= link_to 'Back', weapons_path %>
