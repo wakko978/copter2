@@ -1,0 +1,42 @@
+<h1 class="pagetitle">Gloves</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @gloves %>
+	<caption><%= link_to 'Add Glove', new_admin_glove_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @gloves.each do |glove| %>
+		<tr>
+			<th scope="row">
+				<% unless glove.avatar_file_name.nil? %>
+					<%= image_tag glove.avatar.url(:thumb), :alt  => "#{glove.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to glove.name, glove_path(glove) %>
+			</th>
+			<td><%= glove.attack %></td>
+			<td><%= glove.defense %></td>
+			<td><%= glove.e_attack %></td>
+			<td><%= glove.e_defense %></td>
+			<td><%= number_to_currency(glove.base_cost) %></td>
+			<td><%= number_to_currency(glove.upkeep) %></td>
+			<td><%= glove.div_power %></td>
+			<td><%= glove.forgeable.to_s.titleize %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_glove_path(glove) %>
+        <%= link_to '[Destroy]', admin_glove_path(glove), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

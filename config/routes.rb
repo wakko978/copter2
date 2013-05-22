@@ -4,6 +4,14 @@ Copter2::Application.routes.draw do
   resources :soldiers, :only => [:index, :show]
   resources :weapons, :only => [:index, :show]
   resources :powers, :only => [:index, :show]
+  scope "/items" do
+    resources :boots, :only => [:index, :show]
+    resources :amulets, :only => [:index, :show]
+    resources :armors, :only => [:index, :show]
+    resources :helmets, :only => [:index, :show]
+    resources :gloves, :only => [:index, :show]
+    resources :shields, :only => [:index, :show]
+  end
   
   namespace :admin do
     root :controller => "base", :action => "index"
@@ -12,6 +20,14 @@ Copter2::Application.routes.draw do
     resources :soldiers, :except => [:show]
     resources :weapons, :except => [:show]
     resources :powers, :except => [:show]
+    scope "/items" do
+      resources :boots, :except => [:show]
+      resources :amulets, :except => [:show]
+      resources :armors, :except => [:show]
+      resources :helmets, :except => [:show]
+      resources :gloves, :except => [:show]
+      resources :shields, :except => [:show]
+    end
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.

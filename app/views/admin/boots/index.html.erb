@@ -1,0 +1,42 @@
+<h1 class="pagetitle">Boots</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @boots %>
+	<caption><%= link_to 'Add Boot', new_admin_boot_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @boots.each do |boot| %>
+		<tr>
+			<th scope="row">
+				<% unless boot.avatar_file_name.nil? %>
+					<%= image_tag boot.avatar.url(:thumb), :alt  => "#{boot.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to boot.name, boot_path(boot) %>
+			</th>
+			<td><%= boot.attack %></td>
+			<td><%= boot.defense %></td>
+			<td><%= boot.e_attack %></td>
+			<td><%= boot.e_defense %></td>
+			<td><%= number_to_currency(boot.base_cost) %></td>
+			<td><%= number_to_currency(boot.upkeep) %></td>
+			<td><%= boot.div_power %></td>
+			<td><%= boot.forgeable.to_s.titleize %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_boot_path(boot) %>
+        <%= link_to '[Destroy]', admin_boot_path(boot), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

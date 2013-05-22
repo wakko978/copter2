@@ -1,0 +1,53 @@
+<h1 class="pagetitle"><%= @boot.name %></h1>
+
+<% unless @boot.avatar_file_name.nil? %>
+  <%= image_tag @boot.avatar.url, :alt  => "#{@boot.name}",
+    :style => 'float:right' %>
+<% else %>
+	<div style="float:right">
+		No Image Available
+	</div>
+<% end %>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@boot.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Type:</b> <%= @boot.class.name.titleize %>
+</p>
+
+<p>
+	<b>Attack:</b> <%= @boot.attack %>
+</p>
+
+<p>
+	<b>Defense:</b> <%= @boot.defense %>
+</p>
+
+<p>
+	<b>eAttack:</b> <%= @boot.e_attack %>
+</p>
+
+<p>
+	<b>eDefense:</b> <%= @boot.e_defense %>
+</p>
+
+<p>
+	<b>Base Cost:</b> <%= number_to_currency(@boot.base_cost) %>
+</p>
+
+<p>
+	<b>Upkeep:</b> <%= number_to_currency(@boot.upkeep) %>
+</p>
+
+<p>
+	<b>Divine Power:</b> <%= @boot.div_power %>
+</p>
+
+<p>
+	<b>Forgeable?:</b> <%= @boot.forgeable.to_s.titleize %>
+</p>
+
+<%= link_to 'Back', boots_path %>

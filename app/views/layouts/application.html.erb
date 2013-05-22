@@ -99,13 +99,13 @@
 		          <dt><%#= link_to "Monsters", admin_monsters_path %></dt>
 		          <dt><%#= link_to "Generals", admin_generals_path %></dt>
 		          <dt>
-								<%#= link_to "Item", admin_items_path %>
-		            <dd><%#= link_to "Amulets", admin_items_path(:item_type => 'Amulet') %></dd>
-		            <dd><%#= link_to "Armors", admin_items_path(:item_type => 'Armor') %></dd>
-		            <dd><%#= link_to "Boots", admin_items_path(:item_type => 'Boot') %></dd>
-		            <dd><%#= link_to "Helmets", admin_items_path(:item_type => 'Helmet') %></dd>
-		            <dd><%#= link_to "Gloves", admin_items_path(:item_type => 'Glove') %></dd>
-		            <dd><%#= link_to "Shields", admin_items_path(:item_type => 'Shield') %></dd>
+								<%= link_to "Items", '#' %>
+		            <dd><%= link_to "Amulets", admin_amulets_path %></dd>
+		            <dd><%= link_to "Armors", admin_armors_path %></dd>
+		            <dd><%= link_to "Boots", admin_boots_path %></dd>
+		            <dd><%= link_to "Helmets", admin_helmets_path %></dd>
+		            <dd><%= link_to "Gloves", admin_gloves_path %></dd>
+		            <dd><%= link_to "Shields", admin_shields_path %></dd>
 		          </dt>
 		          <dt><%#= link_to "Lands", admin_lands_path %></dt>
 		          <dt><%#= link_to "Location", admin_locations_path %></dt>
@@ -124,7 +124,15 @@
   		    <dt><%#= link_to "Monster Drop Data", damage_results_path %></dt>
 		      <dt><%#= link_to "Generals/Heros", generals_path %></dt>
 		      <dt><%= link_to "Soldiers", soldiers_path %></dt>
-		      <dt><%#= link_to "Items", items_path %></dt>
+		      <dt>
+						<%= link_to "Items", '#' %>
+						<dd><%= link_to "Amulets", amulets_path %></dd>
+            <dd><%= link_to "Armors", armors_path %></dd>
+            <dd><%= link_to "Boots", boots_path %></dd>
+            <dd><%= link_to "Helmets", helmets_path %></dd>
+            <dd><%= link_to "Gloves", gloves_path %></dd>
+            <dd><%= link_to "Shields", shields_path %></dd>
+					</dt>
 		      <dt><%= link_to "Weapons", weapons_path %></dt>
 		      <dt><%= link_to "Magic", powers_path %></dt>
 		      <dt><%#= link_to "Lands", lands_path %></dt>

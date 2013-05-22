@@ -46,4 +46,8 @@
 	<b>Divine Power:</b> <%= @weapon.div_power %>
 </p>
 
+<p>
+	<b>Forgeable?:</b> <%= @weapon.forgeable.to_s.titleize %>
+</p>
+
 <%= link_to 'Back', weapons_path %>

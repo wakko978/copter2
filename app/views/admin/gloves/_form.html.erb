@@ -1,10 +1,10 @@
-<%= form_for([:admin,@power], { :multipart => true }) do |f| %>
-  <% if @power.errors.any? %>
+<%= form_for(@glove, :as => :glove, :url => admin_gloves_path, :html => { :multipart => true }) do |f| %>
+  <% if @glove.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@power.errors.count, "error") %> prohibited this power from being saved:</h2>
+      <h2><%= pluralize(@glove.errors.count, "error") %> prohibited this glove from being saved:</h2>
 
       <ul>
-      <% @power.errors.full_messages.each do |msg| %>
+      <% @glove.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -42,11 +42,16 @@
 	</p>
 	
 	<p>
+	  <%= f.label 'forgeable', 'Does this have one or more forge slots?' %><br/>
+	  <%= f.check_box :forgeable %>
+	</p>
+	
+	<p>
 		<%= f.label 'avatar', 'Image' %>
-		<% unless @power.avatar_file_name.nil? %>
-			<%= image_tag @power.avatar.url(:thumb) %><br/>
+		<% unless @glove.avatar_file_name.nil? %>
+			<%= image_tag @glove.avatar.url(:thumb) %><br/>
 		<% end %>
-		<%= f.file_field :avatar, :value => @power.avatar_file_name.nil? ? nil : @power.avatar_file_name %>
+		<%= f.file_field :avatar, :value => @glove.avatar_file_name.nil? ? nil : @glove.avatar_file_name %>
 	</p>
 
 	<script type="text/javascript" language="Javascript">

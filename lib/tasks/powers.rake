@@ -30,6 +30,7 @@ namespace :powers do
         :defense => power.defense,
         :base_cost => power.base_cost,
         :upkeep => power.upkeep,
+        :div_power => power.div_power,
         :avatar => File.open("/Users/workaccount/Sites/copter2/lib/assets/mbs_file/file_name/#{power.image.id}/#{power.image.rel_path}")
       )
     end

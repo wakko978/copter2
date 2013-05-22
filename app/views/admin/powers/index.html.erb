@@ -11,6 +11,7 @@
 		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
 		<th class="top" scope="col">Options</th>
 	</thead>
 	
@@ -29,6 +30,7 @@
 			<td><%= power.e_defense %></td>
 			<td><%= number_to_currency(power.base_cost) %></td>
 			<td><%= number_to_currency(power.upkeep) %></td>
+			<td><%= power.div_power %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_power_path(power) %>
         <%= link_to '[Destroy]', admin_power_path(power), :confirm => 'Are you sure?', :method => :delete %>

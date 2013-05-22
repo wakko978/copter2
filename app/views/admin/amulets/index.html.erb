@@ -1,0 +1,42 @@
+<h1 class="pagetitle">Amulets</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @amulets %>
+	<caption><%= link_to 'Add Amulet', new_admin_amulet_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @amulets.each do |amulet| %>
+		<tr>
+			<th scope="row">
+				<% unless amulet.avatar_file_name.nil? %>
+					<%= image_tag amulet.avatar.url(:thumb), :alt  => "#{amulet.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to amulet.name, amulet_path(amulet) %>
+			</th>
+			<td><%= amulet.attack %></td>
+			<td><%= amulet.defense %></td>
+			<td><%= amulet.e_attack %></td>
+			<td><%= amulet.e_defense %></td>
+			<td><%= number_to_currency(amulet.base_cost) %></td>
+			<td><%= number_to_currency(amulet.upkeep) %></td>
+			<td><%= amulet.div_power %></td>
+			<td><%= amulet.forgeable.to_s.titleize %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_amulet_path(amulet) %>
+        <%= link_to '[Destroy]', admin_amulet_path(amulet), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

@@ -1,0 +1,42 @@
+<h1 class="pagetitle">Shields</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @shields %>
+	<caption><%= link_to 'Add Shield', new_admin_shield_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @shields.each do |shield| %>
+		<tr>
+			<th scope="row">
+				<% unless shield.avatar_file_name.nil? %>
+					<%= image_tag shield.avatar.url(:thumb), :alt  => "#{shield.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to shield.name, shield_path(shield) %>
+			</th>
+			<td><%= shield.attack %></td>
+			<td><%= shield.defense %></td>
+			<td><%= shield.e_attack %></td>
+			<td><%= shield.e_defense %></td>
+			<td><%= number_to_currency(shield.base_cost) %></td>
+			<td><%= number_to_currency(shield.upkeep) %></td>
+			<td><%= shield.div_power %></td>
+			<td><%= shield.forgeable.to_s.titleize %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_shield_path(shield) %>
+        <%= link_to '[Destroy]', admin_shield_path(shield), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

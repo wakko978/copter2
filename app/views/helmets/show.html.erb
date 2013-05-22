@@ -1,0 +1,53 @@
+<h1 class="pagetitle"><%= @helmet.name %></h1>
+
+<% unless @helmet.avatar_file_name.nil? %>
+  <%= image_tag @helmet.avatar.url, :alt  => "#{@helmet.name}",
+    :style => 'float:right' %>
+<% else %>
+	<div style="float:right">
+		No Image Available
+	</div>
+<% end %>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@helmet.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Type:</b> <%= @helmet.class.name.titleize %>
+</p>
+
+<p>
+	<b>Attack:</b> <%= @helmet.attack %>
+</p>
+
+<p>
+	<b>Defense:</b> <%= @helmet.defense %>
+</p>
+
+<p>
+	<b>eAttack:</b> <%= @helmet.e_attack %>
+</p>
+
+<p>
+	<b>eDefense:</b> <%= @helmet.e_defense %>
+</p>
+
+<p>
+	<b>Base Cost:</b> <%= number_to_currency(@helmet.base_cost) %>
+</p>
+
+<p>
+	<b>Upkeep:</b> <%= number_to_currency(@helmet.upkeep) %>
+</p>
+
+<p>
+	<b>Divine Power:</b> <%= @helmet.div_power %>
+</p>
+
+<p>
+	<b>Forgeable?:</b> <%= @helmet.forgeable.to_s.titleize %>
+</p>
+
+<%= link_to 'Back', helmets_path %>

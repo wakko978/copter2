@@ -1,7 +1,7 @@
-<h1>Listing Magic available in Castle Age</h1>
+<h1>Listing Helmets available in Castle Age</h1>
 
 <table class="non-fixed">
-	<%= will_paginate @powers %>
+	<%= will_paginate @helmets %>
 	<thead>
 		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
 		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
@@ -11,24 +11,26 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
 	</thead>
 	
-	<% @powers.each do |power| %>
+	<% @helmets.each do |helmet| %>
 		<tr>
 			<th scope="row">
-				<% unless power.avatar_file_name.nil? %>
-					<%= image_tag power.avatar.url(:thumb), :alt  => "#{power.name}",
+				<% unless helmet.avatar_file_name.nil? %>
+					<%= image_tag helmet.avatar.url(:thumb), :alt  => "#{helmet.name}",
 						:style => 'float:left' %>
 				<% end %>
-				<%= link_to power.name, power_path(power) %>
+				<%= link_to helmet.name, helmet_path(helmet) %>
 			</th>
-			<td><%= power.attack %></td>
-			<td><%= power.defense %></td>
-			<td><%= power.e_attack %></td>
-			<td><%= power.e_defense %></td>
-			<td><%= number_to_currency(power.base_cost) %></td>
-			<td><%= number_to_currency(power.upkeep) %></td>
-			<td><%= power.div_power %></td>
+			<td><%= helmet.attack %></td>
+			<td><%= helmet.defense %></td>
+			<td><%= helmet.e_attack %></td>
+			<td><%= helmet.e_defense %></td>
+			<td><%= number_to_currency(helmet.base_cost) %></td>
+			<td><%= number_to_currency(helmet.upkeep) %></td>
+			<td><%= helmet.div_power %></td>
+			<td><%= helmet.forgeable.to_s.titleize %></td>
 		</tr>
 	<% end %>
 </table>

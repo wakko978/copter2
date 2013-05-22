@@ -1,7 +1,7 @@
-<h1>Listing Magic available in Castle Age</h1>
+<h1>Listing Boots available in Castle Age</h1>
 
 <table class="non-fixed">
-	<%= will_paginate @powers %>
+	<%= will_paginate @boots %>
 	<thead>
 		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
 		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
@@ -11,24 +11,26 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
 	</thead>
 	
-	<% @powers.each do |power| %>
+	<% @boots.each do |boot| %>
 		<tr>
 			<th scope="row">
-				<% unless power.avatar_file_name.nil? %>
-					<%= image_tag power.avatar.url(:thumb), :alt  => "#{power.name}",
+				<% unless boot.avatar_file_name.nil? %>
+					<%= image_tag boot.avatar.url(:thumb), :alt  => "#{boot.name}",
 						:style => 'float:left' %>
 				<% end %>
-				<%= link_to power.name, power_path(power) %>
+				<%= link_to boot.name, boot_path(boot) %>
 			</th>
-			<td><%= power.attack %></td>
-			<td><%= power.defense %></td>
-			<td><%= power.e_attack %></td>
-			<td><%= power.e_defense %></td>
-			<td><%= number_to_currency(power.base_cost) %></td>
-			<td><%= number_to_currency(power.upkeep) %></td>
-			<td><%= power.div_power %></td>
+			<td><%= boot.attack %></td>
+			<td><%= boot.defense %></td>
+			<td><%= boot.e_attack %></td>
+			<td><%= boot.e_defense %></td>
+			<td><%= number_to_currency(boot.base_cost) %></td>
+			<td><%= number_to_currency(boot.upkeep) %></td>
+			<td><%= boot.div_power %></td>
+			<td><%= boot.forgeable.to_s.titleize %></td>
 		</tr>
 	<% end %>
 </table>

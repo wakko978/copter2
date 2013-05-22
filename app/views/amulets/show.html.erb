@@ -1,0 +1,53 @@
+<h1 class="pagetitle"><%= @amulet.name %></h1>
+
+<% unless @amulet.avatar_file_name.nil? %>
+  <%= image_tag @amulet.avatar.url, :alt  => "#{@amulet.name}",
+    :style => 'float:right' %>
+<% else %>
+	<div style="float:right">
+		No Image Available
+	</div>
+<% end %>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@amulet.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Type:</b> <%= @amulet.class.name.titleize %>
+</p>
+
+<p>
+	<b>Attack:</b> <%= @amulet.attack %>
+</p>
+
+<p>
+	<b>Defense:</b> <%= @amulet.defense %>
+</p>
+
+<p>
+	<b>eAttack:</b> <%= @amulet.e_attack %>
+</p>
+
+<p>
+	<b>eDefense:</b> <%= @amulet.e_defense %>
+</p>
+
+<p>
+	<b>Base Cost:</b> <%= number_to_currency(@amulet.base_cost) %>
+</p>
+
+<p>
+	<b>Upkeep:</b> <%= number_to_currency(@amulet.upkeep) %>
+</p>
+
+<p>
+	<b>Divine Power:</b> <%= @amulet.div_power %>
+</p>
+
+<p>
+	<b>Forgeable?:</b> <%= @amulet.forgeable.to_s.titleize %>
+</p>
+
+<%= link_to 'Back', amulets_path %>

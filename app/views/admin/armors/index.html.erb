@@ -1,0 +1,42 @@
+<h1 class="pagetitle">Armors</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @armors %>
+	<caption><%= link_to 'Add Armor', new_admin_armor_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @armors.each do |armor| %>
+		<tr>
+			<th scope="row">
+				<% unless armor.avatar_file_name.nil? %>
+					<%= image_tag armor.avatar.url(:thumb), :alt  => "#{armor.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to armor.name, armor_path(armor) %>
+			</th>
+			<td><%= armor.attack %></td>
+			<td><%= armor.defense %></td>
+			<td><%= armor.e_attack %></td>
+			<td><%= armor.e_defense %></td>
+			<td><%= number_to_currency(armor.base_cost) %></td>
+			<td><%= number_to_currency(armor.upkeep) %></td>
+			<td><%= armor.div_power %></td>
+			<td><%= armor.forgeable.to_s.titleize %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_armor_path(armor) %>
+        <%= link_to '[Destroy]', admin_armor_path(armor), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

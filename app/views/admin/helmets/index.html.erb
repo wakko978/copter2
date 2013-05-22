@@ -1,0 +1,42 @@
+<h1 class="pagetitle">Helmets</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @helmets %>
+	<caption><%= link_to 'Add Helmet', new_admin_helmet_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @helmets.each do |helmet| %>
+		<tr>
+			<th scope="row">
+				<% unless helmet.avatar_file_name.nil? %>
+					<%= image_tag helmet.avatar.url(:thumb), :alt  => "#{helmet.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to helmet.name, helmet_path(helmet) %>
+			</th>
+			<td><%= helmet.attack %></td>
+			<td><%= helmet.defense %></td>
+			<td><%= helmet.e_attack %></td>
+			<td><%= helmet.e_defense %></td>
+			<td><%= number_to_currency(helmet.base_cost) %></td>
+			<td><%= number_to_currency(helmet.upkeep) %></td>
+			<td><%= helmet.div_power %></td>
+			<td><%= helmet.forgeable.to_s.titleize %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_helmet_path(helmet) %>
+        <%= link_to '[Destroy]', admin_helmet_path(helmet), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

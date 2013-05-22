@@ -1,0 +1,53 @@
+<h1 class="pagetitle"><%= @armor.name %></h1>
+
+<% unless @armor.avatar_file_name.nil? %>
+  <%= image_tag @armor.avatar.url, :alt  => "#{@armor.name}",
+    :style => 'float:right' %>
+<% else %>
+	<div style="float:right">
+		No Image Available
+	</div>
+<% end %>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@armor.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Type:</b> <%= @armor.class.name.titleize %>
+</p>
+
+<p>
+	<b>Attack:</b> <%= @armor.attack %>
+</p>
+
+<p>
+	<b>Defense:</b> <%= @armor.defense %>
+</p>
+
+<p>
+	<b>eAttack:</b> <%= @armor.e_attack %>
+</p>
+
+<p>
+	<b>eDefense:</b> <%= @armor.e_defense %>
+</p>
+
+<p>
+	<b>Base Cost:</b> <%= number_to_currency(@armor.base_cost) %>
+</p>
+
+<p>
+	<b>Upkeep:</b> <%= number_to_currency(@armor.upkeep) %>
+</p>
+
+<p>
+	<b>Divine Power:</b> <%= @armor.div_power %>
+</p>
+
+<p>
+	<b>Forgeable?:</b> <%= @armor.forgeable.to_s.titleize %>
+</p>
+
+<%= link_to 'Back', armors_path %>

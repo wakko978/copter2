@@ -1,7 +1,7 @@
-<h1>Listing Magic available in Castle Age</h1>
+<h1>Listing Gloves available in Castle Age</h1>
 
 <table class="non-fixed">
-	<%= will_paginate @powers %>
+	<%= will_paginate @gloves %>
 	<thead>
 		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
 		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
@@ -11,24 +11,26 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
 	</thead>
 	
-	<% @powers.each do |power| %>
+	<% @gloves.each do |glove| %>
 		<tr>
 			<th scope="row">
-				<% unless power.avatar_file_name.nil? %>
-					<%= image_tag power.avatar.url(:thumb), :alt  => "#{power.name}",
+				<% unless glove.avatar_file_name.nil? %>
+					<%= image_tag glove.avatar.url(:thumb), :alt  => "#{glove.name}",
 						:style => 'float:left' %>
 				<% end %>
-				<%= link_to power.name, power_path(power) %>
+				<%= link_to glove.name, glove_path(glove) %>
 			</th>
-			<td><%= power.attack %></td>
-			<td><%= power.defense %></td>
-			<td><%= power.e_attack %></td>
-			<td><%= power.e_defense %></td>
-			<td><%= number_to_currency(power.base_cost) %></td>
-			<td><%= number_to_currency(power.upkeep) %></td>
-			<td><%= power.div_power %></td>
+			<td><%= glove.attack %></td>
+			<td><%= glove.defense %></td>
+			<td><%= glove.e_attack %></td>
+			<td><%= glove.e_defense %></td>
+			<td><%= number_to_currency(glove.base_cost) %></td>
+			<td><%= number_to_currency(glove.upkeep) %></td>
+			<td><%= glove.div_power %></td>
+			<td><%= glove.forgeable.to_s.titleize %></td>
 		</tr>
 	<% end %>
 </table>
