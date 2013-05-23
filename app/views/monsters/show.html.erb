@@ -1,0 +1,24 @@
+<h1 class="pagetitle"><%= @monster.name %></h1>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@monster.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Minutes:</b> <%= @monster.minutes %>
+</p>
+
+<p>
+	<b>Attack Type:</b> <%= @monster.attack_type %>
+</p>
+
+<p>
+	<b>Divine Power:</b> <%= @monster.div_power %>
+</p>
+
+<p>
+	<b>Description:</b> <%= @monster.description %>
+</p>
+
+<%= link_to 'Back', monsters_path %>

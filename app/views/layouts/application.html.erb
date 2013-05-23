@@ -95,9 +95,9 @@
 							<% if current_user.is_admin? %>
 		          	<dt><%= link_to "Users", admin_users_path %></dt>
 							<% end %>
-		          <dt><%#= link_to "MOTD", admin_messages_path %></dt>
-		          <dt><%#= link_to "Monsters", admin_monsters_path %></dt>
-		          <dt><%#= link_to "Generals", admin_generals_path %></dt>
+		          <dt><%= link_to "MOTD", edit_admin_message_path(Message.first) %></dt>
+		          <dt><%= link_to "Monsters", admin_monsters_path %></dt>
+		          <dt><%= link_to "Generals", admin_generals_path %></dt>
 		          <dt>
 								<%= link_to "Items", '#' %>
 		            <dd><%= link_to "Amulets", admin_amulets_path %></dd>
@@ -107,12 +107,11 @@
 		            <dd><%= link_to "Gloves", admin_gloves_path %></dd>
 		            <dd><%= link_to "Shields", admin_shields_path %></dd>
 		          </dt>
-		          <dt><%#= link_to "Lands", admin_lands_path %></dt>
-		          <dt><%#= link_to "Location", admin_locations_path %></dt>
+		          <dt><%= link_to "Lands", admin_lands_path %></dt>
 		          <dt><%= link_to "Magic", admin_powers_path %></dt>
 		          <dt><%= link_to "Soldiers", admin_soldiers_path %></dt>
 		          <dt><%= link_to "Weapons", admin_weapons_path %></dt>
-		          <dt><%#= link_to "Others", admin_others_path %></dt>
+		          <dt><%= link_to "Miscellaneous Items", admin_others_path %></dt>
 						<% end %>
   				  <h1 class="first">User Tasks</h1>
   				  <dt><%#= link_to "Manage Profiles", fb_accounts_path %></dt>
@@ -121,8 +120,7 @@
   			    <%# end %>
   			  <% end %>
   		    <h1>Information</h1>
-  		    <dt><%#= link_to "Monster Drop Data", damage_results_path %></dt>
-		      <dt><%#= link_to "Generals/Heros", generals_path %></dt>
+		      <dt><%= link_to "Generals", generals_path %></dt>
 		      <dt><%= link_to "Soldiers", soldiers_path %></dt>
 		      <dt>
 						<%= link_to "Items", '#' %>
@@ -135,9 +133,9 @@
 					</dt>
 		      <dt><%= link_to "Weapons", weapons_path %></dt>
 		      <dt><%= link_to "Magic", powers_path %></dt>
-		      <dt><%#= link_to "Lands", lands_path %></dt>
-		      <dt><%#= link_to "Miscellaneous Items", others_path %></dt>
-		      <dt><%#= link_to "Monsters", monsters_path %></dt>
+		      <dt><%= link_to "Lands", lands_path %></dt>
+		      <dt><%= link_to "Miscellaneous Items", others_path %></dt>
+		      <dt><%= link_to "Monsters", monsters_path %></dt>
   			</dl>
   			<br/>
   			<%#= render :partial => 'common/ad1' %>

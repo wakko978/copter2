@@ -1,0 +1,53 @@
+<%= form_for([:admin,@land], { :multipart => true }) do |f| %>
+  <% if @land.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@land.errors.count, "error") %> prohibited this land from being saved:</h2>
+
+      <ul>
+      <% @land.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+	  <%= f.label 'name' %><br/>
+	  <%= f.text_field :name %>
+	</p>
+
+	<p>
+	  <%= f.label 'base_cost', 'Base Cost' %><br/>
+	  <%= f.text_field :base_cost, :onblur => "changeFormat(this)" %>
+	</p>
+
+	<p>
+	  <%= f.label 'income' %><br/>
+	  <%= f.text_field :income, :onblur => "changeFormat(this)" %>
+	</p>
+	
+	<p>
+	  <%= f.label 'incremental_cost', 'Incremental Cost' %><br/>
+	  <%= f.text_field :incremental_cost, :size => 10 %>
+	</p>
+	
+	<p>
+		<%= f.label 'avatar', 'Image' %>
+		<% unless @land.avatar_file_name.nil? %>
+			<%= image_tag @land.avatar.url(:thumb) %><br/>
+		<% end %>
+		<%= f.file_field :avatar, :value => @land.avatar_file_name.nil? ? nil : @land.avatar_file_name %>
+	</p>
+
+	<script type="text/javascript" language="Javascript">
+	  function changeFormat(f)
+	  {
+	    value = f.value.replace(/,/g,"");
+	    f.value = value;
+	  }
+	</script>
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

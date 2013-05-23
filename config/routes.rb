@@ -4,6 +4,10 @@ Copter2::Application.routes.draw do
   resources :soldiers, :only => [:index, :show]
   resources :weapons, :only => [:index, :show]
   resources :powers, :only => [:index, :show]
+  resources :lands, :only => [:index, :show]
+  resources :others, :only => [:index, :show]
+  resources :monsters, :only => [:index, :show]
+  resources :generals, :only => [:index, :show]
   scope "/items" do
     resources :boots, :only => [:index, :show]
     resources :amulets, :only => [:index, :show]
@@ -17,9 +21,14 @@ Copter2::Application.routes.draw do
     root :controller => "base", :action => "index"
     
     resources :users
+    resources :messages
     resources :soldiers, :except => [:show]
     resources :weapons, :except => [:show]
     resources :powers, :except => [:show]
+    resources :lands, :except => [:show]
+    resources :others, :except => [:show]
+    resources :monsters, :except => [:show]
+    resources :generals, :except => [:show]
     scope "/items" do
       resources :boots, :except => [:show]
       resources :amulets, :except => [:show]

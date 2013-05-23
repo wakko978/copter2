@@ -1,0 +1,24 @@
+<h1>Listing Lands available in Castle Age</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @lands %>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Income', :upkeep %></th>
+	</thead>
+	
+	<% @lands.each do |land| %>
+		<tr>
+			<th scope="row">
+				<% unless land.avatar_file_name.nil? %>
+					<%= image_tag land.avatar.url(:thumb), :alt  => "#{land.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to land.name, land_path(land) %>
+			</th>
+			<td><%= number_to_currency(land.base_cost) %></td>
+			<td><%= number_to_currency(land.income) %></td>
+		</tr>
+	<% end %>
+</table>

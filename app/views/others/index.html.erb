@@ -1,0 +1,16 @@
+<h1>Listing Miscellaneous items available in Castle Age</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @others %>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+	</thead>
+	
+	<% @others.each do |other| %>
+		<tr>
+			<th scope="row">
+				<%= link_to other.name, other_path(other) %>
+			</th>
+		</tr>
+	<% end %>
+</table>

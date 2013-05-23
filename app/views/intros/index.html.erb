@@ -1,6 +1,6 @@
-<% if @messages %>
+<% unless @message.message_text.blank? %>
   <h2 style="color:red">
-	  <%= @messages.message_text %>
+	  <%= @message.message_text.html_safe %>
   </h2>
 <% end %>
 
@@ -18,14 +18,14 @@
 
 <p>
   <ul>
-    <%# unless logged_in? %>
+    <% unless user_signed_in? %>
       <li>
-        Start by <%#= link_to 'Signing Up', signup_path %> for an account. You will get an email to activate your account. You cannot
+        Start by <%= link_to 'Signing Up', new_registration_path('user') %> for an account. You will get an email to activate your account. You cannot
         log in until your account is active.  If you do not get an email, check your spam or wait a while, as it may take some time to   
         reach you.
       </li>
       <br/>
-    <%# end %>
+    <% end %>
     <li>
       Create one a profile which represents your Castle Age profile energy, stamina, health, attack and defense.
     <br/>

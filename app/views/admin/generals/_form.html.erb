@@ -1,0 +1,70 @@
+<%= form_for([:admin,@general], { :multipart => true }) do |f| %>
+  <% if @general.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@general.errors.count, "error") %> prohibited this general from being saved:</h2>
+
+      <ul>
+      <% @general.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+	  <%= f.label 'name' %><br/>
+	  <%= f.text_field :name %>
+	</p>
+
+	<p>
+	  <%= f.label 'attack', 'Attack' %><br/>
+	  <%= f.text_field :attack, :size => 10 %>
+		Increment when leveling: <%= f.text_field :attack_increment, :size => 10 %>
+	</p>
+
+	<p>
+	  <%= f.label 'defense', 'Defense' %><br/>
+	  <%= f.text_field :defense, :size => 10 %>
+		Increment when leveling: <%= f.text_field :defense_increment, :size => 10 %>
+	</p>
+
+	<p>
+	  <%= f.label 'base_cost', 'Base Cost' %><br/>
+	  <%= f.text_field :base_cost, :onblur => "changeFormat(this)" %>
+	</p>
+
+	<p>
+	  <%= f.label 'upkeep' %><br/>
+	  <%= f.text_field :upkeep, :onblur => "changeFormat(this)" %>
+	</p>
+	
+	<p>
+	  <%= f.label 'div_power', 'Divine Power' %><br/>
+	  <%= f.text_field :div_power, :size => 10 %>
+	</p>
+	
+	<p>
+	  <%= f.label 'description' %><br/>
+	  <%= f.text_area :description, :size => '75x3' %>
+	</p>
+	
+	<p>
+		<%= f.label 'avatar', 'Image' %>
+		<% unless @general.avatar_file_name.nil? %>
+			<%= image_tag @general.avatar.url(:thumb) %><br/>
+		<% end %>
+		<%= f.file_field :avatar, :value => @general.avatar_file_name.nil? ? nil : @general.avatar_file_name %>
+	</p>
+
+	<script type="text/javascript" language="Javascript">
+	  function changeFormat(f)
+	  {
+	    value = f.value.replace(/,/g,"");
+	    f.value = value;
+	  }
+	</script>
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

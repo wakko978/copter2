@@ -1,0 +1,22 @@
+<h1>Listing Monsters available in Castle Age</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @monsters %>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Minutes', :minutes %></th>
+		<th class="top" scope="col">Attack Type</th>
+		<th class="top" scope="col"><%= sort_link 'Divine Power', :div_power %></th>
+	</thead>
+	
+	<% @monsters.each do |monster| %>
+		<tr>
+			<th scope="row">
+				<%= link_to monster.name, monster_path(monster) %>
+			</th>
+			<td><%= monster.minutes %></td>
+			<td><%= monster.attack_type %></td>
+			<td><%= monster.div_power %></td>
+		</tr>
+	<% end %>
+</table>

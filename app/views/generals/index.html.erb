@@ -1,0 +1,34 @@
+<h1>Listing Generals available in Castle Age</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @generals %>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+	</thead>
+	
+	<% @generals.each do |general| %>
+		<tr>
+			<th scope="row">
+				<% unless general.avatar_file_name.nil? %>
+					<%= image_tag general.avatar.url(:thumb), :alt  => "#{general.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to general.name, general_path(general) %>
+			</th>
+			<td><%= general.attack %></td>
+			<td><%= general.defense %></td>
+			<td><%= general.e_attack %></td>
+			<td><%= general.e_defense %></td>
+			<td><%= number_to_currency(general.base_cost) %></td>
+			<td><%= number_to_currency(general.upkeep) %></td>
+			<td><%= general.div_power %></td>
+		</tr>
+	<% end %>
+</table>

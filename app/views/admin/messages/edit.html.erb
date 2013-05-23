@@ -1,0 +1,24 @@
+<h1>Edit Message</h1>
+
+<%= form_for([:admin,@message]) do |f| %>
+  <% if @message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
+
+      <ul>
+      <% @message.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+	  <%= f.label 'message_text', 'Message (HTML accepted)' %><br/>
+	  <%= f.text_area :message_text, :size => "75x10" %>
+	</p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

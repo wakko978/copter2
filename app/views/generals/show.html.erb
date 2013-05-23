@@ -1,0 +1,49 @@
+<h1 class="pagetitle"><%= @general.name %></h1>
+
+<% unless @general.avatar_file_name.nil? %>
+  <%= image_tag @general.avatar.url, :alt  => "#{@general.name}",
+    :style => 'float:right' %>
+<% else %>
+	<div style="float:right">
+		No Image Available
+	</div>
+<% end %>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@general.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Attack:</b> <%= @general.attack %>
+</p>
+
+<p>
+	<b>Defense:</b> <%= @general.defense %>
+</p>
+
+<p>
+	<b>eAttack:</b> <%= @general.e_attack %>
+</p>
+
+<p>
+	<b>eDefense:</b> <%= @general.e_defense %>
+</p>
+
+<p>
+	<b>Base Cost:</b> <%= number_to_currency(@general.base_cost) %>
+</p>
+
+<p>
+	<b>Upkeep:</b> <%= number_to_currency(@general.upkeep) %>
+</p>
+
+<p>
+	<b>Divine Power:</b> <%= @general.div_power %>
+</p>
+
+<p>
+	<b>Description:</b> <%= @general.description %>
+</p>
+
+<%= link_to 'Back', generals_path %>

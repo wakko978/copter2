@@ -1,0 +1,42 @@
+<%= form_for([:admin,@monster]) do |f| %>
+  <% if @monster.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@monster.errors.count, "error") %> prohibited this monster from being saved:</h2>
+
+      <ul>
+      <% @monster.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+	  <%= f.label 'name' %><br/>
+	  <%= f.text_field :name %>
+	</p>
+
+	<p>
+	  <%= f.label 'minutes', 'Minutes' %><br/>
+	  <%= f.text_field :minutes, :size => 10 %>
+	</p>
+
+	<p>
+	  <%= f.label 'attack_type', 'Attack Type (Please briefly describe attack options)' %><br/>
+	  <%= f.text_field :attack_type, :size => 100 %>
+	</p>
+
+	<p>
+	  <%= f.label 'div_power', 'Divine Power' %><br/>
+	  <%= f.text_field :div_power, :size => 10 %>
+	</p>
+
+	<p>
+	  <%= f.label 'description', "Description (Please enumerate parts and unaccounted for divine power)" %><br/>
+	  <%= f.text_area :description, :size => '75x5' %>
+	</p>
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

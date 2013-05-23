@@ -1,0 +1,29 @@
+<h1 class="pagetitle"><%= @land.name %></h1>
+
+<% unless @land.avatar_file_name.nil? %>
+  <%= image_tag @land.avatar.url, :alt  => "#{@land.name}",
+    :style => 'float:right' %>
+<% else %>
+	<div style="float:right">
+		No Image Available
+	</div>
+<% end %>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@land.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Type:</b> <%= @land.class.name.titleize %>
+</p>
+
+<p>
+	<b>Base Cost:</b> <%= number_to_currency(@land.base_cost) %>
+</p>
+
+<p>
+	<b>Upkeep:</b> <%= number_to_currency(@land.income) %>
+</p>
+
+<%= link_to 'Back', lands_path %>

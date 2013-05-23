@@ -1,5 +1,6 @@
 class IntrosController < ApplicationController
   def index
+    @message = Message.first
   end
   
   def catcher

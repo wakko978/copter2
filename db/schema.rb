@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522195125) do
+ActiveRecord::Schema.define(:version => 20130523132640) do
+
+  create_table "generals", :force => true do |t|
+    t.string   "name",                                            :null => false
+    t.integer  "attack",                                          :null => false
+    t.integer  "defense",                                         :null => false
+    t.float    "e_attack",                                        :null => false
+    t.float    "e_defense",                                       :null => false
+    t.integer  "base_cost",           :limit => 8
+    t.integer  "upkeep",              :limit => 8
+    t.integer  "attack_increment",                 :default => 1
+    t.integer  "defense_increment",                :default => 1
+    t.integer  "div_power"
+    t.string   "description"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
+  end
 
   create_table "items", :force => true do |t|
     t.string   "name",                                                :null => false
@@ -30,6 +50,39 @@ ActiveRecord::Schema.define(:version => 20130522195125) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",                                          :null => false
     t.datetime "updated_at",                                          :null => false
+  end
+
+  create_table "lands", :force => true do |t|
+    t.string   "name",                             :null => false
+    t.integer  "base_cost",           :limit => 8, :null => false
+    t.integer  "income",              :limit => 8, :null => false
+    t.float    "incremental_cost",                 :null => false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  create_table "messages", :force => true do |t|
+    t.string "message_text", :limit => 2000
+  end
+
+  create_table "monsters", :force => true do |t|
+    t.string   "name",                       :null => false
+    t.integer  "minutes",     :default => 0
+    t.string   "attack_type"
+    t.integer  "div_power"
+    t.string   "description"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "others", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "powers", :force => true do |t|
