@@ -1,0 +1,30 @@
+<% obj_c = obj == 'magic' ? 'power' : obj %>
+
+<td><b><%= obj.titleize %>:</b></td>
+<td>
+	<% if best %>
+		<%= link_to best.name, url_for(controller: obj_c.pluralize, action: 'show', id: best.id) %>
+		<span style="float:right">
+			<%= best.send("e_#{stat == 'att' ? 'attack' : 'defense'}") %> e<%= stat.capitalize %>
+		</span>
+		<%= better.empty? ? "<span class='note'>Best in game</span>" : nil %>
+		<% unless better.empty? %>
+			<p style="font-size:90%; margin-left:20px;">
+				<%= link_to "[Show/Hide Better #{obj.pluralize.titleize}]", '#', :class => "togglable",
+				 	data: {id: "#{stat}_#{obj.pluralize}"} %>
+			</p>
+			<dl id="<%= stat %>_<%= obj.pluralize %>" style="display:none; margin-top:-10px; margin-left:20px">
+				<% for i in better %>
+					<dd style="margin-left:20px">
+						<%= link_to i.name, url_for(controller: obj_c.pluralize, action: 'show', id: i.id) %>
+						<span style="float:right">
+							<%= best.send("e_#{stat == 'att' ? 'attack' : 'defense'}") %> e<%= stat.capitalize %>
+						</span>
+					</dd>
+				<% end %>
+			</dl>
+		<% end %>
+	<% else %>
+		No <%= obj.pluralize %> for this category
+	<% end %>
+</td>

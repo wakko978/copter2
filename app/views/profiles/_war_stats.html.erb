@@ -1,0 +1,173 @@
+<table class="non-fixed">
+	<thead>
+		<th class="top" scope="col"></th>
+		<th class="top" scope="col">Top 7 Generals and top 7 items during attack</th>
+		<th class="top" scope="col">Top 7 Generals and top 7 items during defense</th>
+	</thead>
+	
+	<tr>
+ 		<td><b>Top 6 Generals:</b></td>
+ 		<td>
+			<% unless @war_generals[:best_attack].empty? %>
+				<% @war_generals[:best_attack].each_with_index do |b,i| %>
+					<% if b[:name] == 'Self' %>
+						<%= i+1 %> &minus; Self
+						<span style="float:right">
+							<%= b[:ri_e_attack] %> riAtt
+						</span><br/>
+					<% else %>
+						<%= i+1 %> &minus; <%= b[:name] == 'Self' ? 'Self' : (link_to b.name, url_for(controller: 'generals', action: 'show', id: b.id)) %>
+						<span style="float:right">
+							<%= b.e_attack %> eAtt
+						</span><br/>
+					<% end %>
+				<% end %>
+				<% unless @war_generals[:better_attack].nil? || @war_generals[:better_attack].empty? %>
+			       <p style="font-size:90%; margin-left:10px;">
+			       		<%= link_to "[Show/Hide Better Generals]", '#',
+									:class => "togglable", data: {id: "att_w_generals"} %>
+			       </p>
+			       <dl id="att_w_generals" style="display:none; margin-top:-10px; margin-left:20px">
+			         <% for i in @war_generals[:better_attack] %>
+			           <dd style="margin-left:10px">
+								<%= link_to i.name, url_for(controller: 'generals', action: 'show', id: i.id) %>
+								<span style="float:right">
+			   					  <%= i.e_attack %> eAtt
+			   					</span>
+							</dd>
+			         <% end %>
+			       </dl>
+				<% end %>
+			<% else %>
+				No generals for this category
+			<% end %>
+			<span class="note">* Devs need to confirm that bonus gear is applied.</span><br/>
+			<span class="note">* Placement is strategic and up to you.</span>
+ 		</td>
+ 		<td>
+			<% unless @war_generals[:best_defense].empty? %>
+				<% @war_generals[:best_defense].each_with_index do |b,i| %>
+					<% if b[:name] == 'Self' %>
+						<%= i+1 %> &minus; Self
+						<span style="float:right">
+							<%= b[:ri_e_defense] %> riDef
+						</span><br/>
+					<% else %>
+						<%= i+1 %> &minus; <%= b[:name] == 'Self' ? 'Self' : (link_to b.name, url_for(controller: 'generals', action: 'show', id: b.id)) %>
+						<span style="float:right">
+							<%= b.e_defense %> eDef
+						</span><br/>
+					<% end %>
+				<% end %>
+				<% unless @war_generals[:better_defense].nil? || @war_generals[:better_defense].empty? %>
+			       <p style="font-size:90%; margin-left:10px;">
+			       		<%= link_to "[Show/Hide Better Generals]", '#',
+									:class => "togglable", data: {id: "def_w_generals"} %>
+			       </p>
+			       <dl id="def_w_generals" style="display:none; margin-top:-10px; margin-left:20px">
+			         <% for i in @war_generals[:better_defense] %>
+			           <dd style="margin-left:10px">
+								<%= link_to i.name, url_for(controller: 'generals', action: 'show', id: i.id) %>
+								<span style="float:right">
+			   					  <%= i.e_defense %> eDef
+			   					</span>
+							</dd>
+			         <% end %>
+			       </dl>
+				<% end %>
+			<% else %>
+				No generals for this category
+			<% end %>
+			<span class="note">* Devs need to confirm that bonus gear is applied.</span><br/>
+			<span class="note">* Placement is strategic and up to you.</span>
+ 		</td>
+ 	</tr>
+	<tr>
+		<td><b>Weapons:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_weapons[:best_attack],
+				better: @war_weapons[:better_attack], obj: 'weapon', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_weapons[:best_defense],
+				better: @war_weapons[:better_defense], obj: 'weapon', stat: 'def'} %>
+		</td>
+ 	</tr>
+	<tr>
+		<td><b>Shields:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_shields[:best_attack],
+				better: @war_shields[:better_attack], obj: 'shield', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_shields[:best_defense],
+				better: @war_shields[:better_defense], obj: 'shield', stat: 'def'} %>
+		</td>
+ 	</tr>
+	<tr>
+		<td><b>Helmets:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_helmets[:best_attack],
+				better: @war_helmets[:better_attack], obj: 'helmet', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_helmets[:best_defense],
+				better: @war_helmets[:better_defense], obj: 'helmet', stat: 'def'} %>
+		</td>
+ 	</tr>
+	<tr>
+		<td><b>Armors:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_armors[:best_attack],
+				better: @war_armors[:better_attack], obj: 'armor', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_armors[:best_defense],
+				better: @war_armors[:better_defense], obj: 'armor', stat: 'def'} %>
+		</td>
+ 	</tr>
+	<tr>
+		<td><b>Amulets:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_amulets[:best_attack],
+				better: @war_amulets[:better_attack], obj: 'amulet', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_amulets[:best_defense],
+				better: @war_amulets[:better_defense], obj: 'amulet', stat: 'def'} %>
+		</td>
+ 	</tr>
+	<tr>
+		<td><b>Magic:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_powers[:best_attack],
+				better: @war_powers[:better_attack], obj: 'magic', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_powers[:best_defense],
+				better: @war_powers[:better_defense], obj: 'magic', stat: 'def'} %>
+		</td>
+ 	</tr>
+	<tr>
+		<td><b>Gloves:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_gloves[:best_attack],
+				better: @war_gloves[:better_attack], obj: 'glove', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_gloves[:best_defense],
+				better: @war_gloves[:better_defense], obj: 'glove', stat: 'def'} %>
+		</td>
+ 	</tr>
+	<tr>
+		<td><b>Boots:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_boots[:best_attack],
+				better: @war_boots[:better_attack], obj: 'boot', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_boots[:best_defense],
+				better: @war_boots[:better_defense], obj: 'boot', stat: 'def'} %>
+		</td>
+ 	</tr>
+</table>

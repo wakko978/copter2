@@ -1,0 +1,20 @@
+<h1 class="<%= current_user.is_admin? ? "second" : "first" %>">Account Tasks</h1>
+<dt><%= link_to "Profile Stats", profile_path(@profile) %></dt>
+<!-- <%# if current_user.is_contributor? %>
+	<dt><%#= link_to "Contribute Loot Stats", new_profile_damage_result_path(:profile_id => @profile) %></dt>
+<%# end %> -->
+<dt><%= link_to "Upload Data", updater_profile_path(@profile) %></dt>
+<dt><%#= link_to "CAGE Link", cage_profile_path(@profile) %></dt>
+<dt><%= link_to "Manage Generals", profile_recruits_path(@profile) %></dt>
+<dt>
+  <%= link_to "Manage Items", '#' %>
+  <dd><%= link_to "Amulets", profile_accessories_path(@profile, :item_type => 'amulet') %></dd>
+  <dd><%= link_to "Armors", profile_accessories_path(@profile, :item_type => 'armor') %></dd>
+  <dd><%= link_to "Boots", profile_accessories_path(@profile, :item_type => 'boot') %></dd>
+  <dd><%= link_to "Helmets", profile_accessories_path(@profile, :item_type => 'helmet') %></dd>
+  <dd><%= link_to "Gloves", profile_accessories_path(@profile, :item_type => 'glove') %></dd>
+  <dd><%= link_to "Shields", profile_accessories_path(@profile, :item_type => 'shield') %></dd>
+</dt>
+<dt><%= link_to "Manage Magic", profile_spells_path(@profile) %></dt>
+<dt><%= link_to "Manage Soldiers", profile_fighters_path(@profile) %></dt>
+<dt><%= link_to "Manage Weapons", profile_arms_path(@profile) %></dt>

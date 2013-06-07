@@ -15,7 +15,7 @@
   <!-- Global IE fix to avoid layout crash when single word size wider than column width -->
   <!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
 
-  <body onload="if ($$('.focus-first')[0]) $$('.focus-first')[0].focus();">
+  <body onload="if ($('.focus-first')[0]) $('.focus-first')[0].focus();">
 	<!-- Main Page Container -->
 	<div class="page-container">
 
@@ -41,9 +41,9 @@
 						<li><a href="#">My Profiles<!--[if IE 7]><!--></a><!--<![endif]-->
 							<!--[if lte IE 6]><table><tr><td><![endif]-->
 							<ul>
-					  		<%# current_user.fb_accounts.each do |account| %>
-									<li><%#= link_to account.full_name, fb_account_path(account) %></li>
-					  		<%# end %>
+					  		<% current_user.profiles.each do |profile| %>
+									<li><%= link_to profile.name, profile_path(profile) %></li>
+					  		<% end %>
 							</ul>
 							<!--[if lte IE 6]></td></tr></table></a><![endif]-->
 				  	</li>
@@ -67,7 +67,7 @@
 				<% end %>
 			</div>
 	  </div>
-	  <div class="main" style="background:transparent url('bg_main.gif') top left repeat-y;">
+	  <div class="main">
   		<div class="main-navigation">
   		  <div class="round-border-topright"></div>
   		  <% if !user_signed_in? %>
@@ -114,10 +114,10 @@
 		          <dt><%= link_to "Miscellaneous Items", admin_others_path %></dt>
 						<% end %>
   				  <h1 class="first">User Tasks</h1>
-  				  <dt><%#= link_to "Manage Profiles", fb_accounts_path %></dt>
-  			    <%# if @fb_account.kind_of?(FbAccount) && !@fb_account.new_record? %>
-  				    <%#= render :partial => "/account_tasks" %>
-  			    <%# end %>
+  				  <dt><%= link_to "Manage Profiles", profiles_path %></dt>
+  			    <% if @profile.kind_of?(Profile) && !@profile.new_record? %>
+  				    <%= render :partial => "profiles/tasks" %>
+  			    <% end %>
   			  <% end %>
   		    <h1>Information</h1>
 		      <dt><%= link_to "Generals", generals_path %></dt>

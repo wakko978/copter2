@@ -1,0 +1,31 @@
+<%= form_for @spell, :url => profile_spells_path(@profile) do |f| %>
+  <% if @spell.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@spell.errors.count, "error") %> prohibited this magic from being saved:</h2>
+
+      <ul>
+      <% @spell.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<p style="color:red">Note that it is much easier to <%= link_to 'Upload!', updater_profile_path(@profile) %></p>
+	
+  <% if @spell.new_record? %>
+	  <p>
+	    <%= f.label 'power_id', 'Magic' %><br/>
+	    <%= f.collection_select :power_id, @powers, :id, :name, :include_blank => true %>
+	  </p>
+	<% end %>
+
+	<p>
+		<%= f.label 'owned' %><br/>
+		<%= f.text_field 'owned' %>
+	</p>
+
+  <p>
+    <%= f.submit 'Acquire' %>
+  </p>
+<% end %>

@@ -8,6 +8,38 @@ Copter2::Application.routes.draw do
   resources :others, :only => [:index, :show]
   resources :monsters, :only => [:index, :show]
   resources :generals, :only => [:index, :show]
+  resources :profiles do
+    resources :properties, :only => [:update]
+    resources :fighters, :except => [:edit]
+    resources :spells, :except => [:edit]
+    resources :arms, :except => [:edit]
+    resources :accessories, :except => [:edit]
+    resources :recruits, :except => [:edit]
+    member do
+      get 'updater'
+      get 'army_stats'
+      get 'div_stats'
+      get 'duel_stats'
+      get 'war_stats'
+      post 'process_data'
+      post 'upload_files'
+      post 'income_bonus'
+      post 'army_bonus'
+      post 'level'
+      post 'army_size'
+      post 'energy'
+      post 'stamina'
+      post 'health'
+      post 'health_rune'
+      post 'damage_rune'
+      post 'attack'
+      post 'attack_rune'
+      post 'attack_ia'
+      post 'defense'
+      post 'defense_rune'
+      post 'defense_ia'
+    end
+  end
   scope "/items" do
     resources :boots, :only => [:index, :show]
     resources :amulets, :only => [:index, :show]

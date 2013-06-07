@@ -1,0 +1,114 @@
+<table class="non-fixed">
+	<thead>
+		<th class="top" scope="col" colspan="2">
+		  Best in use during attack
+    	<span style="float:right; text-align:right">
+    		eAtt: <%= @profile.e_attack.round(1) %><br/>
+				rAtt: <%= @profile.r_e_attack.round(1) %><br/>
+				riAtt: <%= @profile.ri_e_attack.round(1) %><br/>
+   	    eGear: <%= gear_sum([
+					@duel_weapons,@duel_shields,@duel_helmets,@duel_armors,@duel_amulets,
+					@duel_powers,@duel_gloves,@duel_boots],'attack').round(1) %><br/>
+    	  <span class="note">(Equipped general not factored in yet)</span>
+    	</span>
+		</th>
+	</thead>
+	
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_weapons[:best_attack], better: @duel_weapons[:better_attack],
+				obj: 'weapon', stat: 'att'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_shields[:best_attack], better: @duel_shields[:better_attack],
+				obj: 'shield', stat: 'att'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_helmets[:best_attack], better: @duel_helmets[:better_attack],
+				obj: 'helmet', stat: 'att'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_armors[:best_attack], better: @duel_armors[:better_attack],
+				obj: 'armor', stat: 'att'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_amulets[:best_attack], better: @duel_amulets[:better_attack],
+				obj: 'amulet', stat: 'att'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_powers[:best_attack], better: @duel_powers[:better_attack],
+				obj: 'magic', stat: 'att'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_gloves[:best_attack], better: @duel_gloves[:better_attack],
+				obj: 'glove', stat: 'att'} %>
+ 	</tr>
+	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_boots[:best_attack], better: @duel_boots[:better_attack],
+				obj: 'boot', stat: 'att'} %>
+ 	</tr>
+	
+	<thead>
+  	<th class="top" scope="col" colspan="2">
+  	  Best in use during defend
+   	  <span style="float:right; text-align:right">
+   	    eDef: <%= @profile.e_defense.round(1) %><br/>
+	   	  rDef: <%= @profile.r_e_defense.round(1) %><br/>
+		   	riDef: <%= @profile.ri_e_defense.round(1) %><br/>
+   	    eGear: <%= gear_sum([
+					@duel_weapons,@duel_shields,@duel_helmets,@duel_armors,@duel_amulets,
+					@duel_powers,@duel_gloves,@duel_boots],'defense').round(1) %><br/>
+   	    <span class="note">(Equipped general not factored in yet)</span>
+   	  </span>
+  	</th>
+	</thead>
+	
+
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_weapons[:best_defense], better: @duel_weapons[:better_defense],
+				obj: 'weapon', stat: 'def'} %>
+ 	</tr>
+	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_shields[:best_defense], better: @duel_shields[:better_defense],
+				obj: 'shield', stat: 'def'} %>
+	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_helmets[:best_defense], better: @duel_helmets[:better_defense],
+				obj: 'helmet', stat: 'def'} %>
+ 	</tr>
+   <tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_armors[:best_defense], better: @duel_armors[:better_defense],
+				obj: 'armor', stat: 'def'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_amulets[:best_defense], better: @duel_amulets[:better_defense],
+				obj: 'amulet', stat: 'def'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_powers[:best_defense], better: @duel_powers[:better_defense],
+				obj: 'magic', stat: 'def'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_gloves[:best_defense], better: @duel_gloves[:better_defense],
+				obj: 'glove', stat: 'def'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_boots[:best_defense], better: @duel_boots[:better_defense],
+				obj: 'boot', stat: 'def'} %>
+ 	</tr>
+</table>

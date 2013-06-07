@@ -1,0 +1,36 @@
+<h1>Profiles for <%= current_user.email %></h1>
+
+<table class="non-fixed">
+	<%= will_paginate @profiles %>
+	<caption><%= link_to 'Add Profile', new_profile_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Level', :level %></th>
+		<th class="top" scope="col"><%= sort_link 'Army Size', :army_size %></th>
+		<th class="top" scope="col"><%= sort_link 'Energy', :energy %></th>
+		<th class="top" scope="col"><%= sort_link 'Stamina', :stamina %></th>
+		<th class="top" scope="col"><%= sort_link 'Health', :health %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @profiles.each do |profile| %>
+		<tr>
+			<th scope="row">
+				<%= link_to profile.name, profile_path(profile) %>
+			</th>
+			<td><%= profile.level %></td>
+			<td><%= profile.army_size %></td>
+			<td><%= profile.energy %></td>
+			<td><%= profile.stamina %></td>
+			<td><%= profile.health %></td>
+			<td><%= profile.attack %></td>
+			<td><%= profile.defense %></td>
+			<td>
+				<%= link_to "[Edit]", edit_profile_path(profile) %>
+				<%= link_to "[Delete]", profile_path(profile), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

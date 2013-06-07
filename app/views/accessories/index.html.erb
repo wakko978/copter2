@@ -1,0 +1,37 @@
+<h1 class="pagetitle"><%= params[:item_type].titleize.pluralize %> acquired for <%= @profile.name %></h1>
+
+<table class="non-fixed">
+	<caption><%= link_to "Acquire Item(s)", new_profile_accessory_path(@profile, item_type: params[:item_type]) %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Item', 'items.name' %></th>
+		<th class="top" scope="col"><%= sort_link 'Owned', 'accessories.owned' %></th>
+		<th class="top" scope="col">Attack/Defense</th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', 'items.e_attack' %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', 'items.e_defense'  %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+
+	<% @accessories.each do |accessory| %>
+		<% item = accessory.item %>
+		<tr id="row_<%= accessory.id %>">
+			<td>
+				<% unless item.avatar_file_name.nil? %>
+					<%= image_tag item.avatar.url(:thumb), :alt  => "#{item.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to item.name, url_for(controller: params[:item_type].pluralize, action: 'show', id: item.id) %>
+			</td>
+			<td id="accessory_<%= accessory.id %>_owned" class="highlight">
+				<%= text_field_tag "accessory_#{accessory.id}", accessory.owned, :size => 10,
+					:class => 'accessory', data: {url: profile_accessory_path(@profile,accessory),
+						field: "accessory_#{accessory.id}"} %>
+			</td>
+			<td><%= item.attack %>/<%= item.defense %></td>
+			<td><%= item.e_attack %></td>
+			<td><%= item.e_defense %></td>
+			<td>
+				<%= link_to '[Remove All]', profile_accessory_path(@profile,accessory), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

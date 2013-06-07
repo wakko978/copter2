@@ -1,0 +1,56 @@
+<table class="non-fixed">
+  <caption>
+  	<b>Total Income:</b>
+  	<span id="total_income">
+  		<%= number_to_currency(@profile.total_income, :precision => 0) %>
+  	</span>
+  	<b>Total Upkeep:</b>
+  	<span id="upkeep">
+  		<%= number_to_currency(@profile.upkeep, :precision => 0) %>
+  		(<%= number_to_percentage((@profile.upkeep.to_f / @profile.cash_flow.to_f) * 100.0, :precision => 2) %>)
+  	</span>
+  	<b>Cash Flow:</b>
+  	<span id="cash_flow">
+  		<%= number_to_currency(@profile.cash_flow, :precision => 0) %>
+  	</span>
+  	<b>General Bonus:</b>
+  	<%= select_tag "income_bonus",
+  	  options_for_select({
+				'0%' => 1.0, '1%' => 1.01, '2%' => 1.02, '3%' => 1.03,
+				'4%' => 1.04, '5%' => 1.05, '6%' => 1.06, '7%' => 1.07}.sort, @profile.income_bonus),
+			:class => 'income_bonus',
+			data: {url: income_bonus_profile_path(@profile)} %>
+  </caption>
+  <thead>
+    <th class="top" scope="col">Name</th>
+    <th class="top" scope="col">Owned</th>
+    <th class="top" scope="col">Next Cost to Buy (10x)</th>
+    <th class="top" scope="col">ROI</th>
+    <th class="top" scope="col">Hours to Save</th>
+  </thead>
+
+  <% @profile.properties.includes(:land).order(:land_id).each do |property| %>
+    <% land = property.land %>
+    <tr>
+      <th scope="row">
+        <% unless land.avatar_file_name.nil? %>
+					<%= image_tag land.avatar.url(:thumb), :alt  => "#{land.name}",
+						:style => 'float:left' %>
+				<% end %>
+        <%= land.name %>
+      </th>
+  	  <td>
+  		  <%= text_field_tag "property_#{property.id}", property.owned, :size => 10,
+					:class => 'property',	data: {url: profile_property_path(@profile,property)} %>
+  		  of <%= @profile.max_property %>
+  	  </td>
+        <td id="property_<%= property.id %>_next_cost">
+  		  <%= number_to_currency(property.next_cost_to_buy * 10, :precision => 0) %>
+  	  </td>
+      <td id="property_<%= property.id %>_roi"><%= property.roi %></td>
+      <td id="property_<%= property.id %>_hours">
+  		  <%= property.hours_to_save(@profile.cash_flow) %>
+  	  </td>
+    </tr>
+  <% end %>
+</table>

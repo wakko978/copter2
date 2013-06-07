@@ -1,0 +1,31 @@
+<%= form_for @arm, :url => profile_arms_path(@profile) do |f| %>
+  <% if @arm.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@arm.errors.count, "error") %> prohibited this weapon from being saved:</h2>
+
+      <ul>
+      <% @arm.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<p style="color:red">Note that it is much easier to <%= link_to 'Upload!', updater_profile_path(@profile) %></p>
+	
+  <% if @arm.new_record? %>
+	  <p>
+	    <%= f.label 'weapon_id', 'Weapon' %><br/>
+	    <%= f.collection_select :weapon_id, @weapons, :id, :name, :include_blank => true %>
+	  </p>
+	<% end %>
+
+	<p>
+		<%= f.label 'owned' %><br/>
+		<%= f.text_field 'owned' %>
+	</p>
+
+  <p>
+    <%= f.submit 'Acquire' %>
+  </p>
+<% end %>

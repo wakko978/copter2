@@ -12,13 +12,21 @@ class Item < ActiveRecord::Base
   before_save :update_e_attack
   before_save :update_e_defense
   
+  scope :amulet, :conditions => "type = 'Item::Amulet'"
+  scope :armor, :conditions => "type = 'Item::Armor'"
+  scope :boot, :conditions => "type = 'Item::Boot'"
+  scope :helmet, :conditions => "type = 'Item::Helmet'"
+  scope :glove, :conditions => "type = 'Item::Glove'"
+  scope :shield, :conditions => "type = 'Item::Shield'"
+  
   cattr_reader :per_page
   @@per_page = 25
+  @permitted_columns = ['name','attack','defense','e_attack','e_defense','base_cost','upkeep','div_power']
   
   def self.permitted_columns
-    ['name','attack','defense','e_attack','e_defense','base_cost','upkeep','div_power']
+    @permitted_columns
   end
-    
+     
   def update_e_attack
     self.e_attack = attack + defense*0.7
   end

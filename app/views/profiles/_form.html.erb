@@ -1,0 +1,87 @@
+<%= form_for(@profile) do |f| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+      <% @profile.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<p>
+	  <%= f.label 'name', "Your CA character profile name" %><br/>
+	  <%= f.text_field :name %>
+	</p>
+
+	<p>
+	  <%= f.label 'level' %><br/>
+	  <%= f.text_field :level %>
+	</p>
+
+	<p>
+	  <%= f.label 'army_size' %><br/>
+	  <%= f.text_field :army_size %>
+	</p>
+
+	<p>
+	  <%= f.label 'energy' %><br/>
+	  <%= f.text_field :energy %>
+	</p>
+
+	<p>
+	  <%= f.label 'stamina' %><br/>
+	  <%= f.text_field :stamina %>
+	</p>
+
+	<p>
+	  <%= f.label 'attack' %><br/>
+	  <%= f.text_field :attack %>
+	</p>
+
+	<p>
+	  <%= f.label 'attack_rune', "Attack Rune stat value" %><br/>
+	  <%= f.text_field :attack_rune %>
+	</p>
+	
+	<p>
+	  <%= f.label 'attack_ia', "Item Archive attack stat value" %><br/>
+	  <%= f.text_field :attack_ia %>
+	</p>
+	
+	<p>
+	  <%= f.label 'defense' %><br/>
+	  <%= f.text_field :defense %>
+	</p>
+
+	<p>
+	  <%= f.label 'defense_rune', "Defense Rune stat value" %><br/>
+	  <%= f.text_field :defense_rune %>
+	</p>
+	
+	<p>
+	  <%= f.label 'defense_ia', "Item Archive defense stat value" %><br/>
+	  <%= f.text_field :defense_ia %>
+	</p>
+	
+	<p>
+	  <%= f.label 'health' %><br/>
+	  <%= f.text_field :health %>
+	</p>
+
+	<p>
+	  <%= f.label 'health_rune', "Health Rune stat value" %><br/>
+	  <%= f.text_field :health_rune %>
+	</p>
+	
+	<p>
+	  <%= f.label 'damage_rune', "Damage Rune stat value" %><br/>
+	  <%= f.text_field :damage_rune %>
+	</p>
+	
+	<p>
+    <%= f.submit %>
+  </p>
+<% end %>

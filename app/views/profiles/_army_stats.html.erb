@@ -1,0 +1,108 @@
+<table class="non-fixed">
+	<caption>
+		<b>Army Bonus:</b>
+		<%= select_tag "army_bonus",
+			options_for_select((0..100).collect{|n| ["+#{n}", n]},@profile.army_bonus),
+			:class => 'army_bonus',
+			data: {url: army_bonus_profile_path(@profile)} %>
+  	</caption>
+	<thead>
+		<th class="top" scope="col">
+		  Equipment in use during attack
+		  <span style="float:right; text-align:right">
+        (Attack Power)
+      </span>
+		</th>
+    <th class="top" scope="col">
+  	  <span style="float:left; text-align:left">
+        Equipment in use during defend
+      </span>
+		  <span style="float:right; text-align:right">
+        (Defense Power)
+      </span>
+    </th>
+	</thead>
+
+	<tr>
+		<td>
+			<h6>
+				Generals
+				<span style="color:rgb(42,90,138); font-size:80%;">
+					(<%= @generals_during_attack.count %> of <%= (@profile.army_in_use.to_f / 5.0).ceil %> possible)
+					<%= link_to "[Show/Hide]", '#', :class => "togglable",
+						data: {id: "att_generals"} %>
+				</span>
+				<span style="color:rgb(42,90,138); font-size:80%; float:right">
+					(<%= attack_sum(@generals_during_attack).round(1) %>)
+				</span>
+			</h6>
+			<div id="att_generals" style="display:none">
+				<% for i in @generals_during_attack %>
+					<%= link_to i.name, general_path(:id => i.id) %>
+					<span style="float:right">
+					  <%= i.e_attack %> eAtt
+					</span><br/>
+				<% end %>
+			</div>
+			<%= render :partial => 'army_line',
+				:locals => {gear: @fighters_during_attack, profile: @profile, obj: 'soldier',
+					stat: 'att'} %>
+			<%= render :partial => 'army_line',
+				:locals => {gear: @arms_during_attack, profile: @profile, obj: 'weapon',
+					stat: 'att'} %>
+			<%= render :partial => 'army_line',
+				:locals => {gear: @accessories_during_attack, profile: @profile, obj: 'item',
+					stat: 'att'} %>
+			<%= render :partial => 'army_line',
+				:locals => {gear: @spells_during_attack, profile: @profile, obj: 'magic',
+					stat: 'att'} %>
+			<h6>
+			  Total Attack Power:
+			  <span style="float:right">
+			    <%= total_attack_power(@profile,[@spells_during_attack,@accessories_during_attack,
+						@arms_during_attack,@fighters_during_attack]).round(1) %>
+			  </span>
+			</h6>
+		</td>
+		<td>
+			<h6>
+				Generals
+				<span style="color:rgb(42,90,138); font-size:80%;">
+					(<%= @generals_during_defend.count %> of <%= (@profile.army_in_use.to_f / 5.0).ceil %> possible)
+					<%= link_to "[Show/Hide]", '#', :class => "togglable",
+						data: {id: "def_generals"} %>
+				</span>
+				<span style="color:rgb(42,90,138); font-size:80%; float:right">
+					(<%= defense_sum(@generals_during_defend).round(1) %>)
+				</span>
+			</h6>
+			<div id="def_generals" style="display:none">
+				<% for i in @generals_during_defend %>
+					<%= link_to i.name, general_path(:id => i.id) %>
+					<span style="float:right">
+					  <%= i.e_defense %> eDef
+					</span><br/>
+				<% end %>
+			</div>
+			<%= render :partial => 'army_line',
+				:locals => {gear: @fighters_during_defend, profile: @profile, obj: 'soldier',
+					stat: 'def'} %>
+			<%= render :partial => 'army_line',
+				:locals => {gear: @arms_during_defend, profile: @profile, obj: 'weapon',
+					stat: 'def'} %>
+			<%= render :partial => 'army_line',
+				:locals => {gear: @accessories_during_defend, profile: @profile, obj: 'item',
+					stat: 'def'} %>
+			<%= render :partial => 'army_line',
+				:locals => {gear: @spells_during_defend, profile: @profile, obj: 'magic',
+					stat: 'def'} %>
+			<h6>
+			  Total Defense Power:
+			  <span style="float:right">
+			    <%= total_defense_power(@profile,[@spells_during_defend,@accessories_during_defend,
+						@arms_during_defend,@fighters_during_defend]).round(1) %>
+			  </span>
+			</h6>
+		</td>
+	</tr>
+</table>

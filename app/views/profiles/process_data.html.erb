@@ -1,0 +1,12 @@
+<h1 class="pagetitle">Results of Upload Processing</h1>
+
+<% @results.each do |type,result| %>
+  <h2><%= type.titleize %></h2>
+  <% result.each do |name,value| %>
+    <li><%= name %>: <%= value %></li>
+  <% end %>
+<% end %>
+
+<br/>
+
+<%= link_to 'Back to profile', profile_path(@profile) %>

@@ -1,0 +1,49 @@
+<table class="non-fixed">
+	<thead>
+		<th class="top" scope="col" colspan="2">
+			Divine Items in use
+    	<span style="float:right; text-align:right">
+    		Total Divine Power <%= total_div_power([
+				@div_weapons,@div_shields,@div_helmets,@div_armor,@div_amulets,
+				@div_gloves,@div_boots,@div_magic,@div_generals]) %>
+    	</span>
+		</th>
+	</thead>
+	
+	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_generals[:best], better: @div_generals[:better],	obj: 'general'} %>
+ 	</tr>
+ 	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_weapons[:best], better: @div_weapons[:better],	obj: 'weapon'} %>
+ 	</tr>
+ 	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_shields[:best], better: @div_shields[:better],	obj: 'shield'} %>
+ 	</tr>
+ 	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_helmets[:best], better: @div_helmets[:better],	obj: 'helmet'} %>
+ 	</tr>
+ 	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_armors[:best], better: @div_armors[:better],	obj: 'armor'} %>
+ 	</tr>
+ 	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_amulets[:best], better: @div_amulets[:better],	obj: 'amulet'} %>
+ 	</tr>
+ 	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_powers[:best], better: @div_powers[:better],	obj: 'magic'} %>
+ 	</tr>
+ 	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_gloves[:best], better: @div_gloves[:better],	obj: 'glove'} %>
+ 	</tr>
+	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_boots[:best], better: @div_boots[:better],	obj: 'boot'} %>
+ 	</tr>
+</table>

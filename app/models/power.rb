@@ -1,5 +1,5 @@
 class Power < ActiveRecord::Base
-  attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense
+  attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense, :div_power
   
   validates :name, :presence => true
   validates :attack, :defense, :presence => true, :numericality => { :only_integer => true }

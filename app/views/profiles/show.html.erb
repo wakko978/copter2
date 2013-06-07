@@ -1,0 +1,119 @@
+<h1>Character Profile: <%= @profile.name %></h1>
+
+<table class="non-fixed">
+  <tr>
+    <td style="vertical-align:top; width:24%">
+			<%= label :profile, :level %>:
+      <%= text_field :profile, :level, :size => 5,
+				data: {url: level_profile_path(@profile)} %>
+      (<span id="lsi"><%= @profile.lsi %></span> LSI)
+    </td>
+    <td style="vertical-align:top; width:19%">
+			<%= label :profile, :army_size, "Army" %>:
+			<%= text_field :profile, :army_size, :size => 5,
+				data: {url: army_bonus_profile_path(@profile)} %>
+		</td>
+    <td style="vertical-align:top; width:19%">
+			<%= label :profile, :energy %>:
+			<%= text_field :profile, :energy, :size => 5,
+				data: {url: energy_profile_path(@profile)} %>
+		</td>
+    <td style="vertical-align:top; width:19%">
+			<%= label :profile, :stamina %>:
+			<%= text_field :profile, :stamina, :size => 5,
+				data: {url: stamina_profile_path(@profile)} %>
+		</td>
+    <td style="vertical-align:top; width:19%">
+			<%= label :profile, :health %>:
+			<%= text_field :profile, :health, :size => 5,
+				data: {url: health_profile_path(@profile)} %><br/>
+			<%= label :profile, :health_rune %>:
+			<%= text_field :profile, :health_rune, :size => 5,
+				data: {url: health_rune_profile_path(@profile)} %><br/>
+			<%= label :profile, :damage_rune %>:
+			<%= text_field :profile, :damage_rune, :size => 5,
+				data: {url: damage_rune_profile_path(@profile)} %>
+		</td>
+	</tr>
+	<tr>
+    <td style="vertical-align:top;" colspan="2">
+			<%= label :profile, :attack %>:
+      <%= text_field :profile, :attack, :size => 5,
+				data: {url: attack_profile_path(@profile)} %>
+			(<span id="eAtt">eAtt:<%= @profile.e_attack %></span>)<br/>
+			<%= label :profile, :attack_rune %>:
+			<%= text_field :profile, :attack_rune, :size => 5,
+				data: {url: attack_rune_profile_path(@profile)} %>
+			(<span id="rAtt">rAtt:<%= @profile.r_e_attack %></span>)<br/>
+			<%= label :profile, :attack_ia, 'Attack IA' %>:
+			<%= text_field :profile, :attack_ia, :size => 5,
+				data: {url: attack_ia_profile_path(@profile)} %>
+			(<span id="riAtt">riAtt:<%= @profile.ri_e_attack %></span>)
+		</td>
+		<td style="vertical-align:top;" colspan="2">
+			<%= label :profile, :defense %>:
+      <%= text_field :profile, :defense, :size => 5,
+				data: {url: defense_profile_path(@profile)} %>
+			(<span id="eDef">eDef:<%= @profile.e_defense %></span>)<br/>
+			<%= label :profile, :defense_rune %>:
+			<%= text_field :profile, :defense_rune, :size => 5,
+				data: {url: defense_rune_profile_path(@profile)} %>
+			(<span id="rDef">rDef:<%= @profile.r_e_defense %></span>)<br/>
+			<%= label :profile, :defense_ia, 'Defense IA' %>:
+			<%= text_field :profile, :defense_ia, :size => 5,
+				data: {url: defense_ia_profile_path(@profile)} %>
+			(<span id="riDef">riDef:<%= @profile.ri_e_defense %></span>)
+    </td>
+		<td style="vertical-align:top;">
+			(<span id="bsi"><%= @profile.bsi %></span> BSI)<br/>
+			(<span id="rbsi"><%= @profile.rbsi %></span> rBSI)<br/>
+			(<span id="ribsi"><%= @profile.ribsi %></span> riBSI)
+		</td>
+  </tr>
+</table>
+
+<br/>
+
+<div id="properties">
+	<%= render :partial => 'properties' %>
+</div>
+
+<br/>
+
+<p>
+	<%= link_to "[Show/Hide Divine Equipment]", '#', :class => "togglable",
+		data: {id: "div_stats", remote: true} %>
+</p>
+
+<div id="div_stats" data-url="<%= div_stats_profile_path(@profile) %>"></div>
+
+<br/>
+
+<p>
+	<%= link_to "[Show/Hide Duel Equipment]", '#', :class => "togglable",
+		data: {id: "duel_stats", remote: true} %>
+</p>
+			
+<div id="duel_stats" data-url="<%= duel_stats_profile_path(@profile) %>"></div>
+
+<br/>
+
+<p>
+	<%= link_to "[Show/Hide War Council]", '#', :class => "togglable",
+		data: {id: "war_stats", remote: true} %>
+</p>
+
+<div id="war_stats" data-url="<%= war_stats_profile_path(@profile) %>"></div>
+
+<br/>
+
+<p>
+	<%= link_to "[Show/Hide Invasion Equipment]", '#', :class => "togglable",
+		data: {id: "army_stats", remote: true} %>
+</p>
+
+<div id="army_stats" data-url="<%= army_stats_profile_path(@profile) %>"></div>
+
+<br/>
+
+<%= link_to 'Back', :back %>

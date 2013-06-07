@@ -11,14 +11,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130523132640) do
+ActiveRecord::Schema.define(:version => 20130606143100) do
+
+  create_table "accessories", :force => true do |t|
+    t.integer "profile_id",                :null => false
+    t.integer "item_id",                   :null => false
+    t.integer "owned",      :default => 0, :null => false
+  end
+
+  create_table "arms", :force => true do |t|
+    t.integer "profile_id",                :null => false
+    t.integer "weapon_id",                 :null => false
+    t.integer "owned",      :default => 0, :null => false
+  end
+
+  create_table "fighters", :force => true do |t|
+    t.integer "profile_id",                :null => false
+    t.integer "soldier_id",                :null => false
+    t.integer "owned",      :default => 0, :null => false
+  end
 
   create_table "generals", :force => true do |t|
-    t.string   "name",                                            :null => false
-    t.integer  "attack",                                          :null => false
-    t.integer  "defense",                                         :null => false
-    t.float    "e_attack",                                        :null => false
-    t.float    "e_defense",                                       :null => false
+    t.string   "name",                                                    :null => false
+    t.integer  "attack",                                                  :null => false
+    t.integer  "defense",                                                 :null => false
+    t.float    "e_attack",                                                :null => false
+    t.float    "e_defense",                                               :null => false
     t.integer  "base_cost",           :limit => 8
     t.integer  "upkeep",              :limit => 8
     t.integer  "attack_increment",                 :default => 1
@@ -29,8 +47,9 @@ ActiveRecord::Schema.define(:version => 20130523132640) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.string   "type",                             :default => "General"
   end
 
   create_table "items", :force => true do |t|
@@ -102,6 +121,63 @@ ActiveRecord::Schema.define(:version => 20130523132640) do
     t.datetime "updated_at",                       :null => false
   end
 
+  create_table "profiles", :force => true do |t|
+    t.string   "name",                                       :null => false
+    t.integer  "attack",                    :default => 0,   :null => false
+    t.integer  "defense",                   :default => 0,   :null => false
+    t.integer  "energy",                    :default => 0,   :null => false
+    t.integer  "stamina",                   :default => 0,   :null => false
+    t.integer  "health",                    :default => 0,   :null => false
+    t.integer  "level",                     :default => 0,   :null => false
+    t.integer  "army_size",                 :default => 0,   :null => false
+    t.integer  "attack_rune",               :default => 0,   :null => false
+    t.integer  "defense_rune",              :default => 0,   :null => false
+    t.integer  "health_rune",               :default => 0,   :null => false
+    t.integer  "damage_rune",               :default => 0,   :null => false
+    t.integer  "attack_ia",                 :default => 0,   :null => false
+    t.integer  "defense_ia",                :default => 0,   :null => false
+    t.float    "e_attack",                                   :null => false
+    t.float    "e_defense",                                  :null => false
+    t.float    "income_bonus",              :default => 1.0
+    t.integer  "army_bonus"
+    t.string   "cage_id"
+    t.integer  "user_id"
+    t.string   "land_file_file_name"
+    t.string   "land_file_content_type"
+    t.integer  "land_file_file_size"
+    t.datetime "land_file_updated_at"
+    t.string   "general_file_file_name"
+    t.string   "general_file_content_type"
+    t.integer  "general_file_file_size"
+    t.datetime "general_file_updated_at"
+    t.string   "soldier_file_file_name"
+    t.string   "soldier_file_content_type"
+    t.integer  "soldier_file_file_size"
+    t.datetime "soldier_file_updated_at"
+    t.string   "item_file_file_name"
+    t.string   "item_file_content_type"
+    t.integer  "item_file_file_size"
+    t.datetime "item_file_updated_at"
+    t.string   "magic_file_file_name"
+    t.string   "magic_file_content_type"
+    t.integer  "magic_file_file_size"
+    t.datetime "magic_file_updated_at"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
+
+  create_table "properties", :force => true do |t|
+    t.integer "profile_id",                :null => false
+    t.integer "land_id",                   :null => false
+    t.integer "owned",      :default => 0, :null => false
+  end
+
+  create_table "recruits", :force => true do |t|
+    t.integer "general_id",                :null => false
+    t.integer "profile_id",                :null => false
+    t.integer "level",      :default => 1, :null => false
+  end
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -127,6 +203,12 @@ ActiveRecord::Schema.define(:version => 20130523132640) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+  end
+
+  create_table "spells", :force => true do |t|
+    t.integer "profile_id",                :null => false
+    t.integer "power_id",                  :null => false
+    t.integer "owned",      :default => 0, :null => false
   end
 
   create_table "users", :force => true do |t|

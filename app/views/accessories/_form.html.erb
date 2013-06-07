@@ -1,0 +1,31 @@
+<%= form_for @accessory, :url => profile_accessories_path(@profile) do |f| %>
+  <% if @accessory.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@accessory.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% @accessory.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<p style="color:red">Note that it is much easier to <%= link_to 'Upload!', updater_profile_path(@profile) %></p>
+	
+  <% if @accessory.new_record? %>
+	  <p>
+	    <%= f.label 'item_id', "#{params[:item_type].titleize}" %><br/>
+	    <%= f.collection_select :item_id, @items, :id, :name, :include_blank => true %>
+	  </p>
+	<% end %>
+
+	<p>
+		<%= f.label 'owned' %><br/>
+		<%= f.text_field 'owned' %>
+	</p>
+
+  <p>
+    <%= f.submit 'Acquire' %>
+  </p>
+<% end %>

@@ -1,0 +1,31 @@
+<%= form_for @fighter, :url => profile_fighters_path(@profile) do |f| %>
+  <% if @fighter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fighter.errors.count, "error") %> prohibited this fighter from being saved:</h2>
+
+      <ul>
+      <% @fighter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<p style="color:red">Note that it is much easier to <%= link_to 'Upload!', updater_profile_path(@profile) %></p>
+	
+  <% if @fighter.new_record? %>
+	  <p>
+	    <%= f.label 'soldier_id', 'Soldier' %><br/>
+	    <%= f.collection_select :soldier_id, @soldiers, :id, :name, :include_blank => true %>
+	  </p>
+	<% end %>
+
+	<p>
+		<%= f.label 'owned' %><br/>
+		<%= f.text_field 'owned' %>
+	</p>
+
+  <p>
+    <%= f.submit 'Acquire' %>
+  </p>
+<% end %>

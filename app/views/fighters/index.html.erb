@@ -1,0 +1,37 @@
+<h1 class="pagetitle">Soldiers acquired for <%= @profile.name %></h1>
+
+<table class="non-fixed">
+	<caption><%= link_to "Acquire Soldier(s)", new_profile_fighter_path(@profile) %></caption>
+   	<thead>
+    	<th class="top" scope="col"><%= sort_link 'Soldier', 'soldiers.name' %></th>
+     	<th class="top" scope="col"><%= sort_link 'Owned', 'fighters.owned' %></th>
+     	<th class="top" scope="col">Attack/Defense</th>
+			<th class="top" scope="col"><%= sort_link 'eAttack', 'soldiers.e_attack' %></th>
+      <th class="top" scope="col"><%= sort_link 'eDefense', 'soldiers.e_defense'  %></th>
+     	<th class="top" scope="col">Options</th>
+   	</thead>
+
+   	<% @fighters.each do |fighter| %>
+			<% soldier = fighter.soldier %>
+    	<tr id="row_<%= fighter.id %>">
+				<td>
+					<% unless soldier.avatar_file_name.nil? %>
+						<%= image_tag soldier.avatar.url(:thumb), :alt  => "#{soldier.name}",
+							:style => 'float:left' %>
+					<% end %>
+					<%= link_to soldier.name, soldier_path(soldier) %>
+				</td>
+				<td id="fighter_<%= fighter.id %>_owned" class="highlight">
+					<%= text_field_tag "fighter_#{fighter.id}", fighter.owned, :size => 10,
+						:class => 'fighter', data: {url: profile_fighter_path(@profile,fighter),
+							field: "fighter_#{fighter.id}"} %>
+				</td>
+				<td><%= soldier.attack %>/<%= soldier.defense %></td>
+				<td><%= soldier.e_attack %></td>
+				<td><%= soldier.e_defense %></td>
+				<td>
+					<%= link_to '[Remove All]', profile_fighter_path(@profile,fighter), :confirm => 'Are you sure?', :method => :delete %>
+				</td>
+     	</tr>
+   <% end %>
+ </table>

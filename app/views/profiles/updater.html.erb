@@ -1,0 +1,53 @@
+<script type="text/javascript">
+	$(function(){
+		$('#uploader').pluploadQueue({
+			runtimes: 'flash,html5,gears,silverlight,browserplus',
+			url: '<%= upload_files_profile_path(@profile) %>',
+			max_file_size : '5mb',
+			unique_names : true,
+			filters : [
+				{title: "HTML files", extensions: "html,htm"},
+			  {title: "PHP files", extensions: "php"}
+			],
+			multipart_params: {
+				'<%= request_forgery_protection_token %>': '<%= form_authenticity_token %>'
+			}
+		});
+		
+		// Client side form validation
+		$('form').submit(function(e) {
+			var uploader = $('#uploader').pluploadQueue();
+		
+			// Files in queue upload them first
+			if (uploader.files.length > 0 && uploader.files.length <= 5) {
+				// When all files are uploaded submit form
+				uploader.bind('StateChanged', function() {
+					if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
+						$('form')[0].submit();
+					}
+				});
+				uploader.start();
+			} else {
+				alert('You must queue at least one file, and not more than 5.');
+			}
+		
+			return false;
+		});
+	});
+</script>
+
+<h1 class="pagetitle">Upload Generals, Soldiers, Items, Magic and Land for <%= @profile.name %></h1>
+
+<%= render :partial => 'faq' %>
+
+<%= form_for @profile, :url => process_data_profile_path(@profile), :method => 'post', :html => { :multipart => true } do |f| %>
+	<div id="uploader">
+		<p>Your browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+	</div>
+	
+  <p>
+    <%= f.submit 'Process' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', :back %>

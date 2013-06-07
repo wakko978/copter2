@@ -1,0 +1,37 @@
+<% obj_c = obj == 'magic' ? 'power' : obj %>
+
+<td><b><%= obj.titleize %>:</b></td>
+<td>
+	<% if best %>
+	  <%= link_to best.name, url_for(controller: obj_c.pluralize, action: 'show', id: best.id) %>
+	  <span style="float:right">
+		  <%= best.div_power %>
+		</span>
+		<%= better.empty? ? "<span class='note'>Best in game</span>" : nil %>
+    <% unless better.empty? %>
+      <p style="font-size:90%; margin-left:20px;">
+				<%= link_to "[Show/Hide Better #{obj.pluralize.titleize}]", '#', :class => "togglable",
+				 	data: {id: "div_#{obj.pluralize}"} %>
+      </p>
+      <dl id="div_<%= obj.pluralize %>" style="display:none; margin-top:-10px; margin-left:20px">
+        <% for i in better %>
+          <dd style="margin-left:20px">
+						<%= link_to i.name, url_for(controller: obj_c.pluralize, action: 'show', id: i.id) %>
+						<span style="float:right">
+						  <%= i.div_power %>
+						</span>
+					</dd>
+        <% end %>
+      </dl>
+    <% end %>
+	<% elsif !better.nil? and !better.empty? %>
+		Attempt to obtain any of the following:
+		<% for i in better %>
+      <dd style="margin-left:20px">
+				<%= link_to "#{i.name} (#{i.div_power})", url_for(controller: obj_c.pluralize, action: 'show', id: i.id) %>
+			</dd>
+    <% end %>
+	<% else %>
+		No data to display
+	<% end %>
+</td>

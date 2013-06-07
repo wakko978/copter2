@@ -1,0 +1,37 @@
+<h1 class="pagetitle">Magic acquired for <%= @profile.name %></h1>
+
+<table class="non-fixed">
+	<caption><%= link_to "Acquire Magic(s)", new_profile_spell_path(@profile) %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Magic', 'powers.name' %></th>
+		<th class="top" scope="col"><%= sort_link 'Owned', 'spells.owned' %></th>
+		<th class="top" scope="col">Attack/Defense</th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', 'powers.e_attack' %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', 'powers.e_defense'  %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+
+	<% @spells.each do |spell| %>
+		<% power = spell.power %>
+		<tr id="row_<%= spell.id %>">
+			<td>
+				<% unless power.avatar_file_name.nil? %>
+					<%= image_tag power.avatar.url(:thumb), :alt  => "#{power.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to power.name, power_path(power) %>
+			</td>
+			<td id="spell_<%= spell.id %>_owned" class="highlight">
+				<%= text_field_tag "spell_#{spell.id}", spell.owned, :size => 10,
+					:class => 'spell', data: {url: profile_spell_path(@profile,spell),
+						field: "spell_#{spell.id}"} %>
+			</td>
+			<td><%= power.attack %>/<%= power.defense %></td>
+			<td><%= power.e_attack %></td>
+			<td><%= power.e_defense %></td>
+			<td>
+				<%= link_to '[Remove All]', profile_spell_path(@profile,spell), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

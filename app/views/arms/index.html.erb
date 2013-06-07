@@ -1,0 +1,37 @@
+<h1 class="pagetitle">Weapons acquired for <%= @profile.name %></h1>
+
+<table class="non-fixed">
+	<caption><%= link_to "Acquire Weapon(s)", new_profile_arm_path(@profile) %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Weapon', 'weapons.name' %></th>
+		<th class="top" scope="col"><%= sort_link 'Owned', 'arms.owned' %></th>
+		<th class="top" scope="col">Attack/Defense</th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', 'weapons.e_attack' %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', 'weapons.e_defense'  %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+
+	<% @arms.each do |arm| %>
+		<% weapon = arm.weapon %>
+		<tr id="row_<%= arm.id %>">
+			<td>
+				<% unless weapon.avatar_file_name.nil? %>
+					<%= image_tag weapon.avatar.url(:thumb), :alt  => "#{weapon.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to weapon.name, weapon_path(weapon) %>
+			</td>
+			<td id="arm_<%= arm.id %>_owned" class="highlight">
+				<%= text_field_tag "arm_#{arm.id}", arm.owned, :size => 10,
+					:class => 'arm', data: {url: profile_arm_path(@profile,arm),
+						field: "arm_#{arm.id}"} %>
+			</td>
+			<td><%= weapon.attack %>/<%= weapon.defense %></td>
+			<td><%= weapon.e_attack %></td>
+			<td><%= weapon.e_defense %></td>
+			<td>
+				<%= link_to '[Remove All]', profile_arm_path(@profile,arm), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

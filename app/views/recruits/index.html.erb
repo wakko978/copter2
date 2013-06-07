@@ -1,0 +1,58 @@
+<h1 class="pagetitle">Generals acquired for <%= @profile.name %></h1>
+
+<table class="non-fixed">
+	<%= will_paginate @recruits %>
+	<caption><%= link_to "Acquire General(s)", new_profile_recruit_path(@profile) %></caption>
+	<thead>
+		<th class="top" scope="col" width="20%"><%= sort_link 'General', 'name' %></th>
+		<th class="top" scope="col" width="3%"><%= sort_link 'Level', 'level' %></th>
+		<th class="top" scope="col" width="8%">Base<br/>Stats</th>
+		<th class="top" scope="col" width="13%">Stats w/<br/>Gear Bonus</th>
+		<th class="top" scope="col" width="10%">
+			<%= sort_link 'General<br/>eAtt w/ Gear', 'attack_with_mods' %>
+		</th>
+		<th class="top" scope="col" width="10%">
+			<%= sort_link 'General<br/>eDef w/ Gear', 'defense_with_mods' %>
+		</th>
+		<th class="top" scope="col" width="18%">
+			<%= sort_link 'Profile<br/>eAtt w/ Bonus', 'e_attack_with_bonus' %>
+		</th>
+		<th class="top" scope="col" width="18%">
+			<%= sort_link 'Profile<br/>eDef w/ Bonus', 'e_defense_with_bonus'  %>
+		</th>
+		<th class="top" scope="col" width="5%">Options</th>
+	</thead>
+
+	<% @recruits.each do |recruit| %>
+		<% general = recruit.general %>
+		<tr id="row_<%= recruit.id %>">
+			<td>
+				<% unless general.avatar_file_name.nil? %>
+					<%= image_tag general.avatar.url(:thumb), :alt  => "#{general.name}",
+						:style => 'float:left' %>
+				<% end %>
+				<%= link_to general.name, general_path(general) %>
+			</td>
+			<td id="recruit_<%= recruit.id %>_level" class="highlight">
+				<%= text_field_tag "recruit_#{recruit.id}", recruit.level, :size => 3,
+					:class => 'recruit', data: {url: profile_recruit_path(@profile,recruit),
+						field: "recruit_#{recruit.id}"} %>
+			</td>
+			<td>
+				<span id="attack_<%= recruit.id %>"><%= recruit.attack %></span> /
+				<span id="defense_<%= recruit.id %>"><%= recruit.defense %></span>
+			</td>
+			<td>
+				<span id="attack_w_mods_<%= recruit.id %>"><%= recruit.general.send("attack_with_mods",@profile,recruit) %></span> /
+				<span id="defense_w_mods_<%= recruit.id %>"><%= recruit.general.send("defense_with_mods",@profile,recruit) %></span>
+			</td>
+			<td id="eAtt_<%= recruit.id %>"><%= recruit.e_attack %></td>
+			<td id="eDef_<%= recruit.id %>"><%= recruit.e_defense %></td>
+			<td id="eAtt_w_bonus_<%= recruit.id %>"><%= recruit.general.send("e_attack_with_bonus",@profile,recruit) %></td>
+			<td id="eDef_w_bonus_<%= recruit.id %>"><%= recruit.general.send("e_defense_with_bonus",@profile,recruit) %></td>
+			<td>
+				<%= link_to '[Remove]', profile_recruit_path(@profile,recruit), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

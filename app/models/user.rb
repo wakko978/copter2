@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
   before_create :set_default_role
+  has_many :profiles
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me

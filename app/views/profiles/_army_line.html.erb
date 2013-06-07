@@ -1,0 +1,22 @@
+<% obj_c = obj == 'magic' ? 'power' : obj %>
+
+<h6>
+	<%= obj.titleize.pluralize %>
+	<span style="color:rgb(42,90,138); font-size:80%;">
+		(<%= gear_count(gear) %> of <%= (profile.army_in_use) %> possible)
+	</span>
+	<span style="color:rgb(42,90,138); font-size:80%; float:right">
+		<% if stat == 'att' %>
+			(<%= attack_power(gear).round(1) %>)
+		<% elsif stat == 'def' %>
+			(<%= defense_power(gear).round(1) %>)
+		<% end %>
+	</span>
+</h6>
+<% gear.each do |i| %>
+	<% url = obj == 'item' ? url_for(controller: acc_cont(i.type), action: 'show', id: i.id) : url_for(controller: obj_c.pluralize, action: 'show', id: i.id) %>
+	<%= link_to i.name, url %> (<%= i.owned %>)
+	<span style="float:right">
+		<%= i.send("e_#{stat == 'att' ? 'attack' : 'defense'}") %> e<%= stat.capitalize %>
+	</span><br/>
+<% end %>
