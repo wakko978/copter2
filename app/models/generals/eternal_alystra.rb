@@ -6,16 +6,9 @@ class EternalAlystra < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 1 if profile.inventory_exists?('items','Gladiators Signet')
+    attack += 2 if profile.inventory_exists?('weapons','Heros War Bow')
+    attack += 3 if profile.inventory_exists?('items','Vanguards Gauntlets')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,9 +25,10 @@ class EternalAlystra < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    defense += 1 if profile.inventory_exists?('items','Brawlers Armor')
+    defense += 2 if profile.inventory_exists?('items','Swordsman Circlet')
+    defense += 3 if profile.inventory_exists?('items','Warriors Greaves')
+    
     # end
     return defense
   end
@@ -42,24 +36,42 @@ class EternalAlystra < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    div_power = [ profile.div_weapons, profile.div_powers, profile.div_generals,
+      profile.div_items('shield'), profile.div_items('helmet'), profile.div_items('armor'),
+      profile.div_items('amulet'), profile.div_items('glove'), profile.div_items('boot')
+    ].collect{|c| c.nil? ? 0 : (c[:best].nil? ? 0 : c[:best].div_power)}.sum
+    attack = profile.attack
+    case recruit.level
+    when 1
+      attack += div_power * 0.1
+    when 2..15
+      attack += div_power * (0.1 + (recruit.level.to_f - 1.0)*0.01)
+    when 16..50
+      attack += div_power * 0.24
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7).round(1)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    div_power = [ profile.div_weapons, profile.div_powers, profile.div_generals,
+      profile.div_items('shield'), profile.div_items('helmet'), profile.div_items('armor'),
+      profile.div_items('amulet'), profile.div_items('glove'), profile.div_items('boot')
+    ].collect{|c| c.nil? ? 0 : (c[:best].nil? ? 0 : c[:best].div_power)}.sum
+    attack = profile.attack
+    case recruit.level
+    when 1
+      attack += div_power * 0.1
+    when 2..15
+      attack += div_power * (0.1 + (recruit.level.to_f - 1.0)*0.01)
+    when 16..50
+      attack += div_power * 0.24
+    end
+    
+    e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7).round(1)
     return e_defense.round(1)
   end
 end

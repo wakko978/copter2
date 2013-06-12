@@ -1,4 +1,4 @@
-class Azalium < General
+class Aria < General
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -6,16 +6,7 @@ class Azalium < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 1 if profile.inventory_exists?('weapons','Emerald Saber')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,9 +23,8 @@ class Azalium < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    defense += 1 if profile.inventory_exists?('powers','Mind Control')
+    
     # end
     return defense
   end

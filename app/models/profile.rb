@@ -148,6 +148,16 @@ class Profile < ActiveRecord::Base
     total_income - upkeep
   end
   
+  def inventory_count(association,item_name)
+    lookup = self.send(association.pluralize.to_sym).select("owned").where(name: item_name)
+    lookup.empty? ? 0 : lookup.first.owned
+  end
+  
+  def inventory_exists?(association,item_name)
+    lookup = self.send(association.pluralize.to_sym).select("owned").where(name: item_name)
+    lookup.empty? ? false : true
+  end
+  
   #### START DIVINE METHODS ###############################
   def div_generals
     generals = {}

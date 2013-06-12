@@ -6,16 +6,8 @@ class Azorah < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 2 if profile.inventory_exists?('weapons','Blindfaith, Blade')
+    attack += 3 if profile.inventory_exists?('weapons','Pristine Chakram')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,34 +24,29 @@ class Azorah < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
-    # end
+    defense += 2 if profile.inventory_exists?('items','Pristine Shield')
+    defense += 4 if profile.inventory_exists?('items','Pristine Plate')
+
     return defense
   end
 
   def e_attack_with_bonus(profile,recruit)
+    defense_rune = profile.defense_rune
     e_attack = super
+    
+    defense_rune += defense_rune * (2 + (recruit.level * 0.25))
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    e_attack = (profile.ri_attack + (profile.defense + defense_rune + profile.defense_ia)*0.7).round(1)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
+    defense_rune = profile.defense_rune
     e_defense = super
+    
+    defense_rune += defense_rune * (2 + (recruit.level * 0.25))
+    
+    e_defense = ((profile.defense + defense_rune + profile.defense_ia) + profile.ri_attack*0.7).round(1)
     return e_defense.round(1)
   end
 end

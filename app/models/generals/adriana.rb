@@ -6,8 +6,8 @@ class Adriana < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    attack += 2 if profile.weapons.exists?(name: 'Lifebane')
-    attack += 2 if profile.items.exists?(name: 'Death Ward')
+    attack += 2 if profile.inventory_exists?('weapons','Lifebane')
+    attack += 2 if profile.inventory_exists?('items','Death Ward')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -25,8 +25,8 @@ class Adriana < General
     # Nothing as no gear modifies Strider's defense
 
     ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    
     # end
     return defense
   end

@@ -6,7 +6,7 @@ class Annika < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    attack += 3.0 if profile.items.exists?(name: 'Devarian Cloak')
+    attack += 3 if profile.inventory_exists?('items','Devarian Cloak')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -23,7 +23,7 @@ class Annika < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    defense += 3.0 if profile.items.exists?(name: 'Templars Mask')
+    defense += 3 if profile.inventory_exists?('items','Templars Mask')
     return defense
   end
 

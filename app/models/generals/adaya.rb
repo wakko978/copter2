@@ -6,7 +6,7 @@ class Adaya < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    attack += 3 if profile.weapons.exists?(name: 'True Flight Bow')
+    attack += 3 if profile.inventory_exists?('weapons','True Flight Bow')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -22,8 +22,8 @@ class Adaya < General
 
     ### Strider
     # Nothing as no gear modifies Strider's defense
-
-    defense += 3 if profile.items.exists?(name: 'True Flight Glove')
+    
+    defense += 3 if profile.inventory_exists?('items','True Flight Glove')
     return defense
   end
 

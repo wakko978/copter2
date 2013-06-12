@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130606143100) do
+ActiveRecord::Schema.define(:version => 20130607202748) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -19,17 +19,23 @@ ActiveRecord::Schema.define(:version => 20130606143100) do
     t.integer "owned",      :default => 0, :null => false
   end
 
+  add_index "accessories", ["profile_id", "owned"], :name => "index_accessories_on_profile_id_and_owned"
+
   create_table "arms", :force => true do |t|
     t.integer "profile_id",                :null => false
     t.integer "weapon_id",                 :null => false
     t.integer "owned",      :default => 0, :null => false
   end
 
+  add_index "arms", ["profile_id", "owned"], :name => "index_arms_on_profile_id_and_owned"
+
   create_table "fighters", :force => true do |t|
     t.integer "profile_id",                :null => false
     t.integer "soldier_id",                :null => false
     t.integer "owned",      :default => 0, :null => false
   end
+
+  add_index "fighters", ["profile_id", "owned"], :name => "index_fighters_on_profile_id_and_owned"
 
   create_table "generals", :force => true do |t|
     t.string   "name",                                                    :null => false
@@ -51,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20130606143100) do
     t.datetime "updated_at",                                              :null => false
     t.string   "type",                             :default => "General"
   end
+
+  add_index "generals", ["name"], :name => "index_generals_on_name"
 
   create_table "items", :force => true do |t|
     t.string   "name",                                                :null => false
@@ -172,11 +180,15 @@ ActiveRecord::Schema.define(:version => 20130606143100) do
     t.integer "owned",      :default => 0, :null => false
   end
 
+  add_index "properties", ["profile_id", "owned"], :name => "index_properties_on_profile_id_and_owned"
+
   create_table "recruits", :force => true do |t|
     t.integer "general_id",                :null => false
     t.integer "profile_id",                :null => false
     t.integer "level",      :default => 1, :null => false
   end
+
+  add_index "recruits", ["profile_id", "level"], :name => "index_recruits_on_profile_id_and_level"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -210,6 +222,8 @@ ActiveRecord::Schema.define(:version => 20130606143100) do
     t.integer "power_id",                  :null => false
     t.integer "owned",      :default => 0, :null => false
   end
+
+  add_index "spells", ["profile_id", "owned"], :name => "index_spells_on_profile_id_and_owned"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

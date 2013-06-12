@@ -6,7 +6,7 @@ class Aegea < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    attack += 1 if profile.weapons.exists?(name: 'Amazons Warpath')
+    attack += 1 if profile.inventory_exists?('weapons','Amazons Warpath')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -22,8 +22,7 @@ class Aegea < General
 
     ### Strider
     # Nothing as no gear modifies Strider's defense
-
-    defense += 2 if profile.items.exists?(name: 'Wyrmhorn Gauntlets')
+    defense += 2 if profile.inventory_exists?('items','Wyrmhorn Gauntlets')
     return defense
   end
 

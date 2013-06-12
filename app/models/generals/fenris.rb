@@ -1,4 +1,4 @@
-class Braku < General
+class Fenris < General
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -7,13 +7,13 @@ class Braku < General
     attack = super
 
     ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
+    
     # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
+    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
     #   attack += 2.0
     # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
+    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
     #   attack += 5.0
     # end
 
@@ -33,8 +33,8 @@ class Braku < General
     # Nothing as no gear modifies Strider's defense
 
     ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    
     # end
     return defense
   end
@@ -42,24 +42,34 @@ class Braku < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    attack = profile.attack
+    attack += 2 if profile.inventory_exists?('items','Wolfbane Trinket')
+    
+    case recruit.level
+    when 1, 2, 3
+      attack += recruit.level + 2
+    when 4..50
+      attack += step_function(recruit.level,{pos_index: 2, offset: 3, period: 2})
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    attack = profile.attack
+    attack += 2 if profile.inventory_exists?('items','Wolfbane Trinket')
+    
+    case recruit.level
+    when 1, 2, 3
+      attack += recruit.level + 2
+    when 4..50
+      attack += step_function(recruit.level,{pos_index: 2, offset: 3, period: 2})
+    end
+    
+    e_attack = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)
   end
 end

@@ -5,7 +5,7 @@ class Aesir < General
     ## not accounted for with a standard integer increment
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
-    attack += 2 if profile.weapons.exists?(name: 'Thundercrash')
+    attack += 2 if profile.inventory_exists?('weapons','Thundercrash')
     return attack
   end
 
@@ -15,7 +15,7 @@ class Aesir < General
     ## not accounted for with a standard integer increment
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     defense = super
-    defense += 1 if profile.items.exists?(name: 'Aesirs Battle Armor')
+    defense += 1 if profile.inventory_exists?('items','Aesirs Battle Armor')
     return defense
   end
 

@@ -17,7 +17,11 @@ class General < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 25
   @permitted_columns = ['name','attack','defense','e_attack','e_defense','base_cost','upkeep','div_power']
-    
+  
+  def has_special_leveling_increment?
+    false
+  end
+  
   def update_e_attack
     self.e_attack = attack + defense*0.7
   end
@@ -41,7 +45,7 @@ class General < ActiveRecord::Base
   def defense_with_mods(profile,recruit)
     return recruit.defense
   end
-
+  
   def e_attack_with_bonus(profile,recruit)
     return profile.ri_e_attack.round(1)
   end
@@ -50,11 +54,37 @@ class General < ActiveRecord::Base
     return profile.ri_e_defense.round(1)
   end
   
+  def step_function(level=1,opts={})
+    opts[:pos_index] ||= 0
+    opts[:multiplier] ||= 1
+    opts[:offset] ||= 0
+    opts[:period] ||= 1
+    
+    mod = opts[:pos_index] + opts[:multiplier]*level -
+      ((level-opts[:offset])/opts[:period]).floor
+    return mod
+  end
+  
   def self.stub_model(name)
     model_name = name.gsub(/\*/,'').gsub(/\s/,'_').classify.underscore
     class_name = name.gsub(/\*/,'').gsub(/\s/,'_').classify
     content = <<-RUBY
 class #{class_name} < General
+  def has_special_leveling_increment?
+    false
+  end
+  
+  def special_leveling_increment(recruit)
+    # case recruit.level
+    # when 1
+    #   return 0
+    # when 2, 3, 4
+    #   return 2 * (recruit.level - 1)
+    # else
+    #   return 6 + recruit.level - 4
+    # end
+  end
+  
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -63,9 +93,9 @@ class #{class_name} < General
     attack = super
 
     ### Strider example
-    # attack += 3.0 if profile.weapons.exists?(name: 'Assassins Blade')
-    # attack += 2.0 if profile.items.exists?(name: 'Amulet of Despair')
-    # attack += 5.0 if profile.items.exists?(name: 'Assassins Cloak')
+    # attack += 3.0 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
+    # attack += 2.0 if profile.items.find{|p| p.name == 'Amulet of Despair'}
+    # attack += 5.0 if profile.items.find{|p| p.name == 'Assassins Cloak'}
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -83,11 +113,17 @@ class #{class_name} < General
     # Nothing as no gear modifies Strider's defense
 
     ### Penelope example
-    # defense += 3.0 if profile.weapons.exists?(name: 'Scepter of Light')
+    # defense += 3.0 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
     return defense
   end
 
   def e_attack_with_bonus(profile,recruit)
+    attack = profile.attack
+    defense = profile.defense
+    attack_rune = profile.attack_rune
+    defense_rune = profile.defense_rune
+    attack_ia = profile.attack_ia
+    defense_ia = profile.defense_ia
     e_attack = super
 
     ## Aesir example
@@ -107,6 +143,12 @@ class #{class_name} < General
   end
 
   def e_defense_with_bonus(profile,recruit)
+    attack = profile.attack
+    defense = profile.defense
+    attack_rune = profile.attack_rune
+    defense_rune = profile.defense_rune
+    attack_ia = profile.attack_ia
+    defense_ia = profile.defense_ia
     e_defense = super
     return e_defense.round(1)
   end

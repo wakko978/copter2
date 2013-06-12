@@ -7,13 +7,13 @@ class Cartigan < General
     attack = super
 
     ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
+    
     # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
+    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
     #   attack += 2.0
     # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
+    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
     #   attack += 5.0
     # end
 
@@ -33,8 +33,8 @@ class Cartigan < General
     # Nothing as no gear modifies Strider's defense
 
     ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    
     # end
     return defense
   end
@@ -42,24 +42,36 @@ class Cartigan < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    attack = profile.attack
+    defense = profile.defense
+    case recruit.level
+    when 1, 2, 3
+      attack += recruit.level
+      defense += recruit.level
+    when 4..50
+      attack += step_function(recruit.level,{offset: 3, period: 2})
+      defense += step_function(recruit.level,{offset: 3, period: 2})
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + (defense + profile.defense_rune + profile.defense_ia)*0.7).round(1)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    attack = profile.attack
+    defense = profile.defense
+    case recruit.level
+    when 1, 2, 3
+      attack += 1 + recruit.level
+      defense += 1 + recruit.level
+    when 4..50
+      attack += step_function(recruit.level,{offset: 3, period: 2})
+      defense += step_function(recruit.level,{offset: 3, period: 2})
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + (attack + profile.attack_rune + profile.attack_ia)*0.7).round(1)
     return e_defense.round(1)
   end
 end

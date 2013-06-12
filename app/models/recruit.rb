@@ -15,11 +15,19 @@ class Recruit < ActiveRecord::Base
   end
   
   def attack
-    general.attack + ((level - 1) * general.attack_increment)
+    unless general.has_special_leveling_increment?
+      general.attack + ((level - 1) * general.attack_increment)
+    else
+      general.attack + general.special_leveling_increment(self)
+    end
   end
   
   def defense
-    general.defense + ((level - 1) * general.defense_increment)
+    unless general.has_special_leveling_increment?
+      general.defense + ((level - 1) * general.defense_increment)
+    else
+      general.defense + general.special_leveling_increment(self)
+    end
   end
   
   def e_attack

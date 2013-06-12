@@ -6,16 +6,7 @@ class Halcyon < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 2 if profile.inventory_exists?('weapons','Halcyon Grinder')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,9 +23,8 @@ class Halcyon < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    defense += 2 if profile.inventory_exists?('items','Halcyon Glove')
+    
     # end
     return defense
   end
@@ -42,24 +32,48 @@ class Halcyon < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    attack = profile.attack
+    defense = profile.defense
+    case recruit.level
+    when 1
+      attack -= (defense * 0.10)
+      defense += (defense * 0.10)
+    when 2
+      attack -= (defense * 0.15)
+      defense += (defense * 0.15)
+    when 3
+      attack -= (defense * 0.20)
+      defense += (defense * 0.20)
+    when 4..50
+      attack -= (defense * 0.25)
+      defense += (defense * 0.25)
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + (defense + profile.defense_rune + profile.defense_ia)*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    attack = profile.attack
+    defense = profile.defense
+    case recruit.level
+    when 1
+      attack -= (defense * 0.10)
+      defense += (defense * 0.10)
+    when 2
+      attack -= (defense * 0.15)
+      defense += (defense * 0.15)
+    when 3
+      attack -= (defense * 0.20)
+      defense += (defense * 0.20)
+    when 4..50
+      attack -= (defense * 0.25)
+      defense += (defense * 0.25)
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + (attack + profile.attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)
   end
 end

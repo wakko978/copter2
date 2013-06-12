@@ -6,8 +6,8 @@ class Aethyx < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    attack += 1 if profile.weapons.exists?(name: 'Inoculator')
-    attack += 1 if profile.items.exists?(name: 'Poisons Touch')
+    attack += 1 if profile.inventory_exists?('weapons','Inoculator')
+    attack += 1 if profile.inventory_exists?('items','Poisons Touch')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -24,7 +24,7 @@ class Aethyx < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    defense += 2 if profile.items.exists?(name: 'Robe of the Fang')
+    defense += 2 if profile.inventory_exists?('items','Robe of the Fang')
     return defense
   end
 

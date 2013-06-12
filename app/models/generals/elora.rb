@@ -6,16 +6,7 @@ class Elora < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 2 if profile.inventory_exists?('weapons','Golden Horn Bow')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -33,8 +24,8 @@ class Elora < General
     # Nothing as no gear modifies Strider's defense
 
     ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    
     # end
     return defense
   end
@@ -42,24 +33,38 @@ class Elora < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    attack = profile.attack
+    case recruit.level
+    when 1
+      attack += 5
+    when 2
+      attack += 8
+    when 3
+      attack += 11
+    when 4..50
+      attack += step_function(recruit.level,{pos_index: 10, offset: 5, period: 2})
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7).round(1)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    attack = profile.attack
+    case recruit.level
+    when 1
+      attack += 5
+    when 2
+      attack += 8
+    when 3
+      attack += 11
+    when 4..50
+      attack += step_function(recruit.level,{pos_index: 10, offset: 5, period: 2})
+    end
+    
+    e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7).round(1)
     return e_defense.round(1)
   end
 end

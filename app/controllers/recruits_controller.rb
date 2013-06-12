@@ -95,6 +95,9 @@ class RecruitsController < ApplicationController
   
   protected
     def load_profile
+      # @profile = current_user.profiles.find(params[:profile_id])
+      
+      ## Possible to use eager loading to make downstream lookups faster?
       @profile = current_user.profiles.includes(:items,:weapons,:powers,:soldiers).find(params[:profile_id])
     end
 end

@@ -6,16 +6,8 @@ class Dante < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 1 if profile.inventory_exists?('powers','Breath of Fire')
+    attack += 2 if profile.inventory_exists?('weapons','Fiery Blade')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,9 +24,8 @@ class Dante < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    defense += 3 if profile.inventory_exists?('items','Shield of Dante')
+    
     # end
     return defense
   end
@@ -42,24 +33,54 @@ class Dante < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    defense = profile.defense
+    attack = profile.attack
+    case recruit.level
+    when 1
+      defense += 4
+      attack -= 5
+    when 2
+      defense += 8
+      attack -= 10
+    when 3
+      defense += 12
+      attack -= 15
+    when 4, 5
+      defense += 20
+      attack -= 25
+    when 5..50
+      defense += step_function(recruit.level,{pos_index: 15, offset: 5, period: 2})
+      attack -= step_function(recruit.level,{pos_index: 20, offset: 5, period: 2})
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + (defense + profile.defense_rune + profile.defense_ia)*0.7).round(1)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    defense = profile.defense
+    attack = profile.attack
+    case recruit.level
+    when 1
+      defense += 4
+      attack -= 5
+    when 2
+      defense += 8
+      attack -= 10
+    when 3
+      defense += 12
+      attack -= 15
+    when 4, 5
+      defense += 20
+      attack -= 25
+    when 5..50
+      defense += step_function(recruit.level,{pos_index: 15, offset: 5, period: 2})
+      attack -= step_function(recruit.level,{pos_index: 20, offset: 5, period: 2})
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + (attack + profile.attack_rune + profile.attack_ia)*0.7).round(1)
     return e_defense.round(1)
   end
 end

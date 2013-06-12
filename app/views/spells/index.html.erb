@@ -1,6 +1,7 @@
 <h1 class="pagetitle">Magic acquired for <%= @profile.name %></h1>
 
 <table class="non-fixed">
+	<%= will_paginate @spells %>
 	<caption><%= link_to "Acquire Magic(s)", new_profile_spell_path(@profile) %></caption>
 	<thead>
 		<th class="top" scope="col"><%= sort_link 'Magic', 'powers.name' %></th>

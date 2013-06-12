@@ -6,9 +6,9 @@ class Strider < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
     
-    attack += 3 if profile.weapons.exists?(name: 'Assassins Blade')
-    attack += 2 if profile.items.exists?(name: 'Amulet of Despair')
-    attack += 5 if profile.items.exists?(name: 'Assassins Cloak')
+    attack += 3 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
+    attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
+    attack += 5 if profile.items.find{|p| p.name == 'Assassins Cloak'}
     return attack
   end
   

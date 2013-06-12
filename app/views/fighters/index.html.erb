@@ -1,6 +1,7 @@
 <h1 class="pagetitle">Soldiers acquired for <%= @profile.name %></h1>
 
 <table class="non-fixed">
+	<%= will_paginate @fighters %>
 	<caption><%= link_to "Acquire Soldier(s)", new_profile_fighter_path(@profile) %></caption>
    	<thead>
     	<th class="top" scope="col"><%= sort_link 'Soldier', 'soldiers.name' %></th>

@@ -6,16 +6,9 @@ class Kanbe < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 2 if profile.inventory_exists?('weapons','Sunder')
+    attack += 5 if profile.inventory_exists?('items','Gaia Boots')
+    attack += 1 if profile.inventory_exists?('items','Gaia Bracer')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,9 +25,10 @@ class Kanbe < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    defense += 1 if profile.inventory_exists?('items','Gaia Armor')
+    defense += 1 if profile.inventory_exists?('items','Gaia Shield')
+    defense += 1 if profile.inventory_exists?('items','Gaia Helm')
+    
     # end
     return defense
   end
@@ -42,19 +36,18 @@ class Kanbe < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    case recruit.level
+    when 1
+      e_attack += 0.005 * profile.e_attack
+    when 2
+      e_attack += 0.01 * profile.e_attack
+    when 3
+      e_attack += 0.015 * profile.e_attack
+    when 4
+      e_attack += 0.02 * profile.e_attack
+    else
+      e_attack += 0.02 * profile.e_attack
+    end
     return e_attack.round(1)
   end
 

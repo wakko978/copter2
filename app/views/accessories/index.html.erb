@@ -1,6 +1,7 @@
 <h1 class="pagetitle"><%= params[:item_type].titleize.pluralize %> acquired for <%= @profile.name %></h1>
 
 <table class="non-fixed">
+	<%= will_paginate @accessories %>
 	<caption><%= link_to "Acquire Item(s)", new_profile_accessory_path(@profile, item_type: params[:item_type]) %></caption>
 	<thead>
 		<th class="top" scope="col"><%= sort_link 'Item', 'items.name' %></th>

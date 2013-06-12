@@ -6,15 +6,15 @@ class Aeris < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
     
-    attack += 5.0 if profile.weapons.exists?(name: 'Aeris Dagger')
+    attack += 5.0 if profile.inventory_exists?('weapons','Aeris Dagger')
     ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
+    
     # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
+    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
     #   attack += 2.0
     # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
+    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
     #   attack += 5.0
     # end
 
@@ -30,13 +30,13 @@ class Aeris < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     defense = super
     
-    defense += 4.0 if profile.items.exists?(name: 'Elven Crown', attack: 2, defense: 5)
+    defense += 4.0 if profile.items.find{|p| p.name == 'Elven Crown' && p.attack == 2 && p.defense == 5}
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
     ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    
     # end
     return defense
   end

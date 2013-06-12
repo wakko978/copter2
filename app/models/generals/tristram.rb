@@ -7,13 +7,13 @@ class Tristram < General
     attack = super
 
     ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
+    
     # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
+    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
     #   attack += 2.0
     # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
+    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
     #   attack += 5.0
     # end
 
@@ -33,8 +33,8 @@ class Tristram < General
     # Nothing as no gear modifies Strider's defense
 
     ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    
     # end
     return defense
   end

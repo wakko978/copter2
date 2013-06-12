@@ -6,16 +6,7 @@ class Axxon < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 2 if profile.inventory_exists?('weapons','Whirling Blade')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,9 +23,8 @@ class Axxon < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    defense += 2 if profile.inventory_exists?('items','Blade Charm')
+    
     # end
     return defense
   end

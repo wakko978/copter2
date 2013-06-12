@@ -1,4 +1,19 @@
 class Arielle < General
+  def has_special_leveling_increment?
+    true
+  end
+  
+  def special_leveling_increment(recruit)
+    case recruit.level
+    when 1
+      return 0
+    when 2, 3, 4
+      return 2 * (recruit.level - 1)
+    else
+      return 6 + recruit.level - 4
+    end
+  end
+  
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -6,17 +21,8 @@ class Arielle < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
-
+    attack += 3 if profile.inventory_exists?('weapons','Blade of Arielle')
+    
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
     return attack
@@ -32,10 +38,9 @@ class Arielle < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
-    # end
+    defense += 2 if profile.inventory_exists?('items','Armor of Arielle')
+    defense += 1 if profile.inventory_exists?('items','Shield of Arielle')
+      
     return defense
   end
 

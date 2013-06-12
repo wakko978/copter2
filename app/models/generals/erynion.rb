@@ -6,16 +6,7 @@ class Erynion < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
-    # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
-    #   attack += 2.0
-    # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
-    #   attack += 5.0
-    # end
+    attack += 2 if profile.inventory_exists?('weapons','Woodwind Staff')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,34 +23,33 @@ class Erynion < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    defense += 1 if profile.inventory_exists?('items','Deepforest Tunic')
+    
     # end
     return defense
   end
 
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
-
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    case recruit.level
+    when 1
+      e_defense += 0.005 * profile.e_defense
+    when 2
+      e_defense += 0.01 * profile.e_defense
+    when 3
+      e_defense += 0.025 * profile.e_defense
+    when 4
+      e_defense += 0.02 * profile.e_defense
+    else
+      e_defense += 0.02 * profile.e_defense
+    end
+    
     return e_defense.round(1)
   end
 end

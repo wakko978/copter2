@@ -7,13 +7,13 @@ class Isolde < General
     attack = super
 
     ### Strider example
-    # if profile.weapons.exists?(name: 'Assassins Blade')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
+    
     # end
-    # if profile.items.exists?(name: 'Amulet of Despair')
+    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
     #   attack += 2.0
     # end
-    # if profile.items.exists?(name: 'Assassins Cloak')
+    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
     #   attack += 5.0
     # end
 
@@ -33,33 +33,53 @@ class Isolde < General
     # Nothing as no gear modifies Strider's defense
 
     ### Penelope example
-    # if profile.weapons.exists?(name: 'Scepter of Light')
-    #   attack += 3.0
+    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    
     # end
     return defense
   end
 
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
-
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    
+    defense = profile.defense
+    tristram = profile.inventory_exists?('generals','Tristram')
+    case recruit.level
+    when 1
+      defense += 4 if tristram
+    when 2
+      defense += 5 if tristram
+    when 3
+      defense += 6 if tristram
+    when 4
+      defense += 7 if tristram
+    when 5..50
+      defense += (recruit.level * 2) - 1 if tristram
+    end
+    
+    e_attack = (profile.ri_attack + (defense + profile.defense_rune + profile.defense_ia)*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    defense = profile.defense
+    tristram = profile.inventory_exists?('generals','Tristram')
+    case recruit.level
+    when 1
+      defense += 4 if tristram
+    when 2
+      defense += 5 if tristram
+    when 3
+      defense += 6 if tristram
+    when 4
+      defense += 7 if tristram
+    when 5..50
+      defense += (recruit.level * 2) - 1 if tristram
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + profile.ri_attack*0.7)
     return e_defense.round(1)
   end
 end
