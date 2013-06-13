@@ -38,15 +38,15 @@ class Kanbe < General
 
     case recruit.level
     when 1
-      e_attack += 0.005 * profile.e_attack
+      e_attack += 0.005 * e_attack
     when 2
-      e_attack += 0.01 * profile.e_attack
+      e_attack += 0.01 * e_attack
     when 3
-      e_attack += 0.015 * profile.e_attack
+      e_attack += 0.015 * e_attack
     when 4
-      e_attack += 0.02 * profile.e_attack
+      e_attack += 0.02 * e_attack
     else
-      e_attack += 0.02 * profile.e_attack
+      e_attack += 0.02 * e_attack
     end
     return e_attack.round(1)
   end

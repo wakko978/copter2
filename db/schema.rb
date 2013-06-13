@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130607202748) do
+ActiveRecord::Schema.define(:version => 20130613151600) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -38,11 +38,11 @@ ActiveRecord::Schema.define(:version => 20130607202748) do
   add_index "fighters", ["profile_id", "owned"], :name => "index_fighters_on_profile_id_and_owned"
 
   create_table "generals", :force => true do |t|
-    t.string   "name",                                                    :null => false
-    t.integer  "attack",                                                  :null => false
-    t.integer  "defense",                                                 :null => false
-    t.float    "e_attack",                                                :null => false
-    t.float    "e_defense",                                               :null => false
+    t.string   "name",                                                     :null => false
+    t.integer  "attack",                                                   :null => false
+    t.integer  "defense",                                                  :null => false
+    t.float    "e_attack",                                                 :null => false
+    t.float    "e_defense",                                                :null => false
     t.integer  "base_cost",           :limit => 8
     t.integer  "upkeep",              :limit => 8
     t.integer  "attack_increment",                 :default => 1
@@ -53,9 +53,10 @@ ActiveRecord::Schema.define(:version => 20130607202748) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.datetime "created_at",                                              :null => false
-    t.datetime "updated_at",                                              :null => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.string   "type",                             :default => "General"
+    t.string   "general_type",                     :default => "Balanced"
   end
 
   add_index "generals", ["name"], :name => "index_generals_on_name"

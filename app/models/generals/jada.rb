@@ -71,7 +71,7 @@ class Jada < General
       attack += count > max ? max : count
     end
     
-    e_attack = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)
+    e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)
   end
 end

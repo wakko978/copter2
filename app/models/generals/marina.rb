@@ -42,24 +42,46 @@ class Marina < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    defense = profile.defense
+    case recruit.level
+    when 1
+      defense += 1
+    when 2
+      defense += 3
+    when 3
+      defense += 6
+    when 4
+      defense += 12
+    when 5
+      defense += 13
+    when 6..50
+      defense += step_function(recruit.level,{pos_index: 7, offset: 5, period: 2})
+    end
+    
+    e_attack = (profile.ri_attack + (defense + profile.defense_rune + profile.defense_ia)*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    defense = profile.defense
+    case recruit.level
+    when 1
+      defense += 1
+    when 2
+      defense += 3
+    when 3
+      defense += 6
+    when 4
+      defense += 12
+    when 5
+      defense += 13
+    when 6..50
+      defense += step_function(recruit.level,{pos_index: 7, offset: 5, period: 2})
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + profile.ri_attack*0.7)
     return e_defense.round(1)
   end
 end

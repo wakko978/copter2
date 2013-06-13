@@ -4,15 +4,15 @@
 	<%= will_paginate @recruits %>
 	<caption><%= link_to "Acquire General(s)", new_profile_recruit_path(@profile) %></caption>
 	<thead>
-		<th class="top" scope="col" width="20%"><%= sort_link 'General', 'name' %></th>
-		<th class="top" scope="col" width="3%"><%= sort_link 'Level', 'level' %></th>
+		<th class="top" scope="col" width="18%"><%= sort_link 'General', 'name' %></th>
+		<th class="top" scope="col" width="2%"><%= sort_link 'Level', 'level' %></th>
 		<th class="top" scope="col" width="8%">Base<br/>Stats</th>
 		<th class="top" scope="col" width="13%">Stats w/<br/>Gear Bonus</th>
 		<th class="top" scope="col" width="10%">
-			<%= sort_link 'General<br/>eAtt w/ Gear', 'attack_with_mods' %>
+			<%= sort_link 'General<br/>eAtt w/ Gear', 'e_attack' %>
 		</th>
 		<th class="top" scope="col" width="10%">
-			<%= sort_link 'General<br/>eDef w/ Gear', 'defense_with_mods' %>
+			<%= sort_link 'General<br/>eDef w/ Gear', 'e_defense' %>
 		</th>
 		<th class="top" scope="col" width="18%">
 			<%= sort_link 'Profile<br/>eAtt w/ Bonus', 'e_attack_with_bonus' %>
@@ -20,6 +20,7 @@
 		<th class="top" scope="col" width="18%">
 			<%= sort_link 'Profile<br/>eDef w/ Bonus', 'e_defense_with_bonus'  %>
 		</th>
+		<th class="top" scope="col" width="3%">General<br/>Type</th>
 		<th class="top" scope="col" width="5%">Options</th>
 	</thead>
 
@@ -32,9 +33,12 @@
 						:style => 'float:left' %>
 				<% end %>
 				<%= link_to general.name, general_path(general) %>
+				<% if general.name == 'Annika' || general.name == 'Vanathan' %>
+					<%= image_tag 'info.png', size: '10x10', title: "Assuming that you have Aesir and/ or Vanir allianced" %>
+				<% end %>
 			</td>
 			<td id="recruit_<%= recruit.id %>_level" class="highlight">
-				<%= text_field_tag "recruit_#{recruit.id}", recruit.level, :size => 3,
+				<%= text_field_tag "recruit_#{recruit.id}", recruit.level, :size => 2,
 					:class => 'recruit', data: {url: profile_recruit_path(@profile,recruit),
 						field: "recruit_#{recruit.id}"} %>
 			</td>
@@ -50,6 +54,7 @@
 			<td id="eDef_<%= recruit.id %>"><%= recruit.e_defense %></td>
 			<td id="eAtt_w_bonus_<%= recruit.id %>"><%= recruit.general.send("e_attack_with_bonus",@profile,recruit) %></td>
 			<td id="eDef_w_bonus_<%= recruit.id %>"><%= recruit.general.send("e_defense_with_bonus",@profile,recruit) %></td>
+			<td><%= truncate(general.general_type, length: 3, omission: '') %></td>
 			<td>
 				<%= link_to '[Remove]', profile_recruit_path(@profile,recruit), :confirm => 'Are you sure?', :method => :delete %>
 			</td>

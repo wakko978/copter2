@@ -3,7 +3,7 @@ class RecruitsController < ApplicationController
   before_filter :load_profile
   
   def index
-    @recruits = @profile.recruits.joins(:general).scoped
+    @recruits = @profile.recruits.scoped
     if params[:filters]
       filters = params[:filters]
       if filters[:term]
@@ -13,33 +13,25 @@ class RecruitsController < ApplicationController
       end
     end
 
-    @permitted_columns = ['name','level','attack_with_mods','defense_with_mods',
+    @permitted_columns = ['name','level','e_attack','e_defense',
       'e_defense_with_bonus','e_attack_with_bonus']
 
     params[:c] = @permitted_columns.include?(params[:c]) ? params[:c] : 'e_attack_with_bonus'
     
-    @recruits.sort! do |a,b|
-      if params[:d] == 'up'
-        if params[:c] == 'name'
-          a.send(params[:c]) <=> b.send(params[:c])
-        elsif params[:c] == 'level'
-          [a.send(params[:c]),b.general.send("e_attack_with_bonus",@profile,b)] <=> [b.send(params[:c]),a.general.send("e_attack_with_bonus",@profile,a)]
-        elsif params[:c] == 'attack_with_mods' || params[:c] == 'defense_with_mods'
-          [a.general.send(params[:c],@profile,a),b.general.send("e_attack_with_bonus",@profile,b)] <=> [b.general.send(params[:c],@profile,b),a.general.send("e_attack_with_bonus",@profile,a)]
-        else
-          [a.general.send(params[:c],@profile,a),b.general.send("attack_with_mods",@profile,b)] <=> [b.general.send(params[:c],@profile,b),a.general.send("attack_with_mods",@profile,a)]
-        end
+    @recruits.sort_by! do |a|
+      if params[:c] == 'name'
+        a.name
+      elsif params[:c] == 'level'
+        [a.level, a.e_attack]
+      elsif params[:c] == 'e_attack' || params[:c] == 'e_defense'
+        [a.send(params[:c]), a.general.send("e_attack_with_bonus",@profile,a)]
       else
-        if params[:c] == 'name'
-          b.send(params[:c]) <=> a.send(params[:c])
-        elsif params[:c] == 'level'
-          [b.send(params[:c]),b.general.send("e_attack_with_bonus",@profile,b)] <=> [a.send(params[:c]),a.general.send("e_attack_with_bonus",@profile,a)]
-        elsif params[:c] == 'attack_with_mods' || params[:c] == 'defense_with_mods'
-          [b.general.send(params[:c],@profile,b),b.general.send("e_attack_with_bonus",@profile,b)] <=> [a.general.send(params[:c],@profile,a),a.general.send("e_attack_with_bonus",@profile,a)]
-        else
-          [b.general.send(params[:c],@profile,b),b.general.send("attack_with_mods",@profile,b)] <=> [a.general.send(params[:c],@profile,a),a.general.send("attack_with_mods",@profile,a)]
-        end
+        [a.general.send(params[:c],@profile,a), a.e_attack]
       end
+    end
+    @recruits.reverse!
+    if params[:d] == 'down'
+      @recruits.reverse!
     end
     @recruits = @recruits.to_a.paginate(:page => params[:page])
 
@@ -98,6 +90,6 @@ class RecruitsController < ApplicationController
       # @profile = current_user.profiles.find(params[:profile_id])
       
       ## Possible to use eager loading to make downstream lookups faster?
-      @profile = current_user.profiles.includes(:items,:weapons,:powers,:soldiers).find(params[:profile_id])
+      @profile = current_user.profiles.includes(:items,:weapons,:powers,:soldiers,:generals).find(params[:profile_id])
     end
 end

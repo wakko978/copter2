@@ -42,24 +42,42 @@ class Sylvana < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    attack = profile.attack
+    case recruit.level
+    when 1..3
+      attack += recruit.level
+    when 4..50
+      attack += step_function(recruit.level,{pos_index: 1, offset: 3, period: 2})
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    attack = profile.attack
+    defense = profile.defense
+    case recruit.level
+    when 1
+      attack += recruit.level
+      defense += 3
+    when 2
+      attack += recruit.level
+      defense += 5
+    when 3
+      attack += recruit.level
+      defense += 10
+    when 4
+      attack += 5
+      defense += 15
+    when 5..50
+      attack += step_function(recruit.level,{pos_index: 1, offset: 3, period: 2})
+      defense += 15 + (6.5 * (15-4)).to_i
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + (attack + profile.attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)
   end
 end

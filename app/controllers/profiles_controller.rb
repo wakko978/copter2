@@ -177,8 +177,8 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.update_attributes(params[:profile])
         format.json { render json: {
-          e_attack: @profile.e_attack, r_e_attack: @profile.r_e_attack,
-          ri_e_attack: @profile.ri_e_attack, e_defense: @profile.e_defense,
+          e_attack: @profile.e_attack.round(1), r_e_attack: @profile.r_e_attack,
+          ri_e_attack: @profile.ri_e_attack, e_defense: @profile.e_defense.round(1),
           r_e_defense: @profile.r_e_defense, ri_e_defense: @profile.ri_e_defense,
           bsi: @profile.bsi, rbsi: @profile.rbsi, ribsi: @profile.ribsi}
         }
@@ -221,8 +221,8 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.update_attributes(params[:profile])
         format.json { render json: {
-          e_attack: @profile.e_attack, r_e_attack: @profile.r_e_attack,
-          ri_e_attack: @profile.ri_e_attack, e_defense: @profile.e_defense,
+          e_attack: @profile.e_attack.round(1), r_e_attack: @profile.r_e_attack,
+          ri_e_attack: @profile.ri_e_attack, e_defense: @profile.e_defense.round(1),
           r_e_defense: @profile.r_e_defense, ri_e_defense: @profile.ri_e_defense,
           bsi: @profile.bsi, rbsi: @profile.rbsi, ribsi: @profile.ribsi}
         }

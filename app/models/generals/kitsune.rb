@@ -5,17 +5,9 @@ class Kitsune < General
     ## not accounted for with a standard integer increment
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
-
-    ### Strider example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
     
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
-    #   attack += 2.0
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
-    #   attack += 5.0
-    # end
+    attack += 1 if profile.inventory_exists?('items','Band of Frostmight')
+    attack += 2 if profile.inventory_exists?('powers','Frostfire')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,8 +24,7 @@ class Kitsune < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    defense += 1 if profile.inventory_exists?('items','Band of Firemight')
     
     # end
     return defense
@@ -42,19 +33,18 @@ class Kitsune < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    case recruit.level
+    when 1
+      e_attack += 0.002 * e_attack
+    when 2
+      e_attack += 0.003 * e_attack
+    when 3
+      e_attack += 0.004 * e_attack
+    when 4
+      e_attack += 0.005 * e_attack
+    else
+      e_attack += 0.005 * e_attack
+    end
     return e_attack.round(1)
   end
 

@@ -1,4 +1,4 @@
-class Tyxero < General
+class Serylius < General
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -42,24 +42,36 @@ class Tyxero < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    defense = profile.defense
+    attack = profile.attack
+    case recruit.level
+    when 1..3
+      defense += 1
+      attack += 1
+    when 4..50
+      defense += step_function(recruit.level,{offset: 3, period: 2})
+      attack += step_function(recruit.level,{offset: 3, period: 2})
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + (defense + profile.defense_rune + profile.defense_ia)*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    defense = profile.defense
+    attack = profile.attack
+    case recruit.level
+    when 1..3
+      defense += 1
+      attack += 1
+    when 4..50
+      defense += step_function(recruit.level,{offset: 3, period: 2})
+      attack += step_function(recruit.level,{offset: 3, period: 2})
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + (attack + profile.attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)
   end
 end

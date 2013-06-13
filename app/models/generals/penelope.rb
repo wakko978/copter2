@@ -6,7 +6,7 @@ class Penelope < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
     
-    attack += 3 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    attack += 3 if profile.inventory_exists?('weapons','Scepter of Light')
     return attack
   end
 

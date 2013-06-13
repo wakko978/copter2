@@ -42,24 +42,30 @@ class Percival < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    defense = profile.defense
+    case recruit.level
+    when 1, 2, 3, 4
+      defense += recruit.level
+    when 5..50
+      defense += step_function(recruit.level,{offset: 3, period: 2})
+    end
+    
+    e_attack = (profile.ri_attack + (defense + profile.defense_rune + profile.defense_ia)*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    defense = profile.defense
+    case recruit.level
+    when 1, 2, 3, 4
+      defense += recruit.level
+    when 5..50
+      defense += step_function(recruit.level,{offset: 3, period: 2})
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + profile.ri_attack*0.7)
     return e_defense.round(1)
   end
 end

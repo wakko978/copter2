@@ -48,7 +48,7 @@ class Dante < General
     when 4, 5
       defense += 20
       attack -= 25
-    when 5..50
+    when 6..50
       defense += step_function(recruit.level,{pos_index: 15, offset: 5, period: 2})
       attack -= step_function(recruit.level,{pos_index: 20, offset: 5, period: 2})
     end
@@ -75,7 +75,7 @@ class Dante < General
     when 4, 5
       defense += 20
       attack -= 25
-    when 5..50
+    when 6..50
       defense += step_function(recruit.level,{pos_index: 15, offset: 5, period: 2})
       attack -= step_function(recruit.level,{pos_index: 20, offset: 5, period: 2})
     end

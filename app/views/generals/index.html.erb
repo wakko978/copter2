@@ -10,6 +10,7 @@
 		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'Type', :general_type %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
 	</thead>
 	
@@ -28,6 +29,7 @@
 			<td><%= general.e_defense %></td>
 			<td><%= number_to_currency(general.base_cost) %></td>
 			<td><%= number_to_currency(general.upkeep) %></td>
+			<td><%= general.general_type %></td>
 			<td><%= general.div_power %></td>
 		</tr>
 	<% end %>

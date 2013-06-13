@@ -6,16 +6,7 @@ class Lailah < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
-    
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
-    #   attack += 2.0
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
-    #   attack += 5.0
-    # end
+    attack += 1 if profile.inventory_exists?('weapons','Incarnation')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,8 +23,7 @@ class Lailah < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    defense += 1 if profile.inventory_exists?('items','Platinus Armor')
     
     # end
     return defense
@@ -42,24 +32,30 @@ class Lailah < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    defense = profile.defense
+    case recruit.level
+    when 1, 2, 3, 4
+      defense += recruit.level + 1
+    when 5..50
+      defense += step_function(recruit.level,{pos_index: 1, offset: 3, period: 2})
+    end
+    
+    e_attack = (profile.ri_attack + (defense + profile.defense_rune + profile.defense_ia)*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    defense = profile.defense
+    case recruit.level
+    when 1, 2, 3, 4
+      defense += recruit.level + 1
+    when 5..50
+      defense += step_function(recruit.level,{pos_index: 1, offset: 3, period: 2})
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + profile.ri_attack*0.7)
     return e_defense.round(1)
   end
 end

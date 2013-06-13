@@ -6,16 +6,7 @@ class Vanathan < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
-    
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
-    #   attack += 2.0
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
-    #   attack += 5.0
-    # end
+    attack += 3 if profile.inventory_exists?('weapons','Lightstrike Sword')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,8 +23,7 @@ class Vanathan < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    defense += 4 if profile.inventory_exists?('items','Lightstead Plate')
     
     # end
     return defense
@@ -41,25 +31,40 @@ class Vanathan < General
 
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
-
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    if (alliance = profile.recruits.includes(:general).where("generals.name = 'Vanir'").first)
+      case alliance.level
+      when 1
+        mod = 0.01 * 0.5
+      when 2
+        mod = 0.02 * 0.5
+      when 3
+        mod = 0.03 * 0.5
+      when 4
+        mod = 0.04 * 0.5
+      else
+        mod = 0.04 * 0.5
+      end
+    else
+      mod = 0
+    end
+    case recruit.level
+    when 1
+      e_defense += (0.02 + mod) * e_defense
+    when 2
+      e_defense += (0.03 + mod) * e_defense
+    when 3
+      e_defense += (0.04 + mod) * e_defense
+    when 4
+      e_defense += (0.05 + mod) * e_defense
+    else
+      e_defense += (0.05 + mod) * e_defense
+    end
     return e_defense.round(1)
   end
 end

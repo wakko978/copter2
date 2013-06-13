@@ -1,4 +1,33 @@
 class Kobo < General
+  def has_special_leveling_increment?
+    true
+  end
+  
+  def special_leveling_increment(recruit,stat)
+    case stat
+    when 'attack'
+      case recruit.level
+      when 1, 2, 3, 4
+        return 0
+      when 5..50
+        return recruit.level - 4
+      end
+    when 'defense'
+      case recruit.level
+      when 1
+        return 0
+      when 2
+        return 5
+      when 3
+        return 20
+      when 4
+        return 40
+      when 5..50
+        return 40 + (recruit.level - 4)
+      end
+    end
+  end
+  
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -45,15 +74,15 @@ class Kobo < General
     ## Aesir example
     # case recruit.level
     # when 1
-    #   e_attack += 0.01 * profile.e_attack
+    #   e_attack += 0.01 * e_attack
     # when 2
-    #   e_attack += 0.02 * profile.e_attack
+    #   e_attack += 0.02 * e_attack
     # when 3
-    #   e_attack += 0.03 * profile.e_attack
+    #   e_attack += 0.03 * e_attack
     # when 4
-    #   e_attack += 0.04 * profile.e_attack
+    #   e_attack += 0.04 * e_attack
     # else
-    #   e_attack += 0.04 * profile.e_attack
+    #   e_attack += 0.04 * e_attack
     # end
     return e_attack.round(1)
   end

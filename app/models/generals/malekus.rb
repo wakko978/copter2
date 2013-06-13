@@ -1,4 +1,19 @@
-class Serene < General
+class Malekus < General
+  def has_special_leveling_increment?
+    true
+  end
+  
+  def special_leveling_increment(recruit,stat)
+    case recruit.level
+    when 1
+      return 0
+    when 2..5
+      return recruit.level - 1
+    when 6..50
+      return 2 + (recruit.level - 4) * 2
+    end
+  end
+  
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -6,16 +21,8 @@ class Serene < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
-    
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
-    #   attack += 2.0
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
-    #   attack += 5.0
-    # end
+    attack += 3 if profile.inventory_exists?('weapons','Moltensteel Blade')
+    attack += 3 if profile.inventory_exists?('weapons','Moltensteel Axe')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,8 +39,7 @@ class Serene < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    defense += 4 if profile.inventory_exists?('items','Conquerors War Helm')
     
     # end
     return defense
@@ -43,18 +49,25 @@ class Serene < General
     e_attack = super
 
     attack = profile.attack
+    count = profile.recruits.count
     case recruit.level
     when 1
-      attack += 2
+      attack += count * 0.15
     when 2
-      attack += 6
+      attack += count * 0.25
     when 3
-      attack += 10
-    when 4..50
-      attack += step_function(recruit.level,{pos_index: 10, offset: 3, period: 2})
+      attack += count * 0.35
+    when 4
+      attack += count * 0.45
+    when 5..50
+      attack += count * (0.50 + (recruit.level - 5) * 0.006)
     end
-    
     e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
+    
+    case recruit.level
+    when 5..50
+      e_attack += e_attack * (0.001 * step_function(recruit.level,{pos_index: -1, offset: 6, period: 2}))
+    end
     return e_attack.round(1)
   end
 
@@ -62,17 +75,19 @@ class Serene < General
     e_defense = super
     
     attack = profile.attack
+    count = profile.recruits.count
     case recruit.level
     when 1
-      attack += 2
+      attack += count * 0.15
     when 2
-      attack += 6
+      attack += count * 0.25
     when 3
-      attack += 10
-    when 4..50
-      attack += step_function(recruit.level,{pos_index: 10, offset: 3, period: 2})
+      attack += count * 0.35
+    when 4
+      attack += count * 0.45
+    when 5..50
+      attack += count * (0.50 + (recruit.level - 5) * 0.006)
     end
-    
     e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)
   end

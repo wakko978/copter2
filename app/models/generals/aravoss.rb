@@ -34,15 +34,15 @@ class Aravoss < General
 
     case recruit.level
     when 1
-      e_attack += 0.002 * profile.e_attack
+      e_attack += 0.002 * e_attack
     when 2
-      e_attack += 0.004 * profile.e_attack
+      e_attack += 0.004 * e_attack
     when 3
-      e_attack += 0.006 * profile.e_attack
+      e_attack += 0.006 * e_attack
     when 4
-      e_attack += 0.008 * profile.e_attack
+      e_attack += 0.008 * e_attack
     else
-      e_attack += 0.008 * profile.e_attack
+      e_attack += 0.008 * e_attack
     end
     return e_attack.round(1)
   end

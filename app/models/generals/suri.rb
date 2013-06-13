@@ -6,16 +6,7 @@ class Suri < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
-    
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
-    #   attack += 2.0
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
-    #   attack += 5.0
-    # end
+    attack += 2 if profile.inventory_exists?('weapons','Windthorn Wand')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -31,9 +22,8 @@ class Suri < General
 
     ### Strider
     # Nothing as no gear modifies Strider's defense
-
-    ### Penelope example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    
+    defense += 2 if profile.inventory_exists?('items','Guilded Tiara')
     
     # end
     return defense
@@ -42,24 +32,44 @@ class Suri < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    defense = profile.defense
+    count = profile.recruits.count
+    case recruit.level
+    when 1
+      defense += count * 0.05
+    when 2
+      defense += count * 0.1
+    when 3
+      defense += count * 0.15
+    when 4
+      defense += count * 0.2
+    when 5..50
+      defense += count * (0.20 + (recruit.level - 4) * 0.003)
+    end
+    
+    e_attack = (profile.ri_attack + (defense + profile.defense_rune + profile.defense_ia)*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    defense = profile.defense
+    count = profile.recruits.count
+    case recruit.level
+    when 1
+      defense += count * 0.05
+    when 2
+      defense += count * 0.1
+    when 3
+      defense += count * 0.15
+    when 4
+      defense += count * 0.2
+    when 5..50
+      defense += count * (0.20 + (recruit.level - 4) * 0.003)
+    end
+    
+    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + profile.ri_attack*0.7)
     return e_defense.round(1)
   end
 end

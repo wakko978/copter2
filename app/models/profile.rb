@@ -1,9 +1,9 @@
-class Profile < ActiveRecord::Base
+class Profile < ActiveRecord::Base  
   belongs_to :user
   has_many :properties
   has_many :fighters
   has_many :spells
-  has_many :arms  
+  has_many :arms
   has_many :accessories
   has_many :recruits
   has_many :lands, :through => :properties
@@ -12,6 +12,8 @@ class Profile < ActiveRecord::Base
   has_many :weapons, :through => :arms
   has_many :items, :through => :accessories
   has_many :generals, :through => :recruits
+  # TODO: Add monster loot storage and graphics?
+  # TODO: Transfer users from old to new
   
   attr_accessible :name, :attack, :defense, :energy, :stamina, :level, :e_attack,
     :e_defense, :health, :army_size, :income_bonus, :army_bonus, :attack_rune, :defense_rune,
@@ -202,8 +204,8 @@ class Profile < ActiveRecord::Base
   #### START WAR METHODS ###############################
   def war_generals
     generals = {}
-    generals[:best_attack] = self.best_recruits(6,'attack')
-    generals[:best_defense] = self.best_recruits(6,'defense')
+    generals[:best_attack] = self.best_recruits(6,'e_attack')
+    generals[:best_defense] = self.best_recruits(6,'e_defense')
     generals[:better_attack] = General
       .where(["e_attack > ?",generals[:best_attack].empty? ? 0 : generals[:best_attack].last.e_attack])
       .where(["id NOT IN (?)",generals[:best_attack].empty? ? 0 : generals[:best_attack].collect{|i| i.id}])

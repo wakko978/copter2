@@ -34,7 +34,7 @@ class Azorah < General
     defense_rune = profile.defense_rune
     e_attack = super
     
-    defense_rune += defense_rune * (2 + (recruit.level * 0.25))
+    defense_rune += defense_rune * (2 + ((recruit.level - 1) * 0.25))
 
     e_attack = (profile.ri_attack + (profile.defense + defense_rune + profile.defense_ia)*0.7).round(1)
     return e_attack.round(1)
@@ -44,7 +44,7 @@ class Azorah < General
     defense_rune = profile.defense_rune
     e_defense = super
     
-    defense_rune += defense_rune * (2 + (recruit.level * 0.25))
+    defense_rune += defense_rune * (2 + ((recruit.level - 1) * 0.25))
     
     e_defense = ((profile.defense + defense_rune + profile.defense_ia) + profile.ri_attack*0.7).round(1)
     return e_defense.round(1)

@@ -42,24 +42,46 @@ class Noktar < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * profile.e_attack
-    # when 2
-    #   e_attack += 0.02 * profile.e_attack
-    # when 3
-    #   e_attack += 0.03 * profile.e_attack
-    # when 4
-    #   e_attack += 0.04 * profile.e_attack
-    # else
-    #   e_attack += 0.04 * profile.e_attack
-    # end
+    attack = profile.attack
+    count = profile.inventory_count('soldiers','Barbarian Captain') / 40
+    case recruit.level
+    when 1
+      attack += (count * 0.4) > 10 ? 10 : (count * 0.4)
+    when 2
+      attack += (count * 0.6) > 10 ? 10 : (count * 0.6)
+    when 3
+      attack += (count * 0.8) > 10 ? 10 : (count * 0.8)
+    when 4
+      attack += count > 10 ? 10 : count
+    when 5..50
+      max = step_function(recruit.level,{pos_index: -2, multiplier: 3, offset: 4, period: 3})
+      attack += count > max ? max : count
+    end
+    
+    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
+    
+    attack = profile.attack
+    count = profile.inventory_count('soldiers','Barbarian Captain') / 40
+    case recruit.level
+    when 1
+      attack += (count * 0.4) > 10 ? 10 : (count * 0.4)
+    when 2
+      attack += (count * 0.6) > 10 ? 10 : (count * 0.6)
+    when 3
+      attack += (count * 0.8) > 10 ? 10 : (count * 0.8)
+    when 4
+      attack += count > 10 ? 10 : count
+    when 5..50
+      max = step_function(recruit.level,{pos_index: -2, multiplier: 3, offset: 4, period: 3})
+      attack += count > max ? max : count
+    end
+    
+    e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)
   end
 end

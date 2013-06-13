@@ -1,4 +1,4 @@
-class Serene < General
+class Medius < General
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -6,16 +6,7 @@ class Serene < General
     ## i.e. Cartigan, Kobo, Malekus don't increment linearly
     attack = super
 
-    ### Strider example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
-    
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Amulet of Despair'}
-    #   attack += 2.0
-    # end
-    # attack += 2 if profile.items.find{|p| p.name == 'Assassins Cloak'}
-    #   attack += 5.0
-    # end
+    attack += 1 if profile.inventory_exists?('weapons','Genesis Sword')
 
     ### Penelope
     # Nothing as no gear modifies Penelope's attack
@@ -32,8 +23,7 @@ class Serene < General
     ### Strider
     # Nothing as no gear modifies Strider's defense
 
-    ### Penelope example
-    # attack += 2 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    defense += 1 if profile.inventory_exists?('powers','Frost Bolt')
     
     # end
     return defense
@@ -43,15 +33,19 @@ class Serene < General
     e_attack = super
 
     attack = profile.attack
+    count = profile.inventory_count('powers','Frost Bolt')
     case recruit.level
     when 1
-      attack += 2
+      attack += (count * 0.25) > 10 ? 10 : (count * 0.25)
     when 2
-      attack += 6
+      attack += (count * 0.5) > 10 ? 10 : (count * 0.5)
     when 3
-      attack += 10
-    when 4..50
-      attack += step_function(recruit.level,{pos_index: 10, offset: 3, period: 2})
+      attack += (count * 0.75) > 10 ? 10 : (count * 0.75)
+    when 4
+      attack += count > 10 ? 10 : count
+    when 5..50
+      max = step_function(recruit.level,{pos_index: -2, multiplier: 3, offset: 4, period: 3})
+      attack += count > max ? max : count
     end
     
     e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
@@ -62,15 +56,19 @@ class Serene < General
     e_defense = super
     
     attack = profile.attack
+    count = profile.inventory_count('powers','Frost Bolt')
     case recruit.level
     when 1
-      attack += 2
+      attack += (count * 0.25) > 10 ? 10 : (count * 0.25)
     when 2
-      attack += 6
+      attack += (count * 0.5) > 10 ? 10 : (count * 0.5)
     when 3
-      attack += 10
-    when 4..50
-      attack += step_function(recruit.level,{pos_index: 10, offset: 3, period: 2})
+      attack += (count * 0.75) > 10 ? 10 : (count * 0.75)
+    when 4
+      attack += count > 10 ? 10 : count
+    when 5..50
+      max = step_function(recruit.level,{pos_index: -2, multiplier: 3, offset: 4, period: 3})
+      attack += count > max ? max : count
     end
     
     e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)

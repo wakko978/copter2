@@ -43,7 +43,7 @@ class Isolde < General
     e_attack = super
     
     defense = profile.defense
-    tristram = profile.inventory_exists?('generals','Tristram')
+    tristram = profile.recruits.includes(:general).where("generals.name = 'Tristram'").first
     case recruit.level
     when 1
       defense += 4 if tristram
@@ -65,7 +65,7 @@ class Isolde < General
     e_defense = super
     
     defense = profile.defense
-    tristram = profile.inventory_exists?('generals','Tristram')
+    tristram = profile.recruits.includes(:general).where("generals.name = 'Tristram'").first
     case recruit.level
     when 1
       defense += 4 if tristram
