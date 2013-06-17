@@ -7,7 +7,7 @@
 		<span style="float:right">
 			<%= best.send("e_#{stat == 'att' ? 'attack' : 'defense'}") %> e<%= stat.capitalize %>
 		</span>
-		<%= better.empty? ? "<span class='note'>Best in game</span>" : nil %>
+		<%= better.empty? ? "<span class='note'>Best in game</span>".html_safe : nil %>
 		<% unless better.empty? %>
 			<p style="font-size:90%; margin-left:20px;">
 				<%= link_to "[Show/Hide Better #{obj.pluralize.titleize}]", '#', :class => "togglable",

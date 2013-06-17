@@ -34,7 +34,7 @@ class Kolrath < General
     attack_rune = profile.attack_rune
     e_attack = super
     
-    attack_rune += attack_rune * (2 + ((recruit.level - 1) * 0.25))
+    attack_rune += attack_rune * (2 + ((recruit.level - 1) * 0.25)) * 0.01
 
     e_attack = ((profile.attack + attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
     return e_attack.round(1)
@@ -44,7 +44,7 @@ class Kolrath < General
     attack_rune = profile.attack_rune
     e_defense = super
     
-    attack_rune += attack_rune * (2 + ((recruit.level - 1) * 0.25))
+    attack_rune += attack_rune * (2 + ((recruit.level - 1) * 0.25)) * 0.01
 
     e_defense = (profile.ri_defense + (profile.attack + attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)

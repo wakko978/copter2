@@ -56,7 +56,7 @@ class Xira < General
       defense -= (defense * 0.2)
     when 4..50
       attack += (defense * 0.25)
-      defense -= (defense * 0.2)
+      defense -= (defense * 0.25)
     end
     
     e_attack = ((attack + profile.attack_rune + profile.attack_ia) + (defense + profile.defense_rune + profile.defense_ia)*0.7)
@@ -80,7 +80,7 @@ class Xira < General
       defense -= (defense * 0.2)
     when 4..50
       attack += (defense * 0.25)
-      defense -= (defense * 0.2)
+      defense -= (defense * 0.25)
     end
     
     e_defense = ((defense + profile.defense_rune + profile.defense_ia) + (attack + profile.attack_rune + profile.attack_ia)*0.7)
