@@ -204,11 +204,11 @@ class Profile < ActiveRecord::Base
   #### START WAR METHODS ###############################
   def war_generals
     generals = {}
-    generals[:best_attack] = self.best_recruits(6,'e_attack')
-    generals[:best_defense] = self.best_recruits(6,'e_defense')
+    generals[:best_attack] = self.best_recruits(6,'e_attack_no_mod')
+    generals[:best_defense] = self.best_recruits(6,'e_defense_no_mod')
     generals[:better_attack] = General
       .where(["e_attack > ?",generals[:best_attack].empty? ? 0 : generals[:best_attack].last.e_attack])
-      .where(["id NOT IN (?)",generals[:best_attack].empty? ? 0 : generals[:best_attack].collect{|i| i.id}])
+      .where(["id NOT IN (?)",generals[:best_attack].empty? ? 0 : generals[:best_attack].collect{|i| i.general_id}])
       .order("e_attack DESC")
 
     ### Add Self to top of list
@@ -216,7 +216,7 @@ class Profile < ActiveRecord::Base
 
     generals[:better_defense] = General
       .where(["e_defense > ?",generals[:best_defense].empty? ? 0 : generals[:best_defense].last.e_defense])
-      .where(["id NOT IN (?)",generals[:best_defense].empty? ? 0 : generals[:best_defense].collect{|i| i.id}])
+      .where(["id NOT IN (?)",generals[:best_defense].empty? ? 0 : generals[:best_defense].collect{|i| i.general_id}])
       .order("e_defense DESC")
 
     ### Add Self to top of list
@@ -319,7 +319,7 @@ class Profile < ActiveRecord::Base
   
   #### START BEST COLLECTION METHODS ##################
   def best_recruits(kount=0,stat=nil)
-    @recruits = Recruit.all
+    @recruits = self.recruits.all
     
     @recruits.sort!{|a,b|
       b.send(stat) <=> a.send(stat)
@@ -329,11 +329,10 @@ class Profile < ActiveRecord::Base
   end
   
   def best_fighters(kount=0,stat=nil)
-    @fighters = Fighter.find_by_sql(
+    @fighters = self.fighters.find_by_sql(
       "SELECT s.name, s.e_#{stat}, f.owned, s.id, s.attack, s.defense
          FROM fighters f, soldiers s
         WHERE s.id = f.soldier_id
-          AND f.profile_id = #{self.id}
           AND f.owned > 0
         ORDER BY s.e_#{stat} DESC"
     )
@@ -359,11 +358,10 @@ class Profile < ActiveRecord::Base
   end
   
   def best_arms(kount=0,stat=nil,limit=nil)
-    @arms = Arm.find_by_sql(
+    @arms = self.arms.find_by_sql(
       "SELECT s.name, s.e_#{stat}, f.owned, s.id, s.attack, s.defense
          FROM arms f, weapons s
         WHERE s.id = f.weapon_id
-          AND f.profile_id = #{self.id}
           AND f.owned > 0
         ORDER BY s.e_#{stat} DESC"
     )
@@ -393,11 +391,10 @@ class Profile < ActiveRecord::Base
   end
   
   def best_accessories(kount=0,stat=nil,limit=nil,item_type=nil)
-    @accessories = Accessory.find_by_sql(
+    @accessories = self.accessories.find_by_sql(
       "SELECT s.name, s.e_#{stat}, f.owned, s.id, s.attack, s.defense, s.type
          FROM accessories f, items s
-        WHERE s.id = f.item_id
-          AND f.profile_id = #{self.id}" +
+        WHERE s.id = f.item_id" +
       (item_type.nil? ? '' : " AND s.type = 'Item::#{item_type.titleize}'") +
       "   AND f.owned > 0
         ORDER BY s.e_#{stat} DESC"
@@ -428,11 +425,10 @@ class Profile < ActiveRecord::Base
   end
   
   def best_spells(kount=0,stat=nil,limit=nil)
-    @spells = Spell.find_by_sql(
+    @spells = self.spells.find_by_sql(
       "SELECT s.name, s.e_#{stat}, f.owned, s.id, s.attack, s.defense
          FROM spells f, powers s
         WHERE s.id = f.power_id
-          AND f.profile_id = #{self.id}
           AND f.owned > 0
         ORDER BY s.e_#{stat} DESC"
     )
@@ -470,7 +466,7 @@ class Profile < ActiveRecord::Base
       if (recruit = self.recruits.includes(:general).where(["generals.name = ?",name]).first)
         recruit.update_attributes(:level => level)
         changes = recruit.previous_changes
-        results[name] = textualize_change(changes[:level]) unless changes[:level].nil?
+        results[name] = "Set to level #{level}" unless changes.nil?
         i += 1 unless changes[:level].nil?
       else
         general = General.find_by_name(name)

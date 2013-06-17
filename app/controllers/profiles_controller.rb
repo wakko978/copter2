@@ -82,6 +82,8 @@ class ProfilesController < ApplicationController
   
   def create
     @profile = current_user.profiles.new(params[:profile])
+    @profile.army_bonus = 0
+    @profile.income_bonus = 0
     
     respond_to do |format|
       if @profile.save!
@@ -103,6 +105,15 @@ class ProfilesController < ApplicationController
       else
         format.html { render :action => "edit" }
       end
+    end
+  end
+  
+  def destroy
+    @profile = Profile.find(params[:id])
+    @profile.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(profiles_url) }
     end
   end
   

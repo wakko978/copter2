@@ -7,7 +7,7 @@
 	  <span style="float:right">
 		  <%= best.div_power %>
 		</span>
-		<%= better.empty? ? "<span class='note'>Best in game</span>" : nil %>
+		<%= better.empty? ? "<span class='note'>Best in game</span>".html_safe : nil %>
     <% unless better.empty? %>
       <p style="font-size:90%; margin-left:20px;">
 				<%= link_to "[Show/Hide Better #{obj.pluralize.titleize}]", '#', :class => "togglable",

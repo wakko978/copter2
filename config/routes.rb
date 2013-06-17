@@ -52,7 +52,9 @@ Copter2::Application.routes.draw do
   namespace :admin do
     root :controller => "base", :action => "index"
     
-    resources :users
+    resources :users do
+      get 'become', :on => :member
+    end
     resources :messages
     resources :soldiers, :except => [:show]
     resources :weapons, :except => [:show]

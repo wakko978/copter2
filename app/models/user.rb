@@ -13,12 +13,22 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
   
+  @permitted_columns = ['email']
+  
   def is_admin?
     has_role?('Admin')
   end
   
   def has_role?(role)
     roles.pluck(:name).include?(role)
+  end
+  
+  def self.search(*args)
+    options = args.extract_options!
+
+    options[:c] = @permitted_columns.include?(options[:c]) ? options[:c] : 'email'
+
+    User.order(options[:c] + " " + ((options[:d] == 'up') ? "ASC" : "DESC")).paginate(:page => options[:page])
   end
   
   private

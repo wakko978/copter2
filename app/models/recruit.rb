@@ -96,4 +96,12 @@ class Recruit < ActiveRecord::Base
   def e_defense
     (general.defense_with_mods(profile,self) + general.attack_with_mods(profile,self)*0.7).round(1)
   end
+  
+  def e_attack_no_mod
+    (attack + defense*0.7).round(1)
+  end
+  
+  def e_defense_no_mod
+    (defense + attack*0.7).round(1)
+  end
 end

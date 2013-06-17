@@ -18,7 +18,7 @@
 					<% else %>
 						<%= i+1 %> &minus; <%= b[:name] == 'Self' ? 'Self' : (link_to b.name, url_for(controller: 'generals', action: 'show', id: b.id)) %>
 						<span style="float:right">
-							<%= b.e_attack %> eAtt
+							<%= b.e_attack_no_mod %> eAtt
 						</span><br/>
 					<% end %>
 				<% end %>
@@ -55,7 +55,7 @@
 					<% else %>
 						<%= i+1 %> &minus; <%= b[:name] == 'Self' ? 'Self' : (link_to b.name, url_for(controller: 'generals', action: 'show', id: b.id)) %>
 						<span style="float:right">
-							<%= b.e_defense %> eDef
+							<%= b.e_defense_no_mod %> eDef
 						</span><br/>
 					<% end %>
 				<% end %>

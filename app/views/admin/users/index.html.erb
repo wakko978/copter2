@@ -1,0 +1,20 @@
+<h1 class="pagetitle">Users</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @users %>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Email', :email %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @users.each do |user| %>
+		<tr>
+			<th scope="row"><%= user.email %></th>
+			<td>
+				<%= link_to '[Edit]', edit_admin_user_path(user) %>
+				<%= link_to '[Become]', become_admin_user_path(user) %>
+        <%= link_to '[Destroy]', admin_user_path(user), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>
