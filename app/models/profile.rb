@@ -329,10 +329,11 @@ class Profile < ActiveRecord::Base
   end
   
   def best_fighters(kount=0,stat=nil)
-    @fighters = self.fighters.find_by_sql(
+    @fighters = Fighter.find_by_sql(
       "SELECT s.name, s.e_#{stat}, f.owned, s.id, s.attack, s.defense
          FROM fighters f, soldiers s
         WHERE s.id = f.soldier_id
+          AND f.profile_id = #{self.id}
           AND f.owned > 0
         ORDER BY s.e_#{stat} DESC"
     )
@@ -358,10 +359,11 @@ class Profile < ActiveRecord::Base
   end
   
   def best_arms(kount=0,stat=nil,limit=nil)
-    @arms = self.arms.find_by_sql(
+    @arms = Arm.find_by_sql(
       "SELECT s.name, s.e_#{stat}, f.owned, s.id, s.attack, s.defense
          FROM arms f, weapons s
         WHERE s.id = f.weapon_id
+          AND f.profile_id = #{self.id}
           AND f.owned > 0
         ORDER BY s.e_#{stat} DESC"
     )
@@ -391,10 +393,11 @@ class Profile < ActiveRecord::Base
   end
   
   def best_accessories(kount=0,stat=nil,limit=nil,item_type=nil)
-    @accessories = self.accessories.find_by_sql(
+    @accessories = Accessory.find_by_sql(
       "SELECT s.name, s.e_#{stat}, f.owned, s.id, s.attack, s.defense, s.type
          FROM accessories f, items s
-        WHERE s.id = f.item_id" +
+        WHERE s.id = f.item_id
+          AND f.profile_id = #{self.id}" +
       (item_type.nil? ? '' : " AND s.type = 'Item::#{item_type.titleize}'") +
       "   AND f.owned > 0
         ORDER BY s.e_#{stat} DESC"
@@ -425,10 +428,11 @@ class Profile < ActiveRecord::Base
   end
   
   def best_spells(kount=0,stat=nil,limit=nil)
-    @spells = self.spells.find_by_sql(
+    @spells = Spell.find_by_sql(
       "SELECT s.name, s.e_#{stat}, f.owned, s.id, s.attack, s.defense
          FROM spells f, powers s
         WHERE s.id = f.power_id
+          AND f.profile_id = #{self.id}
           AND f.owned > 0
         ORDER BY s.e_#{stat} DESC"
     )
