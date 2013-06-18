@@ -1,4 +1,5 @@
-<%= form_for(@armor, :as => :armor, :url => admin_armors_path, :html => { :multipart => true }) do |f| %>
+<% url = @armor.new_record? ? admin_armors_path : admin_armor_path(@armor) %>
+<%= form_for(@armor, :as => :armor, :url => url, :html => { :multipart => true }) do |f| %>
   <% if @armor.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@armor.errors.count, "error") %> prohibited this armor from being saved:</h2>

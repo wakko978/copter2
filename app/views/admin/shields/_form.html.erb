@@ -1,4 +1,5 @@
-<%= form_for(@shield, :as => :shield, :url => admin_shields_path, :html => { :multipart => true }) do |f| %>
+<% url = @shield.new_record? ? admin_shields_path : admin_shield_path(@shield) %>
+<%= form_for(@shield, :as => :shield, :url => url, :html => { :multipart => true }) do |f| %>
   <% if @shield.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@shield.errors.count, "error") %> prohibited this shield from being saved:</h2>

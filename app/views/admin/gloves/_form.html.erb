@@ -1,4 +1,5 @@
-<%= form_for(@glove, :as => :glove, :url => admin_gloves_path, :html => { :multipart => true }) do |f| %>
+<% url = @glove.new_record? ? admin_gloves_path : admin_glove_path(@glove) %>
+<%= form_for(@glove, :as => :glove, :url => url, :html => { :multipart => true }) do |f| %>
   <% if @glove.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@glove.errors.count, "error") %> prohibited this glove from being saved:</h2>

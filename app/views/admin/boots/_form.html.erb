@@ -1,4 +1,5 @@
-<%= form_for(@boot, :as => :boot, :url => admin_boots_path, :html => { :multipart => true }) do |f| %>
+<% url = @boot.new_record? ? admin_boots_path : admin_boot_path(@boot) %>
+<%= form_for(@boot, :as => :boot, :url => url, :html => { :multipart => true }) do |f| %>
   <% if @boot.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@boot.errors.count, "error") %> prohibited this boot from being saved:</h2>

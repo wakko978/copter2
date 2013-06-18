@@ -1,4 +1,5 @@
-<%= form_for(@amulet, :as => :amulet, :url => admin_amulets_path, :html => { :multipart => true }) do |f| %>
+<% url = @amulet.new_record? ? admin_amulets_path : admin_amulet_path(@amulet) %>
+<%= form_for(@amulet, :as => :amulet, :url => url, :html => { :multipart => true }) do |f| %>
   <% if @amulet.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@amulet.errors.count, "error") %> prohibited this amulet from being saved:</h2>

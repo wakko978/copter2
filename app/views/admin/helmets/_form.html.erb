@@ -1,4 +1,5 @@
-<%= form_for(@helmet, :as => :helmet, :url => admin_helmets_path, :html => { :multipart => true }) do |f| %>
+<% url = @helmet.new_record? ? admin_helmets_path : admin_helmet_path(@helmet) %>
+<%= form_for(@helmet, :as => :helmet, :url => url, :html => { :multipart => true }) do |f| %>
   <% if @helmet.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@helmet.errors.count, "error") %> prohibited this helmet from being saved:</h2>

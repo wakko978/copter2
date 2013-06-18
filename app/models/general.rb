@@ -7,7 +7,7 @@ class General < ActiveRecord::Base
   validates :attack_increment, :defense_increment, :base_cost, :upkeep, :div_power, :numericality => { :only_integer => true }, :allow_nil => true
   
   has_attached_file :avatar, :styles => { :medium => "160x160>", :thumb => "50x50>" },
-    :path => "/system/generals/:attachment/:id_partition/:style/:basename.:extension",
+    :path => ":rails_root/public/system/generals/:attachment/:id_partition/:style/:basename.:extension",
     :url => "/system/generals/:attachment/:id_partition/:style/:basename.:extension"
   validates_attachment :avatar,
     :size => { :in => 0..100.kilobytes }
@@ -94,12 +94,11 @@ class #{class_name} < General
     attack = super
 
     ### Strider example
-    # attack += 3.0 if profile.weapons.find{|p| p.name == 'Assassins Blade'}
-    # attack += 2.0 if profile.items.find{|p| p.name == 'Amulet of Despair'}
-    # attack += 5.0 if profile.items.find{|p| p.name == 'Assassins Cloak'}
+    # attack += 3 if profile.inventory_exists?('weapons','Assassins Blade')
+    # attack += 2 if profile.inventory_exists?('items','Amulet of Despair')
 
     ### Penelope
-    # Nothing as no gear modifies Penelope's attack
+    # attack += 3 if profile.inventory_exists?('weapons','Scepter of Light')
     return attack
   end
 
@@ -111,10 +110,10 @@ class #{class_name} < General
     defense = super
 
     ### Strider
-    # Nothing as no gear modifies Strider's defense
+    # defense += 5 if profile.inventory_exists?('items','Assassins Cloak')
 
     ### Penelope example
-    # defense += 3.0 if profile.weapons.find{|p| p.name == 'Scepter of Light'}
+    # Nothing to do as nothing modifies Penelope's defense
     return defense
   end
 
