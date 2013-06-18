@@ -16,7 +16,7 @@
 							<%= b[:ri_e_attack] %> riAtt
 						</span><br/>
 					<% else %>
-						<%= i+1 %> &minus; <%= b[:name] == 'Self' ? 'Self' : (link_to b.name, url_for(controller: 'generals', action: 'show', id: b.id)) %>
+						<%= i+1 %> &minus; <%= b[:name] == 'Self' ? 'Self' : (link_to b.name, url_for(controller: 'generals', action: 'show', id: b.general_id)) %>
 						<span style="float:right">
 							<%= b.e_attack_no_mod %> eAtt
 						</span><br/>
@@ -53,7 +53,7 @@
 							<%= b[:ri_e_defense] %> riDef
 						</span><br/>
 					<% else %>
-						<%= i+1 %> &minus; <%= b[:name] == 'Self' ? 'Self' : (link_to b.name, url_for(controller: 'generals', action: 'show', id: b.id)) %>
+						<%= i+1 %> &minus; <%= b[:name] == 'Self' ? 'Self' : (link_to b.name, url_for(controller: 'generals', action: 'show', id: b.general_id)) %>
 						<span style="float:right">
 							<%= b.e_defense_no_mod %> eDef
 						</span><br/>

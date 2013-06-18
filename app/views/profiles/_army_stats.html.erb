@@ -38,7 +38,7 @@
 			</h6>
 			<div id="att_generals" style="display:none">
 				<% for i in @generals_during_attack %>
-					<%= link_to i.name, general_path(:id => i.id) %>
+					<%= link_to i.name, general_path(:id => i.general_id) %>
 					<span style="float:right">
 					  <%= i.e_attack %> eAtt
 					</span><br/>
@@ -78,7 +78,7 @@
 			</h6>
 			<div id="def_generals" style="display:none">
 				<% for i in @generals_during_defend %>
-					<%= link_to i.name, general_path(:id => i.id) %>
+					<%= link_to i.name, general_path(:id => i.general_id) %>
 					<span style="float:right">
 					  <%= i.e_defense %> eDef
 					</span><br/>

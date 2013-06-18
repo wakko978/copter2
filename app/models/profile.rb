@@ -370,7 +370,7 @@ class Profile < ActiveRecord::Base
     
     total = @arms.collect{|i| i.owned}.sum
     
-    if limit.nil? && total <= kount
+    if (limit.nil? && total <= kount) || (!limit.nil? && total <= limit)
       return @arms
     else
       index = 0
@@ -405,7 +405,7 @@ class Profile < ActiveRecord::Base
     
     total = @accessories.collect{|i| i.owned}.sum
     
-    if limit.nil? && total <= kount
+    if (limit.nil? && total <= kount) || (!limit.nil? && total <= limit)
       return @accessories
     else
       index = 0
@@ -439,7 +439,7 @@ class Profile < ActiveRecord::Base
     
     total = @spells.collect{|i| i.owned}.sum
     
-    if limit.nil? && total <= kount
+    if (limit.nil? && total <= kount) || (!limit.nil? && total <= limit)
       return @spells
     else
       index = 0

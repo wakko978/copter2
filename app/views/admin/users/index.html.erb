@@ -4,12 +4,18 @@
 	<%= will_paginate @users %>
 	<thead>
 		<th class="top" scope="col"><%= sort_link 'Email', :email %></th>
+		<th class="top" scope="col"><%= sort_link "Created", :created_at %></th>
+		<th class="top" scope="col"><%= sort_link "Last Login", :last_sign_in_at %></th>
+		<th class="top" scope="col">Last Time</th>
 		<th class="top" scope="col">Options</th>
 	</thead>
 	
 	<% @users.each do |user| %>
 		<tr>
 			<th scope="row"><%= user.email %></th>
+  		<td><%= user.created_at.strftime('%b %d \'%y') %></td>
+			<td><%= user.current_sign_in_at.localtime.strftime('%D %I:%M %p') if user.current_sign_in_at %></td>
+			<td><%= distance_of_time_in_words(user.current_sign_in_at, Time.now) if user.current_sign_in_at %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_user_path(user) %>
 				<%= link_to '[Become]', become_admin_user_path(user) %>
