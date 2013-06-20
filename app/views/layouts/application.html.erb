@@ -95,8 +95,8 @@
 							<h1 class="first">Administrative Tasks</h1>
 							<% if current_user.is_admin? %>
 		          	<dt><%= link_to "Users", admin_users_path %></dt>
+								<dt><%= link_to "MOTD", edit_admin_message_path(Message.first) %></dt>
 							<% end %>
-		          <dt><%= link_to "MOTD", edit_admin_message_path(Message.first) %></dt>
 		          <dt><%= link_to "Monsters", admin_monsters_path %></dt>
 		          <dt><%= link_to "Generals", admin_generals_path %></dt>
 		          <dt>

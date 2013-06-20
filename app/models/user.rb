@@ -7,13 +7,13 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
   before_create :set_default_role
-  has_many :profiles
+  has_many :profiles, :dependent => :destroy
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :role_ids
   # attr_accessible :title, :body
   
-  @permitted_columns = ['email']
+  @permitted_columns = ['email','last_sign_in_at','created_at','sign_in_count','current_sign_in_at']
   
   def is_admin?
     has_role?('Admin')

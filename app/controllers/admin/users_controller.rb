@@ -12,7 +12,7 @@ module Admin
       @user = User.find(params[:id])
 
       respond_to do |format|
-        if @user.update_attributes(params[:power])
+        if @user.update_attributes(params[:user])
           flash[:notice] = 'User was successfully updated.'
           format.html { redirect_to(admin_users_path) }
         else
@@ -35,5 +35,16 @@ module Admin
       sign_in(:user, User.find(params[:id]))
       redirect_to root_url # or user_root_url
     end
+    
+    protected
+
+      def check_admin_manager
+        ## Omitting Manager Role
+        unless current_user.is_admin?
+          flash[:alert] = "Not Authorized!"
+          redirect_to root_path
+          return
+        end
+      end
   end
 end

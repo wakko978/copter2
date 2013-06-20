@@ -19,10 +19,12 @@
 	<% @helmets.each do |helmet| %>
 		<tr>
 			<th scope="row">
-				<% unless helmet.avatar_file_name.nil? %>
-					<%= image_tag helmet.avatar.url(:thumb), :alt  => "#{helmet.name}",
+				<%# unless helmet.avatar_file_name.nil? %>
+					<%#= image_tag helmet.avatar.url(:thumb), :alt  => "#{helmet.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag helmet.image_path(:thumb), :alt  => "#{helmet.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to helmet.name, helmet_path(helmet) %>
 			</th>
 			<td><%= helmet.attack %></td>
@@ -35,7 +37,9 @@
 			<td><%= helmet.forgeable.to_s.titleize %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_helmet_path(helmet) %>
-        <%= link_to '[Destroy]', admin_helmet_path(helmet), :confirm => 'Are you sure?', :method => :delete %>
+				<% if current_user.is_admin? && helmet.is_unowned? %>
+        	<%= link_to '[Destroy]', admin_helmet_path(helmet), :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>

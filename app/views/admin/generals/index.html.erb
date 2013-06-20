@@ -18,10 +18,12 @@
 	<% @generals.each do |general| %>
 		<tr>
 			<th scope="row">
-				<% unless general.avatar_file_name.nil? %>
-					<%= image_tag general.avatar.url(:thumb), :alt  => "#{general.name}",
+				<%# unless general.avatar_file_name.nil? %>
+					<%#= image_tag general.avatar.url(:thumb), :alt  => "#{general.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to general.name, general_path(general) %>
 			</th>
 			<td><%= general.attack %></td>
@@ -33,7 +35,9 @@
 			<td><%= general.div_power %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_general_path(general) %>
-        <%= link_to '[Destroy]', admin_general_path(general), :confirm => 'Are you sure?', :method => :delete %>
+				<% if current_user.is_admin? && general.is_unowned? %>
+        	<%= link_to '[Destroy]', admin_general_path(general), :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>

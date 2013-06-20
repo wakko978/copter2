@@ -16,5 +16,16 @@ module Admin
         end
       end
     end
+    
+    protected
+
+      def check_admin_manager
+        ## Omitting Manager Role
+        unless current_user.is_admin?
+          flash[:alert] = "Not Authorized!"
+          redirect_to root_path
+          return
+        end
+      end
   end
 end

@@ -48,6 +48,11 @@
 	</p>
 	
 	<p>
+		<%= f.label 'url', 'URL to Wikia Image' %>
+		<%= f.text_field :url, :size => 100 %>
+	</p>
+	
+	<p>
 		<%= f.label 'avatar', 'Image' %>
 		<% unless @glove.avatar_file_name.nil? %>
 			<%= image_tag @glove.avatar.url(:thumb) %><br/>

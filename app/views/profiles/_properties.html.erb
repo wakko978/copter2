@@ -33,10 +33,12 @@
     <% land = property.land %>
     <tr>
       <th scope="row">
-        <% unless land.avatar_file_name.nil? %>
-					<%= image_tag land.avatar.url(:thumb), :alt  => "#{land.name}",
+        <%# unless land.avatar_file_name.nil? %>
+					<%#= image_tag land.avatar.url(:thumb), :alt  => "#{land.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag land.image_path(:thumb), :alt  => "#{land.name}",
+					:style => 'float:left', :size => "50x50" %>
         <%= land.name %>
       </th>
   	  <td>

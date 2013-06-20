@@ -52,7 +52,7 @@ Copter2::Application.routes.draw do
   namespace :admin do
     root :controller => "base", :action => "index"
     
-    resources :users do
+    resources :users, :except => [:show, :new] do
       get 'become', :on => :member
     end
     resources :messages
@@ -118,6 +118,8 @@ Copter2::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  match "*gibberish", :to => 'intros#index'
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

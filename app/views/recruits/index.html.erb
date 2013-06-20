@@ -28,10 +28,12 @@
 		<% general = recruit.general %>
 		<tr id="row_<%= recruit.id %>">
 			<td>
-				<% unless general.avatar_file_name.nil? %>
-					<%= image_tag general.avatar.url(:thumb), :alt  => "#{general.name}",
+				<%# unless general.avatar_file_name.nil? %>
+					<%#= image_tag general.avatar.url(:thumb), :alt  => "#{general.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to general.name, general_path(general) %>
 				<% if general.name == 'Annika' || general.name == 'Vanathan' %>
 					<%= image_tag 'genally_link_primary.gif', height: '18', title: "Assuming that you have Aesir and/ or Vanir allianced" %>

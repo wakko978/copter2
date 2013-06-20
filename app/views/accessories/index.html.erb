@@ -16,10 +16,12 @@
 		<% item = accessory.item %>
 		<tr id="row_<%= accessory.id %>">
 			<td>
-				<% unless item.avatar_file_name.nil? %>
-					<%= image_tag item.avatar.url(:thumb), :alt  => "#{item.name}",
+				<%# unless item.avatar_file_name.nil? %>
+					<%#= image_tag item.avatar.url(:thumb), :alt  => "#{item.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag item.image_path(:thumb), :alt  => "#{item.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to item.name, url_for(controller: params[:item_type].pluralize, action: 'show', id: item.id) %>
 			</td>
 			<td id="accessory_<%= accessory.id %>_owned" class="highlight">

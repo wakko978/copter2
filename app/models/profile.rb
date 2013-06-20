@@ -1,11 +1,11 @@
 class Profile < ActiveRecord::Base  
   belongs_to :user
-  has_many :properties
-  has_many :fighters
-  has_many :spells
-  has_many :arms
-  has_many :accessories
-  has_many :recruits
+  has_many :properties, :dependent => :destroy
+  has_many :fighters, :dependent => :destroy
+  has_many :spells, :dependent => :destroy
+  has_many :arms, :dependent => :destroy
+  has_many :accessories, :dependent => :destroy
+  has_many :recruits, :dependent => :destroy
   has_many :lands, :through => :properties
   has_many :soldiers, :through => :fighters
   has_many :powers, :through => :spells
@@ -604,12 +604,13 @@ class Profile < ActiveRecord::Base
   def textualize_change(change)
     if change.nil?
       "No change"
-    elsif change[0] > change[1]
-      "Increased by #{change[0] - change[1]}"
-    elsif change[0] < change[1]
-      "Decreased by #{change[1] - change[0]}"
     else
-      "No change."
+      diff = change[0] - change[1]
+      if diff > 0
+        "Decreased by #{diff}"
+      elsif diff < 0
+        "Increased by #{diff.abs}"
+      end
     end
   end
 end

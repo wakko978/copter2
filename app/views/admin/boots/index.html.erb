@@ -19,10 +19,12 @@
 	<% @boots.each do |boot| %>
 		<tr>
 			<th scope="row">
-				<% unless boot.avatar_file_name.nil? %>
-					<%= image_tag boot.avatar.url(:thumb), :alt  => "#{boot.name}",
+				<%# unless boot.avatar_file_name.nil? %>
+					<%#= image_tag boot.avatar.url(:thumb), :alt  => "#{boot.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag boot.image_path(:thumb), :alt  => "#{boot.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to boot.name, boot_path(boot) %>
 			</th>
 			<td><%= boot.attack %></td>
@@ -35,7 +37,9 @@
 			<td><%= boot.forgeable.to_s.titleize %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_boot_path(boot) %>
-        <%= link_to '[Destroy]', admin_boot_path(boot), :confirm => 'Are you sure?', :method => :delete %>
+				<% if current_user.is_admin? && boot.is_unowned? %>
+        	<%= link_to '[Destroy]', admin_boot_path(boot), :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>

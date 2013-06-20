@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130613151600) do
+ActiveRecord::Schema.define(:version => 20130620150406) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20130613151600) do
     t.datetime "updated_at",                                               :null => false
     t.string   "type",                             :default => "General"
     t.string   "general_type",                     :default => "Balanced"
+    t.string   "url"
   end
 
   add_index "generals", ["name"], :name => "index_generals_on_name"
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20130613151600) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",                                          :null => false
     t.datetime "updated_at",                                          :null => false
+    t.string   "url"
   end
 
   create_table "lands", :force => true do |t|
@@ -91,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20130613151600) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.string   "url"
   end
 
   create_table "messages", :force => true do |t|
@@ -128,10 +131,11 @@ ActiveRecord::Schema.define(:version => 20130613151600) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.string   "url"
   end
 
   create_table "profiles", :force => true do |t|
-    t.string   "name",                                       :null => false
+    t.string   "name"
     t.integer  "attack",                    :default => 0,   :null => false
     t.integer  "defense",                   :default => 0,   :null => false
     t.integer  "energy",                    :default => 0,   :null => false
@@ -216,6 +220,7 @@ ActiveRecord::Schema.define(:version => 20130613151600) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.string   "url"
   end
 
   create_table "spells", :force => true do |t|
@@ -260,6 +265,7 @@ ActiveRecord::Schema.define(:version => 20130613151600) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",                                          :null => false
     t.datetime "updated_at",                                          :null => false
+    t.string   "url"
   end
 
 end

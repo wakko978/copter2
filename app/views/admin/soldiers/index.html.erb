@@ -17,10 +17,12 @@
 	<% @soldiers.each do |soldier| %>
 		<tr>
 			<th scope="row">
-				<% unless soldier.avatar_file_name.nil? %>
-					<%= image_tag soldier.avatar.url(:thumb), :alt  => "#{soldier.name}",
+				<%# unless soldier.avatar_file_name.nil? %>
+					<%#= image_tag soldier.avatar.url(:thumb), :alt  => "#{soldier.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag soldier.image_path(:thumb), :alt  => "#{soldier.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to soldier.name, soldier_path(soldier) %>
 			</th>
 			<td><%= soldier.attack %></td>
@@ -31,7 +33,9 @@
 			<td><%= number_to_currency(soldier.upkeep) %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_soldier_path(soldier) %>
-        <%= link_to '[Destroy]', admin_soldier_path(soldier), :confirm => 'Are you sure?', :method => :delete %>
+				<% if current_user.is_admin? && soldier.is_unowned? %>
+        	<%= link_to '[Destroy]', admin_soldier_path(soldier), :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>

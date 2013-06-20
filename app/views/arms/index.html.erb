@@ -16,10 +16,12 @@
 		<% weapon = arm.weapon %>
 		<tr id="row_<%= arm.id %>">
 			<td>
-				<% unless weapon.avatar_file_name.nil? %>
-					<%= image_tag weapon.avatar.url(:thumb), :alt  => "#{weapon.name}",
+				<%# unless weapon.avatar_file_name.nil? %>
+					<%#= image_tag weapon.avatar.url(:thumb), :alt  => "#{weapon.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag weapon.image_path(:thumb), :alt  => "#{weapon.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to weapon.name, weapon_path(weapon) %>
 			</td>
 			<td id="arm_<%= arm.id %>_owned" class="highlight">

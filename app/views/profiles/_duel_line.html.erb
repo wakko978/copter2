@@ -18,7 +18,7 @@
 					<dd style="margin-left:20px">
 						<%= link_to i.name, url_for(controller: obj_c.pluralize, action: 'show', id: i.id) %>
 						<span style="float:right">
-							<%= best.send("e_#{stat == 'att' ? 'attack' : 'defense'}") %> e<%= stat.capitalize %>
+							<%= i.send("e_#{stat == 'att' ? 'attack' : 'defense'}") %> e<%= stat.capitalize %>
 						</span>
 					</dd>
 				<% end %>

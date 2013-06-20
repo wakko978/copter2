@@ -19,10 +19,12 @@
 	<% @gloves.each do |glove| %>
 		<tr>
 			<th scope="row">
-				<% unless glove.avatar_file_name.nil? %>
-					<%= image_tag glove.avatar.url(:thumb), :alt  => "#{glove.name}",
+				<%# unless glove.avatar_file_name.nil? %>
+					<%#= image_tag glove.avatar.url(:thumb), :alt  => "#{glove.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag glove.image_path(:thumb), :alt  => "#{glove.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to glove.name, glove_path(glove) %>
 			</th>
 			<td><%= glove.attack %></td>
@@ -35,7 +37,9 @@
 			<td><%= glove.forgeable.to_s.titleize %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_glove_path(glove) %>
-        <%= link_to '[Destroy]', admin_glove_path(glove), :confirm => 'Are you sure?', :method => :delete %>
+				<% if current_user.is_admin? && glove.is_unowned? %>
+        	<%= link_to '[Destroy]', admin_glove_path(glove), :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>

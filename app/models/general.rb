@@ -1,11 +1,12 @@
 class General < ActiveRecord::Base
   attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense, :div_power,
-    :attack_increment, :defense_increment, :description, :general_type
+    :attack_increment, :defense_increment, :description, :general_type, :url
   
   validates :name, :presence => true
   validates :attack, :defense, :presence => true, :numericality => { :only_integer => true }
   validates :attack_increment, :defense_increment, :base_cost, :upkeep, :div_power, :numericality => { :only_integer => true }, :allow_nil => true
   
+  has_many :recruits
   has_attached_file :avatar, :styles => { :medium => "160x160>", :thumb => "50x50>" },
     :path => ":rails_root/public/system/generals/:attachment/:id_partition/:style/:basename.:extension",
     :url => "/system/generals/:attachment/:id_partition/:style/:basename.:extension"
@@ -18,6 +19,22 @@ class General < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 25
   @permitted_columns = ['name','attack','defense','e_attack','e_defense','base_cost','upkeep','div_power']
+  
+  def is_unowned?
+    !recruits.exists?
+  end
+  
+  def image_path(t)
+    unless url.blank?
+      url
+    else
+      unless avatar_file_name.nil?
+        avatar.url(t)
+      else
+        'favor_clear.gif'
+      end
+    end
+  end
   
   def has_special_leveling_increment?
     false

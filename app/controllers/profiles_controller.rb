@@ -83,7 +83,6 @@ class ProfilesController < ApplicationController
   def create
     @profile = current_user.profiles.new(params[:profile])
     @profile.army_bonus = 0
-    @profile.income_bonus = 0
     
     respond_to do |format|
       if @profile.save!
@@ -422,7 +421,6 @@ class ProfilesController < ApplicationController
         my_hash[load][name] = {owned: owned, attack: attack, defense: defense}
       end
       
-      Rails.logger.info my_hash.inspect
       return my_hash
     end
     
@@ -439,7 +437,6 @@ class ProfilesController < ApplicationController
         my_hash[load][name] = {owned: owned, attack: attack, defense: defense}
       end
       
-      Rails.logger.info my_hash.inspect
       return my_hash
     end
     
@@ -456,7 +453,6 @@ class ProfilesController < ApplicationController
         my_hash[load][name] = {owned: owned, attack: attack, defense: defense}
       end
       
-      Rails.logger.info my_hash.inspect
       return my_hash
     end
 end

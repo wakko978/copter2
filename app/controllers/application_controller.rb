@@ -21,4 +21,10 @@ class ApplicationController < ActionController::Base
     # render :not_found   # or e.g. redirect_to :action => :index
     redirect_to root_path
   end
+  
+  rescue_from ActionController::RoutingError do
+    flash[:alert] = 'The page you tried to access does not exist'
+    # render :not_found   # or e.g. redirect_to :action => :index
+    redirect_to root_path
+  end
 end

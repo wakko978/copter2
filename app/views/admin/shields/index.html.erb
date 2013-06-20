@@ -19,10 +19,12 @@
 	<% @shields.each do |shield| %>
 		<tr>
 			<th scope="row">
-				<% unless shield.avatar_file_name.nil? %>
-					<%= image_tag shield.avatar.url(:thumb), :alt  => "#{shield.name}",
+				<%# unless shield.avatar_file_name.nil? %>
+					<%#= image_tag shield.avatar.url(:thumb), :alt  => "#{shield.name}",
 						:style => 'float:left' %>
-				<% end %>
+				<%# end %>
+				<%= image_tag shield.image_path(:thumb), :alt  => "#{shield.name}",
+					:style => 'float:left', :size => "50x50" %>
 				<%= link_to shield.name, shield_path(shield) %>
 			</th>
 			<td><%= shield.attack %></td>
@@ -35,7 +37,9 @@
 			<td><%= shield.forgeable.to_s.titleize %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_shield_path(shield) %>
-        <%= link_to '[Destroy]', admin_shield_path(shield), :confirm => 'Are you sure?', :method => :delete %>
+				<% if current_user.is_admin? && shield.is_unowned? %>
+        	<%= link_to '[Destroy]', admin_shield_path(shield), :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>
