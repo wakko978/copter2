@@ -42,8 +42,8 @@ class Ophelia < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    defense = profile.defense
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1, 2, 3
       defense -= recruit.level * 5
@@ -53,15 +53,15 @@ class Ophelia < General
       attack += step_function(recruit.level,{pos_index: 20, offset: 5, period: 2})
     end
     
-    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + (defense + profile.defense_rune + profile.defense_ia)*0.7)
+    e_attack = (attack + defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    defense = profile.defense
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1, 2, 3
       defense -= recruit.level * 5
@@ -71,7 +71,7 @@ class Ophelia < General
       attack += step_function(recruit.level,{pos_index: 20, offset: 5, period: 2})
     end
     
-    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + (attack + profile.attack_rune + profile.attack_ia)*0.7)
+    e_defense = (defense + attack*0.7)
     return e_defense.round(1)
   end
 end

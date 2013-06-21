@@ -32,7 +32,8 @@ class Gorlak < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1, 2
       attack += 1
@@ -42,14 +43,15 @@ class Gorlak < General
       attack += step_function(recruit.level,{pos_index: -2, offset: 3, period: 2})
     end
     
-    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
+    e_attack = (attack + defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1, 2
       attack += 1
@@ -59,7 +61,7 @@ class Gorlak < General
       attack += step_function(recruit.level,{pos_index: -2, offset: 3, period: 2})
     end
     
-    e_attack = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)
+    e_defense = (defense + attack*0.7)
     return e_defense.round(1)
   end
 end

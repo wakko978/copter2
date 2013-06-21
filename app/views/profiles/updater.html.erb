@@ -15,11 +15,11 @@
 		});
 		
 		// Client side form validation
-		$('form').submit(function(e) {
+		$('#form').submit(function(e) {
 			var uploader = $('#uploader').pluploadQueue();
 		
 			// Files in queue upload them first
-			if (uploader.files.length > 0 && uploader.files.length <= 5) {
+			if (uploader.files.length > 0 && uploader.files.length <= 6) {
 				// When all files are uploaded submit form
 				uploader.bind('StateChanged', function() {
 					if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
@@ -28,7 +28,7 @@
 				});
 				uploader.start();
 			} else {
-				alert('You must queue at least one file, and not more than 5.');
+				alert('You must queue at least one file, and not more than 6.');
 			}
 		
 			return false;
@@ -36,17 +36,39 @@
 	});
 </script>
 
-<h1 class="pagetitle">Upload Generals, Soldiers, Items, Magic and Land for <%= @profile.name %></h1>
+<h1 class="pagetitle">Upload Keep, Generals, Soldiers, Items, Magic and Land for <%= @profile.name %></h1>
 
 <%= render :partial => 'faq' %>
 
-<%= form_for @profile, :url => process_data_profile_path(@profile), :method => 'post', :html => { :multipart => true } do |f| %>
+<%= form_for @profile, :url => process_data_profile_path(@profile), :method => 'post', :html => {:id => 'form',  :multipart => true } do |f| %>
 	<div id="uploader">
 		<p>Your browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
 	</div>
 	
   <p>
     <%= f.submit 'Process' %>
+  </p>
+<% end %>
+
+<h1 class="block">Having problems with the upload or processing?</h1>
+
+<%= form_for @profile, :url => upload_file_profile_path(@profile), :method => 'post', :html => {:id => 'alt_form', :multipart => true} do |f| %>
+	<p>
+		Try loading & processing one file at a time. I accept the following files:
+		<ul>
+			<li>generals.php, generals.php.html, generals.php.htm</li>
+			<li>soldiers.php, soldiers.php.html, soldiers.php.htm</li>
+			<li>magic.php, magic.php.html, magic.php.htm</li>
+			<li>item.php, item.php.html, item.php.htm</li>
+			<li>land.php, land.php.html, land.php.htm</li>
+			<li>keep.php, keep.php.html, keep.php.htm</li>
+		</ul>
+		<%= label_tag "upload", "File" %><br/>
+		<%= file_field_tag 'attachment', :accept => 'text/html,text/php' %>
+	</p>
+	
+	<p>
+    <%= f.submit 'Process Single File' %>
   </p>
 <% end %>
 

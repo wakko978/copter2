@@ -40,7 +40,8 @@ class EternalAlystra < General
       profile.div_items('shield'), profile.div_items('helmet'), profile.div_items('armor'),
       profile.div_items('amulet'), profile.div_items('glove'), profile.div_items('boot')
     ].collect{|c| c.nil? ? 0 : (c[:best].nil? ? 0 : c[:best].div_power)}.sum
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1
       attack += div_power * 0.1
@@ -50,7 +51,7 @@ class EternalAlystra < General
       attack += div_power * 0.24
     end
     
-    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7).round(1)
+    e_attack = (attack + defense*0.7)
     return e_attack.round(1)
   end
 
@@ -61,7 +62,8 @@ class EternalAlystra < General
       profile.div_items('shield'), profile.div_items('helmet'), profile.div_items('armor'),
       profile.div_items('amulet'), profile.div_items('glove'), profile.div_items('boot')
     ].collect{|c| c.nil? ? 0 : (c[:best].nil? ? 0 : c[:best].div_power)}.sum
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1
       attack += div_power * 0.1
@@ -71,7 +73,7 @@ class EternalAlystra < General
       attack += div_power * 0.24
     end
     
-    e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7).round(1)
+    e_defense = (defense + attack*0.7)
     return e_defense.round(1)
   end
 end

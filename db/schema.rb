@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130620150406) do
+ActiveRecord::Schema.define(:version => 20130621201819) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -177,6 +177,10 @@ ActiveRecord::Schema.define(:version => 20130620150406) do
     t.datetime "magic_file_updated_at"
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
+    t.string   "keep_file_file_name"
+    t.string   "keep_file_content_type"
+    t.integer  "keep_file_file_size"
+    t.datetime "keep_file_updated_at"
   end
 
   create_table "properties", :force => true do |t|

@@ -31,14 +31,10 @@ class Anwar < General
   end
 
   def e_attack_with_bonus(profile,recruit)
-    attack = profile.attack
-    defense = profile.defense
-    attack_rune = profile.attack_rune
-    defense_rune = profile.defense_rune
-    attack_ia = profile.attack_ia
-    defense_ia = profile.defense_ia
     e_attack = super
     
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     count = profile.inventory_count('powers','Wolf Spirit') / 3
     case recruit.level
     when 1
@@ -52,19 +48,15 @@ class Anwar < General
     else
       defense += count > 10 ? 10 : count
     end
-    e_attack = (profile.ri_attack + (defense + profile.defense_rune + profile.defense_ia)*0.7).round(1)
+    e_attack = (attack + defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
-    attack = profile.attack
-    defense = profile.defense
-    attack_rune = profile.attack_rune
-    defense_rune = profile.defense_rune
-    attack_ia = profile.attack_ia
-    defense_ia = profile.defense_ia
     e_defense = super
     
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     count = profile.inventory_count('powers','Wolf Spirit') / 3
     case recruit.level
     when 1
@@ -78,7 +70,7 @@ class Anwar < General
     else
       defense += count > 10 ? 10 : count
     end
-    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + profile.ri_attack*0.7).round(1)
+    e_defense = (defense + attack*0.7)
     return e_defense.round(1)
   end
 end

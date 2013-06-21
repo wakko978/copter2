@@ -32,9 +32,11 @@ class Bacalou < General
   end
 
   def e_attack_with_bonus(profile,recruit)
-    defense_rune = profile.defense_rune
     e_attack = super
     
+    defense_rune = profile.defense_rune
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.defense + profile.defense_ia + defense_with_mods(profile,recruit)
     case recruit.level
     when 1
       defense_rune += defense_rune * 1.005
@@ -44,14 +46,16 @@ class Bacalou < General
       defense_rune += defense_rune * 1.007
     end
 
-    e_attack = (profile.ri_attack + (profile.defense + defense_rune + profile.defense_ia)*0.7).round(1)
+    e_attack = (attack + (defense + defense_rune)*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
-    defense_rune = profile.defense_rune
     e_defense = super
     
+    defense_rune = profile.defense_rune
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.defense + profile.defense_ia + defense_with_mods(profile,recruit)
     case recruit.level
     when 1
       defense_rune += defense_rune * 1.005
@@ -61,7 +65,7 @@ class Bacalou < General
       defense_rune += defense_rune * 1.007
     end
     
-    e_defense = ((profile.defense + defense_rune + profile.defense_ia) + profile.ri_attack*0.7).round(1)
+    e_defense = (defense + defense_rune + attack*0.7)
     return e_defense.round(1)
   end
 end

@@ -34,7 +34,8 @@ class Shino < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    defense = profile.defense
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1..3
       defense += recruit.level
@@ -42,14 +43,15 @@ class Shino < General
       defense += step_function(recruit.level,{offset: 3, period: 2})
     end
     
-    e_attack = (profile.ri_attack + (defense + profile.defense_rune + profile.defense_ia)*0.7)
+    e_attack = (attack + defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    defense = profile.defense
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1..3
       defense += recruit.level
@@ -57,7 +59,7 @@ class Shino < General
       defense += step_function(recruit.level,{offset: 3, period: 2})
     end
     
-    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + profile.ri_attack*0.7)
+    e_defense = (defense + attack*0.7)
     return e_defense.round(1)
   end
 end

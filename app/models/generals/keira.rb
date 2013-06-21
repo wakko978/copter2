@@ -52,7 +52,8 @@ class Keira < General
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     case recruit.level
     when 1
       attack += 2
@@ -63,10 +64,10 @@ class Keira < General
     when 4
       attack += 8
     when 5..50
-      attack += 8 + (6.5 * (recruit.level - 4)).to_i
+      attack += 8 + (6.5 * (recruit.level -4)).to_i
     end
     
-    e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)
+    e_defense = (defense + attack*0.7)
     return e_defense.round(1)
   end
 end

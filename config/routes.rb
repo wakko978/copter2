@@ -23,6 +23,7 @@ Copter2::Application.routes.draw do
       get 'war_stats'
       post 'process_data'
       post 'upload_files'
+      post 'upload_file'
       post 'income_bonus'
       post 'army_bonus'
       post 'level'

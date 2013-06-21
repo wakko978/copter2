@@ -18,7 +18,7 @@ class Profile < ActiveRecord::Base
   attr_accessible :name, :attack, :defense, :energy, :stamina, :level, :e_attack,
     :e_defense, :health, :army_size, :income_bonus, :army_bonus, :attack_rune, :defense_rune,
     :health_rune, :damage_rune, :attack_ia, :defense_ia, :land_file, :general_file,
-    :soldier_file, :item_file, :magic_file
+    :soldier_file, :item_file, :magic_file, :keep_file
   
   validates :name, :presence => true
   validates :attack, :defense, :energy, :stamina, :level, :health, :army_size, :attack_rune,
@@ -45,7 +45,10 @@ class Profile < ActiveRecord::Base
   has_attached_file :magic_file,
     :path => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension",
     :url => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension"
-  validates_attachment :land_file, :general_file, :soldier_file, :item_file, :magic_file,
+  has_attached_file :keep_file,
+    :path => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension",
+    :url => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension"
+  validates_attachment :land_file, :general_file, :soldier_file, :item_file, :magic_file, :keep_file,
     :size => { :in => 0..5.megabytes }
   
   cattr_reader :per_page
@@ -480,6 +483,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added at level #{level}"
           i += 1
         else
+          UserMailer.notify_admin("#{name}").deliver
           results[name] = 'Not found'
         end
       end
@@ -506,6 +510,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added #{owned}"
           i += 1
         else
+          UserMailer.notify_admin("#{name}").deliver
           results[name] = 'Not found'
         end
       end
@@ -532,6 +537,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added #{data[:owned]}"
           i += 1
         else
+          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}").deliver
           results[name] = 'Not found'
         end
       end
@@ -565,6 +571,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added #{data[:owned]}"
           i += 1
         else
+          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}").deliver
           results[name] = 'Not found'
         end
       end
@@ -591,12 +598,45 @@ class Profile < ActiveRecord::Base
           results[name] = "Added #{data[:owned]}"
           i += 1
         else
+          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}").deliver
           results[name] = 'Not found'
         end
       end
     end
     
     results.merge!({'Changed' => "#{i} Magic"})
+    return results
+  end
+  
+  def update_stats(data)
+    results = {}
+    i = 0
+    
+    data = data['keep']
+    
+    self.update_attributes(
+      :level => data[:level].to_i,
+      :energy => data[:energy].to_i,
+      :stamina => data[:stamina].to_i,
+      :army_size => data[:army_size].to_i,
+      :health => data[:health].to_i,
+      :attack => data[:attack].to_i,
+      :defense => data[:defense].to_i,
+      :attack_rune => data[:attack_rune].to_i,
+      :attack_ia => data[:attack_ia] == 0 ? self.attack_ia : data[:attack_ia].to_i,
+      :defense_rune => data[:defense_rune].to_i,
+      :defense_ia => data[:defense_ia] == 0 ? self.defense_ia : data[:defense_ia].to_i,
+      :health_rune => data[:health_rune].to_i,
+      :damage_rune => data[:damage_rune].to_i
+    )
+    Rails.logger.info data.inspect
+    
+    changes = self.previous_changes
+    changes.except('keep_file_file_name', 'keep_file_content_type', 'keep_file_file_size', 'keep_file_updated_at','updated_at').each do |name,c|
+      results[name.titleize] = textualize_change(c)
+    end
+    
+    results.merge!({'Changed' => "Nothing"}) if results.empty?
     return results
   end
   #### END UPDATE METHODS #########################

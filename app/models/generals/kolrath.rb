@@ -31,22 +31,26 @@ class Kolrath < General
   end
 
   def e_attack_with_bonus(profile,recruit)
-    attack_rune = profile.attack_rune
     e_attack = super
     
+    attack_rune = profile.attack_rune
+    attack = profile.attack + profile.attack_ia + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     attack_rune += attack_rune * (2 + ((recruit.level - 1) * 0.25)) * 0.01
 
-    e_attack = ((profile.attack + attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
+    e_attack = (attack + attack_rune + defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
-    attack_rune = profile.attack_rune
     e_defense = super
     
+    attack_rune = profile.attack_rune
+    attack = profile.attack + profile.attack_ia + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     attack_rune += attack_rune * (2 + ((recruit.level - 1) * 0.25)) * 0.01
 
-    e_defense = (profile.ri_defense + (profile.attack + attack_rune + profile.attack_ia)*0.7)
+    e_defense = (defense + (attack + attack_rune)*0.7)
     return e_defense.round(1)
   end
 end

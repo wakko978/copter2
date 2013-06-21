@@ -18,7 +18,7 @@ class General < ActiveRecord::Base
   
   cattr_reader :per_page
   @@per_page = 25
-  @permitted_columns = ['name','attack','defense','e_attack','e_defense','base_cost','upkeep','div_power']
+  @permitted_columns = ['name','attack','defense','e_attack','e_defense','base_cost','upkeep','div_power','general_type']
   
   def is_unowned?
     !recruits.exists?
@@ -65,11 +65,13 @@ class General < ActiveRecord::Base
   end
   
   def e_attack_with_bonus(profile,recruit)
-    return profile.ri_e_attack.round(1)
+    return ((attack_with_mods(profile,recruit) + profile.ri_attack) + (profile.ri_defense + defense_with_mods(profile,recruit))*0.7).round(1)
+    # return profile.ri_e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
-    return profile.ri_e_defense.round(1)
+    return ((defense_with_mods(profile,recruit) + profile.ri_defense) + (profile.ri_attack + attack_with_mods(profile,recruit))*0.7).round(1)
+    # return profile.ri_e_defense.round(1)
   end
   
   def step_function(level=1,opts={})

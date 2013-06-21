@@ -32,7 +32,8 @@ class Kaylen < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     count = profile.recruits.count
     case recruit.level
     when 1
@@ -47,14 +48,15 @@ class Kaylen < General
       attack += count * (0.150 + (recruit.level - 4) * 0.006)
     end
     
-    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + profile.ri_defense*0.7)
+    e_attack = (attack + defense*0.7)
     return e_attack.round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    attack = profile.attack
+    attack = profile.ri_attack + attack_with_mods(profile,recruit)
+    defense = profile.ri_defense + defense_with_mods(profile,recruit)
     count = profile.recruits.count
     case recruit.level
     when 1
@@ -69,7 +71,7 @@ class Kaylen < General
       attack += count * (0.150 + (recruit.level - 4) * 0.006)
     end
     
-    e_defense = (profile.ri_defense + (attack + profile.attack_rune + profile.attack_ia)*0.7)
+    e_defense = (defense + attack*0.7)
     return e_defense.round(1)
   end
 end

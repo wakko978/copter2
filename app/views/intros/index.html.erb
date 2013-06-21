@@ -4,7 +4,7 @@
   </h2>
 <% end %>
 
-<h1 class="pagetitle">Castle Age Optimizer: Introduction</h1>
+<h1 class="pagetitle">Castle Age Optimizer 2.0: Introduction</h1>
 
 <p>
   If you got here, you probably already know what <%= link_to "Castle Age", "http://apps.facebook.com/castle_age", :target => "_blank" %> is,
@@ -20,26 +20,24 @@
   <ul>
     <% unless user_signed_in? %>
       <li>
-        Start by <%= link_to 'Signing Up', new_registration_path('user') %> for an account. You will get an email to activate your account. You cannot
-        log in until your account is active.  If you do not get an email, check your spam or wait a while, as it may take some time to   
-        reach you.
+        Start by <%= link_to 'Signing Up', new_registration_path('user') %> for an account.
       </li>
       <br/>
     <% end %>
     <li>
-      Create one a profile which represents your Castle Age profile energy, stamina, health, attack and defense.
+      Create one or more profiles which represent your Castle Age profile energy, stamina, health, attack and defense,
+			plus runes and item archive.
     <br/>
     <li>
       Next, you may enter generals, soldiers, lands, magic and blacksmith items manually.  I've designed a method for uploading specific
-      files which can be downloaded Castle Age and subsequently uploaded into COPTER.  You can upload the files as often as you like,
-      easy-peasy-lemon-squeezy.  If you want to play pretend, you can alter all of your inventory to be the ultimate warrior and then come
-      back to reality by uploading your inventory and getting a real representation of your character.
+      files which can be downloaded from Castle Age (web3/web4) and subsequently uploaded into COPTER.  You can upload the files as often
+ 			as you like, easy-peasy-lemon-squeezy.  If you want to play pretend, you can alter all of your inventory to be the ultimate warrior
+ 			and then come back to reality by uploading your inventory and getting a real representation of your character.
     </li>
     <br/>
     <li>
       Next, look over your soldier list when invading or being invaded. Look over your weapon list. Check out your top attack and
-      top defense items.  See what better items exist and click the item to see what monsters drop that item.  Find out what land to buy
-      next to get the greatest return on your investment (ROI).
+      top defense items.  See what better items exist.  Find out what land to buy next to get the greatest return on your investment (ROI).
     </li>
     <br/>
     <li>
@@ -52,8 +50,8 @@
 <h1 class="block">Can I contribute to the upkeep of the site?</h1>
 
 <p>
-  Yes you can and it is greatly appreciated.  The site is hosted by <%= link_to 'Bomhof Integrated, LLC', "http://bomhofintegrated.com", :target => "_blank" %>.
-  This means I do have some hosting fees, so thank you in advance.
+  Yes you can and it is greatly appreciated.  The may be hosted by <%= link_to 'Bomhof Integrated, LLC', "http://bomhofintegrated.com", :target => "_blank" %>.
+  This means I might have some hosting fees, so thank you in advance.
   <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
     <input type="hidden" name="cmd" value="_s-xclick">
     <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----

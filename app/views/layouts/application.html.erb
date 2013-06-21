@@ -28,7 +28,7 @@
 		<div class="header-top">
 		  <div class="round-border-topleft"></div><div class="round-border-topright"></div>
 		  <div class="sitename">		    
-  		  <h1 style="font-size:300%"><a href="<%= root_path %>">COPTER</a></h1>
+  		  <h1 style="font-size:300%"><a href="<%= root_path %>">COPTER 2.0</a></h1>
   		  <h2>The Castle Age Optimizer</h2>
 		  </div>
 		  <div class="nav1">
@@ -91,6 +91,11 @@
         
   		  <dl class="nav3-grid">
   		    <% if user_signed_in? %>
+					  <h1 class="first">User Tasks</h1>
+					  <dt><%= link_to "Manage Profiles", profiles_path %></dt>
+				    <% if @profile.kind_of?(Profile) && !@profile.new_record? %>
+					    <%= render :partial => "profiles/tasks" %>
+				    <% end %>
 						<% if current_user.is_admin? || current_user.has_role?('Manager') %>
 							<h1 class="first">Administrative Tasks</h1>
 							<% if current_user.is_admin? %>
@@ -114,11 +119,6 @@
 		          <dt><%= link_to "Weapons", admin_weapons_path %></dt>
 		          <dt><%= link_to "Miscellaneous Items", admin_others_path %></dt>
 						<% end %>
-  				  <h1 class="first">User Tasks</h1>
-  				  <dt><%= link_to "Manage Profiles", profiles_path %></dt>
-  			    <% if @profile.kind_of?(Profile) && !@profile.new_record? %>
-  				    <%= render :partial => "profiles/tasks" %>
-  			    <% end %>
   			  <% end %>
   		    <h1>Information</h1>
 		      <dt><%= link_to "Generals", generals_path %></dt>

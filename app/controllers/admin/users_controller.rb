@@ -33,7 +33,7 @@ module Admin
     def become
       return unless current_user.is_admin?
       sign_in(:user, User.find(params[:id]))
-      redirect_to root_url # or user_root_url
+      redirect_to profiles_url # or user_root_url
     end
     
     protected

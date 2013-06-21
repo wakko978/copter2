@@ -19,7 +19,7 @@
   		<td><%= user.created_at.strftime('%b %d \'%y') %></td>
 			<td><%= (user.current_sign_in_at - 4.hours).localtime.strftime('%D') if user.current_sign_in_at %></td>
 			<td><%= (user.last_sign_in_at - 4.hours).localtime.strftime('%D') if user.last_sign_in_at %></td>
-			<td><%= distance_of_time_in_words(user.last_sign_in_at,Time.now) %></td>
+			<td><%= distance_of_time_in_words(user.current_sign_in_at,Time.now) %></td>
 			<td><%= user.sign_in_count %></td>
 			<td><%= user.profiles.pluck(:name).join('<br/>').html_safe %></td>
 			<td>

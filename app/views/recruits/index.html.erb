@@ -15,12 +15,12 @@
 			<%= sort_link 'General<br/>eDef w/ Gear', 'e_defense' %>
 		</th>
 		<th class="top" scope="col" width="18%">
-			<%= sort_link 'Profile<br/>eAtt w/ Bonus', 'e_attack_with_bonus' %>
+			<%= sort_link 'Profile+Gen<br/>eAtt w/ Bonus', 'e_attack_with_bonus' %>
 		</th>
 		<th class="top" scope="col" width="18%">
-			<%= sort_link 'Profile<br/>eDef w/ Bonus', 'e_defense_with_bonus'  %>
+			<%= sort_link 'Profile+Gen<br/>eDef w/ Bonus', 'e_defense_with_bonus'  %>
 		</th>
-		<th class="top" scope="col" width="3%">General<br/>Type</th>
+		<th class="top" scope="col" width="3%"><%= sort_link "General<br/>Type".html_safe, 'generals.general_type' %></th>
 		<th class="top" scope="col" width="5%">Options</th>
 	</thead>
 

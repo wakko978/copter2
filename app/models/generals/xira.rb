@@ -59,7 +59,7 @@ class Xira < General
       defense -= (defense * 0.25)
     end
     
-    e_attack = ((attack + profile.attack_rune + profile.attack_ia) + (defense + profile.defense_rune + profile.defense_ia)*0.7)
+    e_attack = ((attack + attack_with_mods(profile,recruit) + profile.attack_rune + profile.attack_ia) + (defense + defense_with_mods(profile,recruit) + profile.defense_rune + profile.defense_ia)*0.7)
     return e_attack.round(1)
   end
 
@@ -83,7 +83,7 @@ class Xira < General
       defense -= (defense * 0.25)
     end
     
-    e_defense = ((defense + profile.defense_rune + profile.defense_ia) + (attack + profile.attack_rune + profile.attack_ia)*0.7)
+    e_defense = ((defense + defense_with_mods(profile,recruit) + profile.defense_rune + profile.defense_ia) + (attack + attack_with_mods(profile,recruit) + profile.attack_rune + profile.attack_ia)*0.7)
     return e_defense.round(1)
   end
 end

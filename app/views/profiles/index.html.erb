@@ -2,7 +2,7 @@
 
 <table class="non-fixed">
 	<%= will_paginate @profiles %>
-	<caption><%= link_to 'Add Profile', new_profile_path %></caption>
+	<caption><%= link_to "#{current_user.profiles.empty? ? 'Create your Castle Age profile' : 'Add profile'}", new_profile_path %></caption>
 	<thead>
 		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
 		<th class="top" scope="col"><%= sort_link 'Level', :level %></th>
