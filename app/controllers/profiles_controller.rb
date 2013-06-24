@@ -283,6 +283,8 @@ class ProfilesController < ApplicationController
     
     respond_to do |format|
       if @profile.update_attributes(params[:profile])
+        @generals_during_attack = @profile.best_recruits((@profile.army_in_use/5.to_f).ceil,'attack')
+        @generals_during_defend = @profile.best_recruits((@profile.army_in_use/5.to_f).ceil,'defense')
         @fighters_during_attack = @profile.best_fighters(@profile.army_in_use,'attack')
         @fighters_during_defend = @profile.best_fighters(@profile.army_in_use,'defense')
         @spells_during_attack = @profile.best_spells(@profile.army_in_use,'attack')
@@ -302,155 +304,175 @@ class ProfilesController < ApplicationController
   end
   
   def upload_files
-    @profile = current_user.profiles.find(params[:id])
+    unless current_user.nil?
+      @profile = current_user.profiles.find(params[:id])
     
-    case params[:Filename]
-    when 'land.php', 'land.html', 'land.htm', 'land.php.htm'
-      @profile.land_file = params[:file]
-    when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm'
-      @profile.general_file = params[:file]
-    when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm'
-      @profile.soldier_file = params[:file]
-    when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm'
-      @profile.magic_file = params[:file]
-    when 'item.php', 'item.html', 'item.htm', 'item.php.htm'
-      @profile.item_file = params[:file]
-    when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm'
-      @profile.keep_file = params[:file]
-    end
+      case params[:Filename]
+      when 'land.php', 'land.html', 'land.htm', 'land.php.htm'
+        @profile.land_file = params[:file]
+      when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm'
+        @profile.general_file = params[:file]
+      when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm'
+        @profile.soldier_file = params[:file]
+      when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm'
+        @profile.magic_file = params[:file]
+      when 'item.php', 'item.html', 'item.htm', 'item.php.htm'
+        @profile.item_file = params[:file]
+      when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm'
+        @profile.keep_file = params[:file]
+      end
           
-    respond_to do |format|
-      if @profile.save!
-        format.all { render :nothing => true, :status => 200 }
-      else
+      respond_to do |format|
+        if @profile.save!
+          format.all { render :nothing => true, :status => 200 }
+        else
+          format.all { render :nothing => true, :status => 404 }
+        end
+      end
+    else
+      respond_to do |format|
         format.all { render :nothing => true, :status => 404 }
       end
     end
   end
   
   def upload_file
-    @profile = current_user.profiles.find(params[:id])
-    process = []
-    my_hash = Hash.new()
-    @results = Hash.new()
+    unless current_user.nil?
+      @profile = current_user.profiles.find(params[:id])
+      process = []
+      my_hash = Hash.new()
+      @results = Hash.new()
     
-    if params[:attachment]      
-      case params[:attachment].original_filename
-      when 'land.php', 'land.html', 'land.htm', 'land.php.htm'
-        @profile.land_file = params[:attachment]
-        process.push("land")
-      when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm'
-        @profile.general_file = params[:attachment]
-        process.push("general")
-      when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm'
-        @profile.soldier_file = params[:attachment]
-        process.push("soldier")
-      when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm'
-        @profile.magic_file = params[:attachment]
-        process.push("magic")
-      when 'item.php', 'item.html', 'item.htm', 'item.php.htm'
-        @profile.item_file = params[:attachment]
-        process.push("item")
-      when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm'
-        @profile.keep_file = params[:attachment]
-        process.push("keep")
-      else
-        @results["Error"] = {"File name" => "Invalid"}
-      end
+      if params[:attachment]      
+        case params[:attachment].original_filename
+        when 'land.php', 'land.html', 'land.htm', 'land.php.htm'
+          @profile.land_file = params[:attachment]
+          process.push("land")
+        when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm'
+          @profile.general_file = params[:attachment]
+          process.push("general")
+        when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm'
+          @profile.soldier_file = params[:attachment]
+          process.push("soldier")
+        when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm'
+          @profile.magic_file = params[:attachment]
+          process.push("magic")
+        when 'item.php', 'item.html', 'item.htm', 'item.php.htm'
+          @profile.item_file = params[:attachment]
+          process.push("item")
+        when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm'
+          @profile.keep_file = params[:attachment]
+          process.push("keep")
+        else
+          @results["Error"] = {"File name" => "Invalid"}
+        end
     
-      if @profile.save
-        process.each do |load|
-          if File.exists?(@profile.send("#{load}_file").url(:original, timestamp: false))
-            my_hash[load] = Hash.new
-            doc = Nokogiri::HTML(open(@profile.send("#{load}_file").url(:original, timestamp: false)))
+        if @profile.save
+          process.each do |load|
+            if File.exists?(@profile.send("#{load}_file").url(:original, timestamp: false))
+              my_hash[load] = Hash.new
+              doc = Nokogiri::HTML(open(@profile.send("#{load}_file").url(:original, timestamp: false)))
 
-            case load
-            when 'land'
-              parse_land(doc,load,my_hash)
-              @profile.land_file.destroy
-              @results[load] = @profile.update_lands(my_hash)
-            when 'soldier'
-              parse_soldiers(doc,load,my_hash)
-              @profile.soldier_file.destroy
-              @results[load] = @profile.update_soldiers(my_hash)
-            when 'magic'
-              parse_magic(doc,load,my_hash)
-              @profile.magic_file.destroy
-              @results[load] = @profile.update_magic(my_hash)
-            when 'item'
-              parse_items(doc,load,my_hash)
-              @profile.item_file.destroy
-              @results[load] = @profile.update_items(my_hash)
-            when 'general'
-              parse_generals(doc,load,my_hash)
-              @profile.general_file.destroy
-              @results[load] = @profile.update_generals(my_hash)
-            when 'keep'
-              parse_keep(doc,load,my_hash)
-              @profile.keep_file.destroy
-              @results[load] = @profile.update_stats(my_hash)
+              case load
+              when 'land'
+                parse_land(doc,load,my_hash)
+                @profile.land_file.destroy
+                @results[load] = @profile.update_lands(my_hash)
+              when 'soldier'
+                parse_soldiers(doc,load,my_hash)
+                @profile.soldier_file.destroy
+                @results[load] = @profile.update_soldiers(my_hash)
+              when 'magic'
+                parse_magic(doc,load,my_hash)
+                @profile.magic_file.destroy
+                @results[load] = @profile.update_magic(my_hash)
+              when 'item'
+                parse_items(doc,load,my_hash)
+                @profile.item_file.destroy
+                @results[load] = @profile.update_items(my_hash)
+              when 'general'
+                parse_generals(doc,load,my_hash)
+                @profile.general_file.destroy
+                @results[load] = @profile.update_generals(my_hash)
+              when 'keep'
+                parse_keep(doc,load,my_hash)
+                @profile.keep_file.destroy
+                @results[load] = @profile.update_stats(my_hash)
+              end
             end
           end
         end
       end
-    end
     
-    respond_to do |format|
-      if @profile && params[:attachment]
-        format.html { render :action => "process_data" }
-      else
-        flash[:alert] = "There was an error processing the files."
-        format.html { render :action => "updater" }
+      respond_to do |format|
+        if @profile && params[:attachment]
+          format.html { render :action => "process_data" }
+        else
+          flash[:alert] = "There was an error processing the files."
+          format.html { render :action => "updater" }
+        end
+      end
+    else
+      respond_to do |format|
+        flash[:alert] = "Please try the \"Single File\" option if you are having problems uploading/processing files."
+        format.html { redirect_to root_path }
       end
     end
   end
   
   def process_data
-    @profile = current_user.profiles.find(params[:id])
+    unless current_user.nil?
+      @profile = current_user.profiles.find(params[:id])
     
-    my_hash = Hash.new()
-    @results = Hash.new()
+      my_hash = Hash.new()
+      @results = Hash.new()
     
-    ['land','soldier','magic','item','general','keep'].each do |load|
-      if File.exists?(@profile.send("#{load}_file").url(:original, timestamp: false))
-        my_hash[load] = Hash.new
-        doc = Nokogiri::HTML(open(@profile.send("#{load}_file").url(:original, timestamp: false)))
+      ['land','soldier','magic','item','general','keep'].each do |load|
+        if File.exists?(@profile.send("#{load}_file").url(:original, timestamp: false))
+          my_hash[load] = Hash.new
+          doc = Nokogiri::HTML(open(@profile.send("#{load}_file").url(:original, timestamp: false)))
       
-        case load
-        when 'land'
-          parse_land(doc,load,my_hash)
-          @profile.land_file.destroy
-          @results[load] = @profile.update_lands(my_hash)
-        when 'soldier'
-          parse_soldiers(doc,load,my_hash)
-          @profile.soldier_file.destroy
-          @results[load] = @profile.update_soldiers(my_hash)
-        when 'magic'
-          parse_magic(doc,load,my_hash)
-          @profile.magic_file.destroy
-          @results[load] = @profile.update_magic(my_hash)
-        when 'item'
-          parse_items(doc,load,my_hash)
-          @profile.item_file.destroy
-          @results[load] = @profile.update_items(my_hash)
-        when 'general'
-          parse_generals(doc,load,my_hash)
-          @profile.general_file.destroy
-          @results[load] = @profile.update_generals(my_hash)
-        when 'keep'
-          parse_keep(doc,load,my_hash)
-          @profile.keep_file.destroy
-          @results[load] = @profile.update_stats(my_hash)
+          case load
+          when 'land'
+            parse_land(doc,load,my_hash)
+            @profile.land_file.destroy
+            @results[load] = @profile.update_lands(my_hash)
+          when 'soldier'
+            parse_soldiers(doc,load,my_hash)
+            @profile.soldier_file.destroy
+            @results[load] = @profile.update_soldiers(my_hash)
+          when 'magic'
+            parse_magic(doc,load,my_hash)
+            @profile.magic_file.destroy
+            @results[load] = @profile.update_magic(my_hash)
+          when 'item'
+            parse_items(doc,load,my_hash)
+            @profile.item_file.destroy
+            @results[load] = @profile.update_items(my_hash)
+          when 'general'
+            parse_generals(doc,load,my_hash)
+            @profile.general_file.destroy
+            @results[load] = @profile.update_generals(my_hash)
+          when 'keep'
+            parse_keep(doc,load,my_hash)
+            @profile.keep_file.destroy
+            @results[load] = @profile.update_stats(my_hash)
+          end
         end
       end
-    end
     
-    respond_to do |format|
-      if @profile
-        format.html
-      else
-        flash[:alert] = "There was an error processing the files."
-        format.html { render :action => "updater" }
+      respond_to do |format|
+        if @profile
+          format.html
+        else
+          flash[:alert] = "There was an error processing the files."
+          format.html { render :action => "updater" }
+        end
+      end
+    else
+      respond_to do |format|
+        flash[:alert] = "Please try the \"Single File\" option if you are having problems uploading/processing files."
+        format.html { redirect_to root_path }
       end
     end
   end
@@ -548,12 +570,12 @@ class ProfilesController < ApplicationController
       my_hash[load][:defense] = doc.at_css('div#defense').previous_element.text().strip.match(/\d+/).try(:to_s) || 0
       my_hash[load][:health] = doc.at_css('div#health_max').previous_element.text().strip.match(/\d+/).try(:to_s) || 0
       my_hash[load][:army_size] = doc.at_css('div#army_desc').previous_element.text().strip.match(/\d+/).try(:to_s) || 0
-      my_hash[load][:attack_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Atk|Attack)/).captures.try(:first) || 0
-      my_hash[load][:attack_ia] = doc.at_css('div#attack').text.match(/(\d+) Item Archive Bonus/).captures.try(:first) || 0
-      my_hash[load][:defense_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Def|Defense)/).captures.try(:first) || 0
-      my_hash[load][:defense_ia] = doc.at_css('div#defense').text.match(/(\d+) Item Archive Bonus/).captures.try(:first) || 0
-      my_hash[load][:damage_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Dmg|Damage)/).captures.try(:first) || 0
-      my_hash[load][:health_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Hth|Health)/).captures.try(:first) || 0
+      my_hash[load][:attack_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Atk|Attack)/).try(:captures).try(:first) || 0
+      my_hash[load][:attack_ia] = doc.at_css('div#attack').text.match(/(\d+) Item Archive Bonus/).try(:captures).try(:first) || 0
+      my_hash[load][:defense_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Def|Defense)/).try(:captures).try(:first) || 0
+      my_hash[load][:defense_ia] = doc.at_css('div#defense').text.match(/(\d+) Item Archive Bonus/).try(:captures).try(:first) || 0
+      my_hash[load][:damage_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Dmg|Damage)/).try(:captures).try(:first) || 0
+      my_hash[load][:health_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Hth|Health)/).try(:captures).try(:first) || 0
       
       return my_hash
     end

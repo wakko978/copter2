@@ -56,11 +56,11 @@ class Profile < ActiveRecord::Base
   @permitted_columns = ['name','attack','defense','e_attack','e_defense','level','health','energy','army_size']
     
   def update_e_attack
-    self.e_attack = attack + defense*0.7
+    self.e_attack = (attack + defense*0.7).round(1)
   end
   
   def update_e_defense
-    self.e_defense = defense + attack*0.7
+    self.e_defense = (defense + attack*0.7).round(1)
   end
   
   def populate_lands
@@ -373,7 +373,7 @@ class Profile < ActiveRecord::Base
     
     total = @arms.collect{|i| i.owned}.sum
     
-    if (limit.nil? && total <= kount) || (!limit.nil? && total <= limit)
+    if (limit.nil? && total <= kount) || (!limit.nil? && total <= kount)
       return @arms
     else
       index = 0
@@ -408,7 +408,7 @@ class Profile < ActiveRecord::Base
     
     total = @accessories.collect{|i| i.owned}.sum
     
-    if (limit.nil? && total <= kount) || (!limit.nil? && total <= limit)
+    if (limit.nil? && total <= kount) || (!limit.nil? && total <= kount)
       return @accessories
     else
       index = 0
@@ -442,7 +442,7 @@ class Profile < ActiveRecord::Base
     
     total = @spells.collect{|i| i.owned}.sum
     
-    if (limit.nil? && total <= kount) || (!limit.nil? && total <= limit)
+    if (limit.nil? && total <= kount) || (!limit.nil? && total <= kount)
       return @spells
     else
       index = 0
@@ -629,11 +629,11 @@ class Profile < ActiveRecord::Base
       :health_rune => data[:health_rune].to_i,
       :damage_rune => data[:damage_rune].to_i
     )
-    Rails.logger.info data.inspect
     
-    changes = self.previous_changes
-    changes.except('keep_file_file_name', 'keep_file_content_type', 'keep_file_file_size', 'keep_file_updated_at','updated_at').each do |name,c|
-      results[name.titleize] = textualize_change(c)
+    changes = self.previous_changes.to_hash
+    changes.each do |name,c|
+      results[name.titleize] = textualize_change(c) if ['level','energy','stamina','attack','defense','health','attack_rune','attack_ia',
+        'defense_rune','defense_ia','health_rune','damage_rune','army_size','e_attack','e_defense'].include?(name)
     end
     
     results.merge!({'Changed' => "Nothing"}) if results.empty?

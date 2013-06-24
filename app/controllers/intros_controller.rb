@@ -1,4 +1,6 @@
 class IntrosController < ApplicationController
+  skip_before_filter :authenticate_user!
+  
   def index
     @message = Message.first
   end

@@ -64,7 +64,7 @@ class Keira < General
     when 4
       attack += 8
     when 5..50
-      attack += 8 + (6.5 * (recruit.level -4)).to_i
+      attack += 8 + (6.5 * (recruit.level - 4)).to_i
     end
     
     e_defense = (defense + attack*0.7)
