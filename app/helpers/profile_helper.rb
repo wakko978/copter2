@@ -20,7 +20,7 @@ module ProfileHelper
   end
   
   def gear_sum(collection,stat)
-    collection.collect{|f| f["best_#{stat}".to_sym].send("e_#{stat}")}.sum
+    collection.collect{|f| f["best_#{stat}".to_sym].nil? ? 0 : f["best_#{stat}".to_sym].send("e_#{stat}")}.sum
   end
   
   def acc_cont(type)
