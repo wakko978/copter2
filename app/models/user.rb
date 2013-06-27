@@ -26,9 +26,20 @@ class User < ActiveRecord::Base
   def self.search(*args)
     options = args.extract_options!
 
-    options[:c] = @permitted_columns.include?(options[:c]) ? options[:c] : 'email'
+    options[:c] = @permitted_columns.include?(options[:c]) ? options[:c] : 'current_sign_in_at'
+    
+    @users = User.includes(:profiles).scoped
+    if options[:filters]
+      filters = options[:filters]
+      if filters[:term]
+        @users = @users.where(
+          "UPPER(users.email) LIKE ?
+           OR UPPER(profiles.name) LIKE ?","%#{filters[:term].upcase}%","%#{filters[:term].upcase}%"
+        )
+      end
+    end
 
-    User.order(options[:c] + " " + ((options[:d] == 'up') ? "ASC" : "DESC")).paginate(:page => options[:page])
+    @users = @users.order(options[:c] + " " + ((options[:d] == 'up') ? "ASC" : "DESC")).paginate(:page => options[:page])
   end
   
   private

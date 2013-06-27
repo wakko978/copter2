@@ -30,18 +30,22 @@ class Annika < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    if (alliance = profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
-      case alliance.level
-      when 1
-        mod = 0.01 * 0.5
-      when 2
-        mod = 0.02 * 0.5
-      when 3
-        mod = 0.03 * 0.5
-      when 4
-        mod = 0.04 * 0.5
+    unless profile.recruits.includes(:general).where("generals.name = 'Odin'").first
+      if (alliance = profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
+        case alliance.level
+        when 1
+          mod = 0.01 * 0.5
+        when 2
+          mod = 0.02 * 0.5
+        when 3
+          mod = 0.03 * 0.5
+        when 4
+          mod = 0.04 * 0.5
+        else
+          mod = 0.04 * 0.5
+        end
       else
-        mod = 0.04 * 0.5
+        mod = 0
       end
     else
       mod = 0

@@ -647,9 +647,9 @@ class Profile < ActiveRecord::Base
     else
       diff = change[0] - change[1]
       if diff > 0
-        "Decreased by #{diff}"
+        "Decreased by #{diff.round(1)}"
       elsif diff < 0
-        "Increased by #{diff.abs}"
+        "Increased by #{diff.abs.round(1)}"
       end
     end
   end

@@ -1,5 +1,7 @@
 <h1 class="pagetitle">Generals acquired for <%= @profile.name %></h1>
 
+<%= render :partial => "faq" %>
+
 <table class="non-fixed">
 	<%= will_paginate @recruits %>
 	<caption><%= link_to "Acquire General(s)", new_profile_recruit_path(@profile) %></caption>
@@ -35,8 +37,8 @@
 				<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to general.name, general_path(general) %>
-				<% if general.name == 'Annika' || general.name == 'Vanathan' %>
-					<%= image_tag 'genally_link_primary.gif', height: '18', title: "Assuming that you have Aesir and/ or Vanir allianced" %>
+				<% if ['Annika','Aesir','Odin','Vanathan','Vanir'].include?(general.name) %>
+					<%= image_tag 'genally_link_primary.gif', height: '18' %>
 				<% end %>
 			</td>
 			<td id="recruit_<%= recruit.id %>_level" class="highlight">

@@ -563,7 +563,7 @@ class ProfilesController < ApplicationController
     end
     
     def parse_keep(doc=nil,load=nil,my_hash=nil)
-      my_hash[load][:level] = doc.at_css('div#st_5').text().strip.match(/\d+/).try(:to_s) || 0
+      my_hash[load][:level] = doc.at_css('div#main_sts_container').text().match(/Level: (\d+)/).try(:captures).try(:first) || 0
       my_hash[load][:energy] = doc.at_css('div#energy_max').previous_element.text().strip
       my_hash[load][:stamina] = doc.at_css('div#stamina_max').previous_element.text().strip
       my_hash[load][:attack] = doc.at_css('div#attack').previous_element.text().strip.match(/\d+/).try(:to_s) || 0

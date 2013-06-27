@@ -22,7 +22,7 @@ class Odin < General
     attack = super
 
     ### Strider example
-    # attack += 3 if profile.inventory_exists?('weapons','Assassins Blade')
+    attack += 4 if profile.inventory_exists?('weapons','Gladiators Warstaff')
     # attack += 2 if profile.inventory_exists?('items','Amulet of Despair')
 
     ### Penelope
@@ -38,7 +38,9 @@ class Odin < General
     defense = super
 
     ### Strider
-    # defense += 5 if profile.inventory_exists?('items','Assassins Cloak')
+    defense += 1 if profile.inventory_exists?('items','Brawler Boots')
+    defense += 2 if profile.inventory_exists?('items','Warriors Helm')
+    defense += 4 if profile.inventory_exists?('items','Legends Wargear')
 
     ### Penelope example
     # Nothing to do as nothing modifies Penelope's defense
@@ -46,37 +48,53 @@ class Odin < General
   end
 
   def e_attack_with_bonus(profile,recruit)
-    
     e_attack = super
 
-    # if (alliance = profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
-    #   case alliance.level
-    #   when 1
-    #     mod = 0.01 * 0.5
-    #   when 2
-    #     mod = 0.02 * 0.5
-    #   when 3
-    #     mod = 0.03 * 0.5
-    #   when 4
-    #     mod = 0.04 * 0.5
-    #   else
-    #     mod = 0.04 * 0.5
-    #   end
-    # else
-    #   mod = 0
-    # end
-    # case recruit.level
-    # when 1
-    #   e_attack += (0.02 + mod) * e_attack
-    # when 2
-    #   e_attack += (0.03 + mod) * e_attack
-    # when 3
-    #   e_attack += (0.04 + mod) * e_attack
-    # when 4
-    #   e_attack += (0.05 + mod) * e_attack
-    # else
-    #   e_attack += (0.05 + mod) * e_attack
-    # end
+    if (alliance = profile.recruits.includes(:general).where("generals.name = 'Annika'").first)
+      case alliance.level
+      when 1
+        mod = 0.02 * 0.5
+      when 2
+        mod = 0.03 * 0.5
+      when 3
+        mod = 0.04 * 0.5
+      when 4
+        mod = 0.05 * 0.5
+      else
+        mod = 0.05 * 0.5
+      end
+    else
+      mod = 0
+    end
+    if (alliance = profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
+      case alliance.level
+      when 1
+        mod2 = 0.01 * 0.33
+      when 2
+        mod2 = 0.02 * 0.33
+      when 3
+        mod2 = 0.03 * 0.33
+      when 4
+        mod2 = 0.04 * 0.33
+      else
+        mod2 = 0.04 * 0.33
+      end
+      mod2.round(3)
+    else
+      mod2 = 0
+    end
+    case recruit.level
+    when 1
+      e_attack += (0.02 + mod + mod2) * e_attack
+    when 2
+      e_attack += (0.03 + mod + mod2) * e_attack
+    when 3
+      e_attack += (0.04 + mod + mod2) * e_attack
+    when 4
+      e_attack += (0.05 + mod + mod2) * e_attack
+    else
+      e_attack += (0.05 + mod + mod2) * e_attack
+    end
     
     return e_attack.round(1)
   end

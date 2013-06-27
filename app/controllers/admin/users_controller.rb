@@ -1,7 +1,7 @@
 module Admin
   class UsersController < BaseController
     def index
-      @users = User.search(:c => params[:c], :d => params[:d], :page => params[:page])
+      @users = User.search(:c => params[:c], :d => params[:d], :page => params[:page], :filters => params[:filters])
     end
     
     def edit
