@@ -563,19 +563,19 @@ class ProfilesController < ApplicationController
     end
     
     def parse_keep(doc=nil,load=nil,my_hash=nil)
-      my_hash[load][:level] = doc.at_css('div#main_sts_container').text().match(/Level: (\d+)/).try(:captures).try(:first) || 0
-      my_hash[load][:energy] = doc.at_css('div#energy_max').previous_element.text().strip
-      my_hash[load][:stamina] = doc.at_css('div#stamina_max').previous_element.text().strip
-      my_hash[load][:attack] = doc.at_css('div#attack').previous_element.text().strip.match(/\d+/).try(:to_s) || 0
-      my_hash[load][:defense] = doc.at_css('div#defense').previous_element.text().strip.match(/\d+/).try(:to_s) || 0
-      my_hash[load][:health] = doc.at_css('div#health_max').previous_element.text().strip.match(/\d+/).try(:to_s) || 0
-      my_hash[load][:army_size] = doc.at_css('div#army_desc').previous_element.text().strip.match(/\d+/).try(:to_s) || 0
-      my_hash[load][:attack_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Atk|Attack)/).try(:captures).try(:first) || 0
-      my_hash[load][:attack_ia] = doc.at_css('div#attack').text.match(/(\d+) Item Archive Bonus/).try(:captures).try(:first) || 0
-      my_hash[load][:defense_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Def|Defense)/).try(:captures).try(:first) || 0
-      my_hash[load][:defense_ia] = doc.at_css('div#defense').text.match(/(\d+) Item Archive Bonus/).try(:captures).try(:first) || 0
-      my_hash[load][:damage_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Dmg|Damage)/).try(:captures).try(:first) || 0
-      my_hash[load][:health_rune] = doc.at_css('div#runes_2').text.match(/(\d+) (Hth|Health)/).try(:captures).try(:first) || 0
+      my_hash[load][:level] = doc.at_css('div#main_sts_container').try(:text).try(:match,/Level: (\d+)/).try(:captures).try(:first) || @profile.level
+      my_hash[load][:energy] = doc.at_css('div#energy_max').try(:previous_element).try(:text).try(:strip) || @profile.energy
+      my_hash[load][:stamina] = doc.at_css('div#stamina_max').try(:previous_element).try(:text).try(:strip) || @profile.stamina
+      my_hash[load][:attack] = doc.at_css('div#attack').try(:previous_element).try(:text).try(:strip).try(:match,/\d+/).try(:to_s) || @profile.attack
+      my_hash[load][:defense] = doc.at_css('div#defense').try(:previous_element).try(:text).try(:strip).try(:match,/\d+/).try(:to_s) || @profile.defense
+      my_hash[load][:health] = doc.at_css('div#health_max').try(:previous_element).try(:text).try(:strip).try(:match,/\d+/).try(:to_s) || @profile.health
+      my_hash[load][:army_size] = doc.at_css('div#army_desc').try(:previous_element).try(:text).try(:strip).try(:match,/\d+/).try(:to_s) || @profile.army_size
+      my_hash[load][:attack_rune] = doc.at_css('div#runes_2').try(:text).try(:match,/(\d+) (Atk|Attack)/).try(:captures).try(:first) || @profile.attack_rune
+      my_hash[load][:attack_ia] = doc.at_css('div#attack').try(:text).try(:match,/(\d+) Item Archive Bonus/).try(:captures).try(:first) || @profile.attack_ia
+      my_hash[load][:defense_rune] = doc.at_css('div#runes_2').try(:text).try(:match,/(\d+) (Def|Defense)/).try(:captures).try(:first) || @profile.defense_rune
+      my_hash[load][:defense_ia] = doc.at_css('div#defense').try(:text).try(:match,/(\d+) Item Archive Bonus/).try(:captures).try(:first) || @profile.defense_ia
+      my_hash[load][:damage_rune] = doc.at_css('div#runes_2').try(:text).try(:match,/(\d+) (Dmg|Damage)/).try(:captures).try(:first) || @profile.damage_rune
+      my_hash[load][:health_rune] = doc.at_css('div#runes_2').try(:text).try(:match,/(\d+) (Hth|Health)/).try(:captures).try(:first) || @profile.health_rune
       
       return my_hash
     end
