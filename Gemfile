@@ -13,6 +13,7 @@ gem 'plupload-rails'
 gem 'nokogiri'
 gem 'seed_dump'
 gem 'airbrake'
+gem 'le'
 
 # Gems used only for assets and not required
 # in production environments by default.

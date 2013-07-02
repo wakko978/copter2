@@ -64,7 +64,8 @@
 			<li>keep.php, keep.php.html, keep.php.htm</li>
 		</ul>
 		<%= label_tag "upload", "File" %><br/>
-		<%= file_field_tag 'attachment', :accept => 'text/html,text/php' %>
+		<%= file_field_tag 'attachment',
+		 	:accept => 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source' %>
 	</p>
 	
 	<p>

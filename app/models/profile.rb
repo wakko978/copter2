@@ -473,7 +473,7 @@ class Profile < ActiveRecord::Base
       if (recruit = self.recruits.includes(:general).where(["generals.name = ?",name]).first)
         recruit.update_attributes(:level => level)
         changes = recruit.previous_changes
-        results[name] = "Set to level #{level}" unless changes.nil?
+        results[name] = "Set to level #{level}" unless changes.empty?
         i += 1 unless changes[:level].nil?
       else
         general = General.find_by_name(name)
