@@ -309,17 +309,17 @@ class ProfilesController < ApplicationController
     
       case params[:Filename]
       when 'land.php', 'land.html', 'land.htm', 'land.php.htm'
-        @profile.land_file = params[:file]
+        @profile.land = params[:file]
       when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm'
-        @profile.general_file = params[:file]
+        @profile.general = params[:file]
       when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm'
-        @profile.soldier_file = params[:file]
+        @profile.soldier = params[:file]
       when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm'
-        @profile.magic_file = params[:file]
+        @profile.magic = params[:file]
       when 'item.php', 'item.html', 'item.htm', 'item.php.htm'
-        @profile.item_file = params[:file]
+        @profile.item = params[:file]
       when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm'
-        @profile.keep_file = params[:file]
+        @profile.keep = params[:file]
       end
           
       respond_to do |format|
@@ -346,57 +346,63 @@ class ProfilesController < ApplicationController
       if params[:attachment]      
         case params[:attachment].original_filename
         when 'land.php', 'land.html', 'land.htm', 'land.php.htm'
-          @profile.land_file = params[:attachment]
+          @profile.land = params[:attachment]
           process.push("land")
         when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm'
-          @profile.general_file = params[:attachment]
+          @profile.general = params[:attachment]
           process.push("general")
         when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm'
-          @profile.soldier_file = params[:attachment]
+          @profile.soldier = params[:attachment]
           process.push("soldier")
         when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm'
-          @profile.magic_file = params[:attachment]
+          @profile.magic = params[:attachment]
           process.push("magic")
         when 'item.php', 'item.html', 'item.htm', 'item.php.htm'
-          @profile.item_file = params[:attachment]
+          @profile.item = params[:attachment]
           process.push("item")
         when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm'
-          @profile.keep_file = params[:attachment]
+          @profile.keep = params[:attachment]
           process.push("keep")
         else
           @results["Error"] = {"File name" => "Invalid"}
         end
     
-        if @profile.save
+        if @profile.save!
           process.each do |load|
-            if File.exists?(@profile.send("#{load}_file").url(:original, timestamp: false))
+            unless @profile.send("#{load}_url").nil?
               my_hash[load] = Hash.new
-              doc = Nokogiri::HTML(open(@profile.send("#{load}_file").url(:original, timestamp: false)))
+              doc = Nokogiri::HTML(open(@profile.send("#{load}_url")))
 
               case load
               when 'land'
                 parse_land(doc,load,my_hash)
-                @profile.land_file.destroy
+                @profile.remove_land = true
+                @profile.save
                 @results[load] = @profile.update_lands(my_hash)
               when 'soldier'
                 parse_soldiers(doc,load,my_hash)
-                @profile.soldier_file.destroy
+                @profile.remove_soldier = true
+                @profile.save
                 @results[load] = @profile.update_soldiers(my_hash)
               when 'magic'
                 parse_magic(doc,load,my_hash)
-                @profile.magic_file.destroy
+                @profile.remove_magic = true
+                @profile.save
                 @results[load] = @profile.update_magic(my_hash)
               when 'item'
                 parse_items(doc,load,my_hash)
-                @profile.item_file.destroy
+                @profile.remove_item = true
+                @profile.save
                 @results[load] = @profile.update_items(my_hash)
               when 'general'
                 parse_generals(doc,load,my_hash)
-                @profile.general_file.destroy
+                @profile.remove_general = true
+                @profile.save
                 @results[load] = @profile.update_generals(my_hash)
               when 'keep'
                 parse_keep(doc,load,my_hash)
-                @profile.keep_file.destroy
+                @profile.remove_keep = true
+                @profile.save
                 @results[load] = @profile.update_stats(my_hash)
               end
             end
@@ -419,7 +425,7 @@ class ProfilesController < ApplicationController
       end
     end
   end
-  
+
   def process_data
     unless current_user.nil?
       @profile = current_user.profiles.find(params[:id])
@@ -428,34 +434,40 @@ class ProfilesController < ApplicationController
       @results = Hash.new()
     
       ['land','soldier','magic','item','general','keep'].each do |load|
-        if File.exists?(@profile.send("#{load}_file").url(:original, timestamp: false))
+        unless @profile.send("#{load}_url").nil?
           my_hash[load] = Hash.new
-          doc = Nokogiri::HTML(open(@profile.send("#{load}_file").url(:original, timestamp: false)))
+          doc = Nokogiri::HTML(open(@profile.send("#{load}_url")))
       
           case load
           when 'land'
             parse_land(doc,load,my_hash)
-            @profile.land_file.destroy
+            @profile.remove_land = true
+            @profile.save
             @results[load] = @profile.update_lands(my_hash)
           when 'soldier'
             parse_soldiers(doc,load,my_hash)
-            @profile.soldier_file.destroy
+            @profile.remove_soldier = true
+            @profile.save
             @results[load] = @profile.update_soldiers(my_hash)
           when 'magic'
             parse_magic(doc,load,my_hash)
-            @profile.magic_file.destroy
+            @profile.remove_magic = true
+            @profile.save
             @results[load] = @profile.update_magic(my_hash)
           when 'item'
             parse_items(doc,load,my_hash)
-            @profile.item_file.destroy
+            @profile.remove_item = true
+            @profile.save
             @results[load] = @profile.update_items(my_hash)
           when 'general'
             parse_generals(doc,load,my_hash)
-            @profile.general_file.destroy
+            @profile.remove_general = true
+            @profile.save
             @results[load] = @profile.update_generals(my_hash)
           when 'keep'
             parse_keep(doc,load,my_hash)
-            @profile.keep_file.destroy
+            @profile.remove_keep = true
+            @profile.save
             @results[load] = @profile.update_stats(my_hash)
           end
         end
@@ -476,6 +488,63 @@ class ProfilesController < ApplicationController
       end
     end
   end
+  
+  # def process_data_bak
+  #   unless current_user.nil?
+  #     @profile = current_user.profiles.find(params[:id])
+  #   
+  #     my_hash = Hash.new()
+  #     @results = Hash.new()
+  #   
+  #     ['land','soldier','magic','item','general','keep'].each do |load|
+  #       if File.exists?(@profile.send("#{load}_file").url(:original, timestamp: false))
+  #         my_hash[load] = Hash.new
+  #         doc = Nokogiri::HTML(open(@profile.send("#{load}_file").url(:original, timestamp: false)))
+  #     
+  #         case load
+  #         when 'land'
+  #           parse_land(doc,load,my_hash)
+  #           @profile.land_file.destroy
+  #           @results[load] = @profile.update_lands(my_hash)
+  #         when 'soldier'
+  #           parse_soldiers(doc,load,my_hash)
+  #           @profile.soldier_file.destroy
+  #           @results[load] = @profile.update_soldiers(my_hash)
+  #         when 'magic'
+  #           parse_magic(doc,load,my_hash)
+  #           @profile.magic_file.destroy
+  #           @results[load] = @profile.update_magic(my_hash)
+  #         when 'item'
+  #           parse_items(doc,load,my_hash)
+  #           @profile.item_file.destroy
+  #           @results[load] = @profile.update_items(my_hash)
+  #         when 'general'
+  #           parse_generals(doc,load,my_hash)
+  #           @profile.general_file.destroy
+  #           @results[load] = @profile.update_generals(my_hash)
+  #         when 'keep'
+  #           parse_keep(doc,load,my_hash)
+  #           @profile.keep_file.destroy
+  #           @results[load] = @profile.update_stats(my_hash)
+  #         end
+  #       end
+  #     end
+  #   
+  #     respond_to do |format|
+  #       if @profile
+  #         format.html
+  #       else
+  #         flash[:alert] = "There was an error processing the files."
+  #         format.html { render :action => "updater" }
+  #       end
+  #     end
+  #   else
+  #     respond_to do |format|
+  #       flash[:alert] = "Please try the \"Single File\" option if you are having problems uploading/processing files."
+  #       format.html { redirect_to root_path }
+  #     end
+  #   end
+  # end
   
   protected
     def duel_lookups

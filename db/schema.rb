@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130621201819) do
+ActiveRecord::Schema.define(:version => 20130709162509) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -136,51 +136,33 @@ ActiveRecord::Schema.define(:version => 20130621201819) do
 
   create_table "profiles", :force => true do |t|
     t.string   "name"
-    t.integer  "attack",                    :default => 0,   :null => false
-    t.integer  "defense",                   :default => 0,   :null => false
-    t.integer  "energy",                    :default => 0,   :null => false
-    t.integer  "stamina",                   :default => 0,   :null => false
-    t.integer  "health",                    :default => 0,   :null => false
-    t.integer  "level",                     :default => 0,   :null => false
-    t.integer  "army_size",                 :default => 0,   :null => false
-    t.integer  "attack_rune",               :default => 0,   :null => false
-    t.integer  "defense_rune",              :default => 0,   :null => false
-    t.integer  "health_rune",               :default => 0,   :null => false
-    t.integer  "damage_rune",               :default => 0,   :null => false
-    t.integer  "attack_ia",                 :default => 0,   :null => false
-    t.integer  "defense_ia",                :default => 0,   :null => false
-    t.float    "e_attack",                                   :null => false
-    t.float    "e_defense",                                  :null => false
-    t.float    "income_bonus",              :default => 1.0
+    t.integer  "attack",       :default => 0,   :null => false
+    t.integer  "defense",      :default => 0,   :null => false
+    t.integer  "energy",       :default => 0,   :null => false
+    t.integer  "stamina",      :default => 0,   :null => false
+    t.integer  "health",       :default => 0,   :null => false
+    t.integer  "level",        :default => 0,   :null => false
+    t.integer  "army_size",    :default => 0,   :null => false
+    t.integer  "attack_rune",  :default => 0,   :null => false
+    t.integer  "defense_rune", :default => 0,   :null => false
+    t.integer  "health_rune",  :default => 0,   :null => false
+    t.integer  "damage_rune",  :default => 0,   :null => false
+    t.integer  "attack_ia",    :default => 0,   :null => false
+    t.integer  "defense_ia",   :default => 0,   :null => false
+    t.float    "e_attack",                      :null => false
+    t.float    "e_defense",                     :null => false
+    t.float    "income_bonus", :default => 1.0
     t.integer  "army_bonus"
     t.string   "cage_id"
     t.integer  "user_id"
-    t.string   "land_file_file_name"
-    t.string   "land_file_content_type"
-    t.integer  "land_file_file_size"
-    t.datetime "land_file_updated_at"
-    t.string   "general_file_file_name"
-    t.string   "general_file_content_type"
-    t.integer  "general_file_file_size"
-    t.datetime "general_file_updated_at"
-    t.string   "soldier_file_file_name"
-    t.string   "soldier_file_content_type"
-    t.integer  "soldier_file_file_size"
-    t.datetime "soldier_file_updated_at"
-    t.string   "item_file_file_name"
-    t.string   "item_file_content_type"
-    t.integer  "item_file_file_size"
-    t.datetime "item_file_updated_at"
-    t.string   "magic_file_file_name"
-    t.string   "magic_file_content_type"
-    t.integer  "magic_file_file_size"
-    t.datetime "magic_file_updated_at"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
-    t.string   "keep_file_file_name"
-    t.string   "keep_file_content_type"
-    t.integer  "keep_file_file_size"
-    t.datetime "keep_file_updated_at"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "keep"
+    t.string   "general"
+    t.string   "soldier"
+    t.string   "magic"
+    t.string   "item"
+    t.string   "land"
   end
 
   create_table "properties", :force => true do |t|

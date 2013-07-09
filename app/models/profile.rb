@@ -1,3 +1,4 @@
+require 'file_size_validator'
 class Profile < ActiveRecord::Base  
   belongs_to :user
   has_many :properties, :dependent => :destroy
@@ -17,8 +18,7 @@ class Profile < ActiveRecord::Base
   
   attr_accessible :name, :attack, :defense, :energy, :stamina, :level, :e_attack,
     :e_defense, :health, :army_size, :income_bonus, :army_bonus, :attack_rune, :defense_rune,
-    :health_rune, :damage_rune, :attack_ia, :defense_ia, :land_file, :general_file,
-    :soldier_file, :item_file, :magic_file, :keep_file
+    :health_rune, :damage_rune, :attack_ia, :defense_ia, :land, :general, :soldier, :item, :magic, :keep
   
   validates :name, :presence => true
   validates :attack, :defense, :energy, :stamina, :level, :health, :army_size, :attack_rune,
@@ -30,26 +30,15 @@ class Profile < ActiveRecord::Base
   before_save :update_e_defense
   after_create :populate_lands
   
-  has_attached_file :land_file,
-    :path => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension",
-    :url => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension"
-  has_attached_file :general_file,
-    :path => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension",
-    :url => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension"
-  has_attached_file :soldier_file,
-    :path => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension",
-    :url => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension"
-  has_attached_file :item_file,
-    :path => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension",
-    :url => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension"
-  has_attached_file :magic_file,
-    :path => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension",
-    :url => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension"
-  has_attached_file :keep_file,
-    :path => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension",
-    :url => ":rails_root/lib/data/:class/:attachment/:id/:style/:basename.:extension"
-  validates_attachment :land_file, :general_file, :soldier_file, :item_file, :magic_file, :keep_file,
-    :size => { :in => 0..5.megabytes }
+  validates :land, :general, :soldier, :item, :magic, :keep,
+    :file_size => { :in => 0..5.megabytes }
+  
+  mount_uploader :keep, ProfileUploader
+  mount_uploader :land, ProfileUploader
+  mount_uploader :general, ProfileUploader
+  mount_uploader :soldier, ProfileUploader
+  mount_uploader :item, ProfileUploader
+  mount_uploader :magic, ProfileUploader
   
   cattr_reader :per_page
   @@per_page = 25
@@ -381,6 +370,8 @@ class Profile < ActiveRecord::Base
       while running_total < kount
         if limit.nil?
           running_total += @arms[index].owned
+        elsif @arms[index].nil?
+          kount = running_total
         elsif limit > 0
           running_total += (@arms[index].owned <= limit ? @arms[index].owned : @arms[index].owned = limit)
         end
@@ -416,6 +407,8 @@ class Profile < ActiveRecord::Base
       while running_total < kount
         if limit.nil?
           running_total += @accessories[index].owned
+        elsif @accessories[index].nil?
+          kount = running_total
         elsif limit > 0
           running_total += (@accessories[index].owned <= limit ? @accessories[index].owned : @accessories[index].owned = limit)
         end
@@ -450,6 +443,8 @@ class Profile < ActiveRecord::Base
       while running_total < kount
         if limit.nil?
           running_total += @spells[index].owned
+        elsif @spells[index].nil?
+          kount = running_total
         elsif limit > 0
           running_total += (@spells[index].owned <= limit ? @spells[index].owned : @spells[index].owned = limit)
         end
