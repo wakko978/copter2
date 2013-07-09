@@ -13,6 +13,8 @@
 
 	<p style="color:red">Note that it is much easier to <%= link_to 'Upload!', updater_profile_path(@profile) %></p>
 	
+	<%= hidden_field_tag :item_type, params[:item_type] %>
+	
   <% if @accessory.new_record? %>
 	  <p>
 	    <%= f.label 'item_id', "#{params[:item_type].titleize}" %><br/>

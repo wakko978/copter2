@@ -44,7 +44,7 @@ class Aurora < General
 
     attack = profile.ri_attack + attack_with_mods(profile,recruit)
     defense = profile.ri_defense + defense_with_mods(profile,recruit)
-    count = (profile.health + profile.health_rune) / 4
+    count = profile.health / 4
     case recruit.level
     when 1
       attack += count * 0.4
@@ -55,9 +55,9 @@ class Aurora < General
     when 4
       attack += count
     when 5..50
-      attack += count + recruit.level
+      attack += count + (recruit.level / 4)
     else
-      attack += count + recruit.level
+      attack += count + (recruit.level / 4)
     end
     
     e_attack = (attack + defense*0.7)
@@ -69,7 +69,7 @@ class Aurora < General
     
     attack = profile.ri_attack + attack_with_mods(profile,recruit)
     defense = profile.ri_defense + defense_with_mods(profile,recruit)
-    count = (profile.health + profile.health_rune) / 4
+    count = profile.health / 4
     case recruit.level
     when 1
       attack += count * 0.4
@@ -80,9 +80,9 @@ class Aurora < General
     when 4
       attack += count
     when 5..50
-      attack += count + recruit.level
+      attack += count + (recruit.level / 4)
     else
-      attack += count + recruit.level
+      attack += count + (recruit.level / 4)
     end
     
     e_defense = (defense + attack*0.7)

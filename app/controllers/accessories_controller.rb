@@ -39,9 +39,10 @@ class AccessoriesController < ApplicationController
   
   def create
     @accessory = @profile.accessories.build(params[:accessory])
+    @items = Item.send(params[:item_type].to_sym).order(:name) - @profile.items.send(params[:item_type].to_sym)
     
     respond_to do |format|
-      if @accessory.save!
+      if @accessory.save
         format.html { redirect_to profile_accessories_path(@profile) }
       else
         format.html { render :action => 'new'}

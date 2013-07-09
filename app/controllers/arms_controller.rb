@@ -29,9 +29,10 @@ class ArmsController < ApplicationController
   
   def create
     @arm = @profile.arms.build(params[:arm])
+    @weapons = Weapon.order(:name) - @profile.weapons
     
     respond_to do |format|
-      if @arm.save!
+      if @arm.save
         format.html { redirect_to profile_arms_path(@profile) }
       else
         format.html { render :action => 'new'}

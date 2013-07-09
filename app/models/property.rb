@@ -4,6 +4,7 @@ class Property < ActiveRecord::Base
   belongs_to :profile
   belongs_to :land
   
+  validates :land_id, :presence => true
   validates :owned, :presence => true, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   
   def roi

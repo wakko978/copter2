@@ -44,7 +44,7 @@ class Aurelius < General
 
     attack = profile.ri_attack + attack_with_mods(profile,recruit)
     defense = profile.ri_defense + defense_with_mods(profile,recruit)
-    count = (profile.health + profile.health_rune) / 3
+    count = profile.health / 3
     case recruit.level
     when 1
       defense += count * 0.6
@@ -67,7 +67,7 @@ class Aurelius < General
     
     attack = profile.ri_attack + attack_with_mods(profile,recruit)
     defense = profile.ri_defense + defense_with_mods(profile,recruit)
-    count = (profile.health + profile.health_rune) / 3
+    count = profile.health / 3
     case recruit.level
     when 1
       defense += count * 0.6

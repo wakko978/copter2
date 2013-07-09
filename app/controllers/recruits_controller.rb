@@ -49,9 +49,10 @@ class RecruitsController < ApplicationController
   
   def create
     @recruit = @profile.recruits.build(params[:recruit])
+    @generals = General.order(:name) - @profile.generals
     
     respond_to do |format|
-      if @recruit.save!
+      if @recruit.save
         format.html { redirect_to profile_recruits_path(@profile) }
       else
         format.html { render :action => 'new'}

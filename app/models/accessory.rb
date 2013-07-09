@@ -4,6 +4,7 @@ class Accessory < ActiveRecord::Base
   belongs_to :profile
   belongs_to :item
   
+  validates :item_id, :presence => true
   validates :owned, :presence => true, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   
   scope :amulet, :joins => :item, :conditions => "type = 'Item::Amulet'"

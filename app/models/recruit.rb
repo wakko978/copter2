@@ -1,6 +1,7 @@
 class Recruit < ActiveRecord::Base
   attr_accessible :name, :general, :general_id, :profile_id, :level
   
+  validates :general_id, :presence => true
   validates :level, :presence => true, :numericality => { :only_integer => true, :less_than_or_equal_to => 50 }
     
   belongs_to :profile

@@ -29,12 +29,13 @@ class FightersController < ApplicationController
   
   def create
     @fighter = @profile.fighters.build(params[:fighter])
+    @soldiers = Soldier.order(:name) - @profile.soldiers
     
     respond_to do |format|
-      if @fighter.save!
+      if @fighter.save
         format.html { redirect_to profile_fighters_path(@profile) }
       else
-        format.html { render :action => 'new'}
+        format.html { render :action => 'new' }
       end
     end
   end

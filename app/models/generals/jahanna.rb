@@ -35,7 +35,7 @@ class Jahanna < General
 
     attack = profile.ri_attack + attack_with_mods(profile,recruit)
     defense = profile.ri_defense + defense_with_mods(profile,recruit)
-    count = (profile.health + profile.health_rune) / 4
+    count = profile.health / 4
     case recruit.level
     when 1
       attack += count * 0.6
@@ -58,7 +58,7 @@ class Jahanna < General
     
     attack = profile.ri_attack + attack_with_mods(profile,recruit)
     defense = profile.ri_defense + defense_with_mods(profile,recruit)
-    count = (profile.health + profile.health_rune) / 4
+    count = profile.health / 4
     case recruit.level
     when 1
       attack += count * 0.6

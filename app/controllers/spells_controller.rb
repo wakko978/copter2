@@ -29,9 +29,10 @@ class SpellsController < ApplicationController
   
   def create
     @spell = @profile.spells.build(params[:spell])
+    @powers = Power.order(:name) - @profile.powers
     
     respond_to do |format|
-      if @spell.save!
+      if @spell.save
         format.html { redirect_to profile_spells_path(@profile) }
       else
         format.html { render :action => 'new'}
