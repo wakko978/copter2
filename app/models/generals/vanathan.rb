@@ -1,4 +1,24 @@
 class Vanathan < General
+  def resistance(recruit)
+    mod = 0
+    if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Vanir'").first)
+      case alliance.level
+      when 1..4
+        mod = (recruit.level * 10) * 0.5
+      else
+        mod = 40 * 0.5
+      end
+    else
+      mod = 0
+    end
+    case recruit.level
+    when 1..4
+      return (recruit.level + 1) * 10 + mod
+    else
+      return 50 + mod
+    end
+  end
+  
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -37,34 +57,8 @@ class Vanathan < General
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    if (alliance = profile.recruits.includes(:general).where("generals.name = 'Vanir'").first)
-      case alliance.level
-      when 1
-        mod = 0.01 * 0.5
-      when 2
-        mod = 0.02 * 0.5
-      when 3
-        mod = 0.03 * 0.5
-      when 4
-        mod = 0.04 * 0.5
-      else
-        mod = 0.04 * 0.5
-      end
-    else
-      mod = 0
-    end
-    case recruit.level
-    when 1
-      e_defense += (0.02 + mod) * e_defense
-    when 2
-      e_defense += (0.03 + mod) * e_defense
-    when 3
-      e_defense += (0.04 + mod) * e_defense
-    when 4
-      e_defense += (0.05 + mod) * e_defense
-    else
-      e_defense += (0.05 + mod) * e_defense
-    end
+    e_defense += (resistance(recruit) / 1000) * e_defense
+
     return e_defense.round(1)
   end
 end

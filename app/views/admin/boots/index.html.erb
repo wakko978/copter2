@@ -12,7 +12,8 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
-		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
 		<th class="top" scope="col">Options</th>
 	</thead>
 	
@@ -34,7 +35,8 @@
 			<td><%= number_to_currency(boot.base_cost) %></td>
 			<td><%= number_to_currency(boot.upkeep) %></td>
 			<td><%= boot.div_power %></td>
-			<td><%= boot.forgeable.to_s.titleize %></td>
+			<td><%= boot.piercing %></td>
+			<td><%= boot.resistance %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_boot_path(boot) %>
 				<% if current_user.is_admin? && boot.is_unowned? %>

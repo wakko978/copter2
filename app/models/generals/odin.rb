@@ -1,4 +1,34 @@
 class Odin < General
+  def piercing(recruit)
+    mod = 0
+    if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Annika'").first)
+      case alliance.level
+      when 1..4
+        mod += (recruit.level * 10) * 0.5
+      else
+        mod += 50 * 0.5
+      end
+    else
+      mod += 0
+    end
+    if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
+      case alliance.level
+      when 1..4
+        mod += ((recruit.level * 10) * 0.33).floor
+      else
+        mod += (40 * 0.33).floor
+      end
+    else
+      mod += 0
+    end
+    case recruit.level
+    when 1..4
+      return (recruit.level + 1) * 10 + mod
+    else
+      return 50 + mod
+    end
+  end
+  
   def has_special_leveling_increment?
     false
   end

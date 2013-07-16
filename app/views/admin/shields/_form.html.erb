@@ -43,8 +43,13 @@
 	</p>
 	
 	<p>
-	  <%= f.label 'forgeable', 'Does this have one or more forge slots?' %><br/>
-	  <%= f.check_box :forgeable %>
+	  <%= f.label 'piercing', 'Piercing' %><br/>
+	  <%= f.text_field :piercing, :size => 10 %>
+	</p>
+	
+	<p>
+	  <%= f.label 'resistance', 'Resistance' %><br/>
+	  <%= f.text_field :resistance, :size => 10 %>
 	</p>
 	
 	<p>

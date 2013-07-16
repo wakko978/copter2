@@ -1,4 +1,32 @@
 class Annika < General
+  def piercing(recruit)
+    mod = 0
+    unless recruit.profile.recruits.includes(:general).where("generals.name = 'Odin'").first
+      if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
+        case alliance.level
+        when 1..4
+          mod = (recruit.level * 10) * 0.5
+        else
+          mod = 40 * 0.5
+        end
+      else
+        mod = 0
+      end
+    else
+      mod = 0
+    end
+    case recruit.level
+    when 1..4
+      return (recruit.level + 1) * 10 + mod
+    else
+      return 50 + mod
+    end
+  end
+  
+  def resistance(recruit)
+    super
+  end
+  
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -29,40 +57,9 @@ class Annika < General
 
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
-
-    unless profile.recruits.includes(:general).where("generals.name = 'Odin'").first
-      if (alliance = profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
-        case alliance.level
-        when 1
-          mod = 0.01 * 0.5
-        when 2
-          mod = 0.02 * 0.5
-        when 3
-          mod = 0.03 * 0.5
-        when 4
-          mod = 0.04 * 0.5
-        else
-          mod = 0.04 * 0.5
-        end
-      else
-        mod = 0
-      end
-    else
-      mod = 0
-    end
-    case recruit.level
-    when 1
-      e_attack += (0.02 + mod) * e_attack
-    when 2
-      e_attack += (0.03 + mod) * e_attack
-    when 3
-      e_attack += (0.04 + mod) * e_attack
-    when 4
-      e_attack += (0.05 + mod) * e_attack
-    else
-      e_attack += (0.05 + mod) * e_attack
-    end
     
+    e_attack += (piercing(recruit) / 1000) * e_attack
+
     return e_attack.round(1)
   end
 

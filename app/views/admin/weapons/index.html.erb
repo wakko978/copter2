@@ -12,7 +12,9 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
-		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col"><%= sort_link 'Slots', :slots %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
 		<th class="top" scope="col">Options</th>
 	</thead>
 	
@@ -34,7 +36,9 @@
 			<td><%= number_to_currency(weapon.base_cost) %></td>
 			<td><%= number_to_currency(weapon.upkeep) %></td>
 			<td><%= weapon.div_power %></td>
-			<td><%= weapon.forgeable.to_s.titleize %></td>
+			<td><%= weapon.slots %></td>
+			<td><%= weapon.piercing %></td>
+			<td><%= weapon.resistance %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_weapon_path(weapon) %>
 				<% if current_user.is_admin? && weapon.is_unowned? %>

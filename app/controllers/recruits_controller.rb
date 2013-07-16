@@ -42,6 +42,14 @@ class RecruitsController < ApplicationController
     end
   end
   
+  def get_info
+    @recruit = @profile.recruits.find(params[:recruit][:id])
+    
+    respond_to do |format|
+      format.json { render json: { piercing: @recruit.piercing, resistance: @recruit.resistance } }
+    end
+  end
+  
   def new
     @recruit = Recruit.new
     @generals = General.order(:name) - @profile.generals

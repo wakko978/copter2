@@ -12,7 +12,9 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
-		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col"><%= sort_link 'Slots', :slots %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
 		<th class="top" scope="col">Options</th>
 	</thead>
 	
@@ -34,7 +36,9 @@
 			<td><%= number_to_currency(helmet.base_cost) %></td>
 			<td><%= number_to_currency(helmet.upkeep) %></td>
 			<td><%= helmet.div_power %></td>
-			<td><%= helmet.forgeable.to_s.titleize %></td>
+			<td><%= helmet.slots %></td>
+			<td><%= helmet.piercing %></td>
+			<td><%= helmet.resistance %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_helmet_path(helmet) %>
 				<% if current_user.is_admin? && helmet.is_unowned? %>

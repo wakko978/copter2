@@ -1,4 +1,17 @@
 class Ravendor < General
+  def resistance(recruit)
+    case recruit.level
+    when 1
+      return 5
+    when 2
+      return 15
+    when 3
+      return 25
+    else
+      return 35
+    end
+  end
+
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -52,18 +65,8 @@ class Ravendor < General
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    case recruit.level
-    when 1
-      e_defense += 0.005 * e_defense
-    when 2
-      e_defense += 0.015 * e_defense
-    when 3
-      e_defense += 0.025 * e_defense
-    when 4
-      e_defense += 0.035 * e_defense
-    else
-      e_defense += 0.035 * e_defense
-    end
+    e_defense += (resistance(recruit) / 1000) * e_defense
+
     return e_defense.round(1)
   end
 end

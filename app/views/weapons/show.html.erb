@@ -49,7 +49,15 @@
 </p>
 
 <p>
-	<b>Forgeable?:</b> <%= @weapon.forgeable.to_s.titleize %>
+	<b>Forge Slots:</b> <%= @weapon.slots %>
+</p>
+
+<p>
+	<b>Piercing:</b> <%= @weapon.piercing %>
+</p>
+
+<p>
+	<b>Resistance:</b> <%= @weapon.resistance %>
 </p>
 
 <%= link_to 'Back', weapons_path %>

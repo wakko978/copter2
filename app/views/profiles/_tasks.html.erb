@@ -6,6 +6,9 @@
 <dt><%= link_to "Upload Data", updater_profile_path(@profile) %></dt>
 <dt><%#= link_to "CAGE Link", cage_profile_path(@profile) %></dt>
 <dt><%= link_to "Manage Generals", profile_recruits_path(@profile) %></dt>
+<% if current_user.is_admin? || current_user.has_role?('Manager') %>
+	<dt><%= link_to "Manage Loadouts", profile_loadouts_path(@profile) %></dt>
+<% end %>
 <dt>
   <%= link_to "Manage Items", '#' %>
   <dd><%= link_to "Amulets", profile_accessories_path(@profile, :item_type => 'amulet') %></dd>

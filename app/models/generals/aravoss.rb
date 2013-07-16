@@ -1,4 +1,13 @@
 class Aravoss < General
+  def piercing(recruit)
+    case recruit.level
+    when 1..4
+      return recruit.level * 2
+    else
+      return 8
+    end
+  end
+  
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
@@ -31,19 +40,9 @@ class Aravoss < General
 
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
+    
+    e_attack += (piercing(recruit) / 1000) * e_attack
 
-    case recruit.level
-    when 1
-      e_attack += 0.002 * e_attack
-    when 2
-      e_attack += 0.004 * e_attack
-    when 3
-      e_attack += 0.006 * e_attack
-    when 4
-      e_attack += 0.008 * e_attack
-    else
-      e_attack += 0.008 * e_attack
-    end
     return e_attack.round(1)
   end
 

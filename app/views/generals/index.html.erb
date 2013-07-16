@@ -12,6 +12,8 @@
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'Type', :general_type %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Res', :resistance %></th>
 	</thead>
 	
 	<% @generals.each do |general| %>
@@ -33,6 +35,8 @@
 			<td><%= number_to_currency(general.upkeep) %></td>
 			<td><%= general.general_type %></td>
 			<td><%= general.div_power %></td>
+			<td><%= general.piercing %></td>
+			<td><%= general.resistance %></td>
 		</tr>
 	<% end %>
 </table>

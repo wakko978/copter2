@@ -28,6 +28,14 @@ class AccessoriesController < ApplicationController
     end
   end
   
+  def get_info
+    @item = Item.find(params[:item][:id])
+    
+    respond_to do |format|
+      format.json { render json: { piercing: "Base: #{@item.piercing}", resistance: "Base: #{@item.resistance}" } }
+    end
+  end
+  
   def new
     permitted_scopes = ['amulet','armor','boot','helmet','glove','shield']
     

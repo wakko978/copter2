@@ -15,6 +15,14 @@ class Recruit < ActiveRecord::Base
     self[:name] = val
   end
   
+  def piercing
+    general.piercing(self)
+  end
+  
+  def resistance
+    general.resistance(self)
+  end
+  
   def attack
     attack = general.attack
     unless general.has_special_leveling_increment?

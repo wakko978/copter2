@@ -49,7 +49,15 @@
 </p>
 
 <p>
-	<b>Forgeable?:</b> <%= @helmet.forgeable.to_s.titleize %>
+	<b>Forge Slots:</b> <%= @helmet.slots %>
+</p>
+
+<p>
+	<b>Piercing:</b> <%= @helmet.piercing %>
+</p>
+
+<p>
+	<b>Resistance:</b> <%= @helmet.resistance %>
 </p>
 
 <%= link_to 'Back', helmets_path %>

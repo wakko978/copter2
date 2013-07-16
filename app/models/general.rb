@@ -1,9 +1,9 @@
 class General < ActiveRecord::Base
   attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense, :div_power,
-    :attack_increment, :defense_increment, :description, :general_type, :url
+    :attack_increment, :defense_increment, :description, :general_type, :url, :base_piercing, :base_resistance
   
   validates :name, :presence => true
-  validates :attack, :defense, :presence => true, :numericality => { :only_integer => true }
+  validates :attack, :defense, :base_piercing, :base_resistance, :presence => true, :numericality => { :only_integer => true }
   validates :attack_increment, :defense_increment, :base_cost, :upkeep, :div_power, :numericality => { :only_integer => true }, :allow_nil => true
   
   has_many :recruits
@@ -12,6 +12,7 @@ class General < ActiveRecord::Base
     :url => "/system/generals/:attachment/:id_partition/:style/:basename.:extension"
   validates_attachment :avatar,
     :size => { :in => 0..100.kilobytes }
+  belongs_to :loadoutable, :polymorphic => true
   
   before_save :update_e_attack
   before_save :update_e_defense
@@ -38,6 +39,14 @@ class General < ActiveRecord::Base
   
   def has_special_leveling_increment?
     false
+  end
+  
+  def resistance(recruit)
+    base_resistance
+  end
+  
+  def piercing(recruit)
+    base_piercing
   end
   
   def update_e_attack
@@ -90,6 +99,14 @@ class General < ActiveRecord::Base
     class_name = name.gsub(/\*/,'').gsub(/\s/,'_').classify
     content = <<-RUBY
 class #{class_name} < General
+  def piercing(recruit)
+    super
+  end
+  
+  def resistance(recruit)
+    super
+  end
+  
   def has_special_leveling_increment?
     false
   end

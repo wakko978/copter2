@@ -12,9 +12,16 @@ Copter2::Application.routes.draw do
     resources :properties, :only => [:update]
     resources :fighters, :except => [:edit]
     resources :spells, :except => [:edit]
-    resources :arms, :except => [:edit]
-    resources :accessories, :except => [:edit]
-    resources :recruits, :except => [:edit]
+    resources :arms, :except => [:edit] do
+      get 'get_info', :on => :collection
+    end
+    resources :accessories, :except => [:edit] do
+      get 'get_info', :on => :collection
+    end
+    resources :recruits, :except => [:edit] do
+      get 'get_info', :on => :collection
+    end
+    resources :loadouts
     member do
       get 'updater'
       get 'army_stats'

@@ -1,0 +1,46 @@
+<h1 class="pagetitle">Loadouts for <%= @profile.name %></h1>
+
+<table class="non-fixed">
+	<caption><%= link_to "Create Loadout", new_profile_loadout_path(@profile) %></caption>
+	<thead>
+		<th class="top" scope="col" width="10%"><%= sort_link 'Name', 'name' %></th>
+		<th class="top" scope="col" width="5%"><%= sort_link 'Class', 'class_type' %></th>
+		<th class="top" scope="col" width="10%"><%= sort_link 'Attack', 'attack' %></th>
+		<th class="top" scope="col" width="10%"><%= sort_link 'Defense', 'defense' %></th>
+		<th class="top" scope="col" width="10%"><%= sort_link 'eAttack', 'e_attack' %></th>
+		<th class="top" scope="col" width="10%"><%= sort_link 'eDefense', 'e_defense' %></th>
+		<th class="top" scope="col" width="40%">Gear</th>
+		<th class="top" scope="col" width="5%">Options</th>
+	</thead>
+
+	<% @loadouts.each do |loadout| %>
+		<% general = General.find(loadout.general.general_id) %>
+		<tr>
+			<td><%= loadout.name %></td>
+			<td><%= loadout.class_type %></td>
+			<td><%= loadout.attack %></td>
+			<td><%= loadout.defense %></td>
+			<td><%= loadout.e_attack %></td>
+			<td><%= loadout.e_defense %></td>
+			<td>
+				<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}", :size => "25x25" %>
+				<% if ['Annika','Aesir','Odin','Vanathan','Vanir'].include?(general.name) %>
+					<%= image_tag 'genally_link_primary.gif', height: '9' %>
+				<% end %>
+				<br/>
+				<%= image_tag loadout.weapon.image_path(:thumb), :alt  => "#{loadout.weapon.name}", :size => "25x25" %>
+				<%= image_tag loadout.shield.image_path(:thumb), :alt  => "#{loadout.shield.name}", :size => "25x25" %>
+				<%= image_tag loadout.helmet.image_path(:thumb), :alt  => "#{loadout.helmet.name}", :size => "25x25" %>
+				<%= image_tag loadout.armor.image_path(:thumb), :alt  => "#{loadout.armor.name}", :size => "25x25" %>
+				<%= image_tag loadout.amulet.image_path(:thumb), :alt  => "#{loadout.amulet.name}", :size => "25x25" %>
+				<%= image_tag loadout.glove.image_path(:thumb), :alt  => "#{loadout.glove.name}", :size => "25x25" %>
+				<%= image_tag loadout.boot.image_path(:thumb), :alt  => "#{loadout.boot.name}", :size => "25x25" %>
+				<%= image_tag loadout.power.image_path(:thumb), :alt  => "#{loadout.power.name}", :size => "25x25" %>
+			</td>
+			<td>
+				<%= link_to '[Edit]', edit_profile_loadout_path(@profile,loadout) %>
+				<%= link_to '[Remove]', profile_loadout_path(@profile,loadout), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

@@ -7,6 +7,7 @@ class Profile < ActiveRecord::Base
   has_many :arms, :dependent => :destroy
   has_many :accessories, :dependent => :destroy
   has_many :recruits, :dependent => :destroy
+  has_many :loadouts, :dependent => :destroy
   has_many :lands, :through => :properties
   has_many :soldiers, :through => :fighters
   has_many :powers, :through => :spells

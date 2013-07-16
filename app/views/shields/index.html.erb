@@ -11,7 +11,8 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
-		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
 	</thead>
 	
 	<% @shields.each do |shield| %>
@@ -32,7 +33,8 @@
 			<td><%= number_to_currency(shield.base_cost) %></td>
 			<td><%= number_to_currency(shield.upkeep) %></td>
 			<td><%= shield.div_power %></td>
-			<td><%= shield.forgeable.to_s.titleize %></td>
+			<td><%= shield.piercing %></td>
+			<td><%= shield.resistance %></td>
 		</tr>
 	<% end %>
 </table>

@@ -12,7 +12,8 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
-		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
 		<th class="top" scope="col">Options</th>
 	</thead>
 	
@@ -34,7 +35,8 @@
 			<td><%= number_to_currency(amulet.base_cost) %></td>
 			<td><%= number_to_currency(amulet.upkeep) %></td>
 			<td><%= amulet.div_power %></td>
-			<td><%= amulet.forgeable.to_s.titleize %></td>
+			<td><%= amulet.piercing %></td>
+			<td><%= amulet.resistance %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_amulet_path(amulet) %>
 				<% if current_user.is_admin? && amulet.is_unowned? %>

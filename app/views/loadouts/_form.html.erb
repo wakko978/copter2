@@ -1,0 +1,137 @@
+<%= render :partial => "faq" %>
+
+<%= form_for([@profile,@loadout]) do |f| %>
+  <% if @loadout.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@loadout.errors.count, "error") %> prohibited this loadout from being saved:</h2>
+
+      <ul>
+      <% @loadout.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+	  <%= f.label 'name' %><br/>
+	  <%= f.text_field :name %>
+	</p>
+
+	<p>
+	  <%= f.label 'class_type', 'Class' %><br/>
+	  <%= f.select :class_type, options_for_select(['Cleric','Mage','Rogue','Warrior']) %>
+	</p>
+
+	<table class="fixed">
+		<thead>
+			<th class="top" scope="col" width="10%"></th>
+			<th class="top" scope="col" width="30%">Item</th>
+			<th class="top" scope="col" width="30%">Rune</th>
+			<th class="top" scope="col" width="10%">Piercing ex/ 40</th>
+			<th class="top" scope="col" width="10%">Resistance ex/ 40</th>
+		</thead>
+		
+		<tr>
+			<td>General</td>
+			<td><%= f.collection_select :general_id, @generals, :id, :name, {:include_blank => true},
+				{:data => {url: get_info_profile_recruits_path(@profile)}} %></td>
+			<td>N/A</td>
+			<td id="general_piercing"><%= @loadout.general.nil? ? nil : @loadout.general.piercing %></td>
+			<td id="general_resistance"><%= @loadout.general.nil? ? nil : @loadout.general.resistance %></td>
+		</tr>
+		<tr>
+			<td>Weapon</td>
+			<td><%= f.select :weapon_id, @weapons.collect{|w| ["#{w.name}(Slots: #{w.slots})",w.id]}, {:include_blank => true},
+				{:data => {url: get_info_profile_arms_path(@profile)}} %></td>
+			<td><%= f.check_box :attack_rune_on_weapon %> Attack Rune Forged?</td>
+			<td>
+				<span id="weapon_piercing"><%= @loadout.weapon.nil? ? nil : "Base: #{@loadout.weapon.piercing}" %></span>
+				<%= f.text_field :weapon_piercing, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+			<td>
+				<span id="weapon_resistance"><%= @loadout.weapon.nil? ? nil : "Base: #{@loadout.weapon.resistance}" %></span>
+				<%#= f.text_field :weapon_resistance, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+		</tr>
+		<tr>
+			<td>Shield</td>
+			<td><%= f.collection_select :shield_id, @shields, :id, :name, {:include_blank => true},
+				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
+			<td>N/A</td>
+			<td id="shield_piercing"><%= @loadout.shield.nil? ? nil : @loadout.shield.piercing %></td>
+			<td id="shield_resistance"><%= @loadout.shield.nil? ? nil : @loadout.shield.resistance %></td>
+		</tr>
+		<tr>
+			<td>Helmet</td>
+			<td><%= f.select :helmet_id, @helmets.collect{|w| ["#{w.name}(Slots: #{w.slots})",w.id]}, {:include_blank => true},
+				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
+			<td><%= f.check_box :defense_rune_on_helmet %> Defense Rune Forged?</td>
+			<td>
+				<span id="helmet_piercing"><%= @loadout.helmet.nil? ? nil : "Base: #{@loadout.helmet.piercing}" %></span>
+				<%#= f.text_field :helmet_piercing, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+			<td>
+				<span id="helmet_piercing"><%= @loadout.helmet.nil? ? nil : "Base: #{@loadout.helmet.resistance}" %></span>
+				<%= f.text_field :helmet_resistance, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+		</tr>
+		<tr>
+			<td>Armor</td>
+			<td><%= f.select :armor_id, @armors.collect{|w| ["#{w.name}(Slots: #{w.slots})",w.id]}, {:include_blank => true},
+				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
+			<td><%= f.check_box :defense_rune_on_armor %> Defense Rune Forged?</td>
+			<td>
+				<span id="armor_piercing"><%= @loadout.armor.nil? ? nil : "Base: #{@loadout.armor.piercing}" %></span>
+				<%#= f.text_field :armor_piercing, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+			<td>
+				<span id="armor_piercing"><%= @loadout.armor.nil? ? nil : "Base: #{@loadout.armor.resistance}" %></span>
+				<%= f.text_field :armor_resistance, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+		</tr>
+		<tr>
+			<td>Amulet</td>
+			<td><%= f.collection_select :amulet_id, @amulets, :id, :name, {:include_blank => true},
+				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
+			<td>N/A</td>
+			<td id="amulet_piercing"><%= @loadout.amulet.nil? ? nil : @loadout.amulet.piercing %></td>
+			<td id="amulet_resistance"><%= @loadout.amulet.nil? ? nil : @loadout.amulet.resistance %></td>
+		</tr>
+		<tr>
+			<td>Glove</td>
+			<td><%= f.collection_select :glove_id, @gloves, :id, :name, {:include_blank => true},
+				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
+			<td>N/A</td>
+			<td id="glove_piercing"><%= @loadout.glove.nil? ? nil : @loadout.glove.piercing %></td>
+			<td id="glove_resistance"><%= @loadout.glove.nil? ? nil : @loadout.glove.resistance %></td>
+		</tr>
+		<tr>
+			<td>Boot</td>
+			<td><%= f.collection_select :boot_id, @boots, :id, :name, {:include_blank => true},
+				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
+			<td>N/A</td>
+			<td id="boot_piercing"><%= @loadout.boot.nil? ? nil : @loadout.boot.piercing %></td>
+			<td id="boot_resistance"><%= @loadout.boot.nil? ? nil : @loadout.boot.resistance %></td>
+		</tr>
+		<tr>
+			<td>Magic</td>
+			<td><%= f.collection_select :power_id, @powers, :id, :name, {:include_blank => true} %></td>
+			<td>N/A</td>
+			<td>N/A</td>
+			<td>N/A</td>
+		</tr>
+	</table>
+
+	<script type="text/javascript" language="Javascript">
+	  function changeFormat(f)
+	  {
+	    value = f.value.replace(/,/g,"");
+	    f.value = value;
+	  }
+	</script>
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

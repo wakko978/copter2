@@ -11,7 +11,9 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
-		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col"><%= sort_link 'Slots', :slots %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
 	</thead>
 	
 	<% @armors.each do |armor| %>
@@ -32,7 +34,9 @@
 			<td><%= number_to_currency(armor.base_cost) %></td>
 			<td><%= number_to_currency(armor.upkeep) %></td>
 			<td><%= armor.div_power %></td>
-			<td><%= armor.forgeable.to_s.titleize %></td>
+			<td><%= armor.slots %></td>
+			<td><%= armor.piercing %></td>
+			<td><%= armor.resistance %></td>
 		</tr>
 	<% end %>
 </table>

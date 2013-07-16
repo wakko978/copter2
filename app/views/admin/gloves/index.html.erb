@@ -12,7 +12,9 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
-		<th class="top" scope="col"><%= sort_link 'Forge?', :forgeable %></th>
+		<th class="top" scope="col"><%= sort_link 'Slots', :slots %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
 		<th class="top" scope="col">Options</th>
 	</thead>
 	
@@ -34,7 +36,9 @@
 			<td><%= number_to_currency(glove.base_cost) %></td>
 			<td><%= number_to_currency(glove.upkeep) %></td>
 			<td><%= glove.div_power %></td>
-			<td><%= glove.forgeable.to_s.titleize %></td>
+			<td><%= glove.slots %></td>
+			<td><%= glove.piercing %></td>
+			<td><%= glove.resistance %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_glove_path(glove) %>
 				<% if current_user.is_admin? && glove.is_unowned? %>

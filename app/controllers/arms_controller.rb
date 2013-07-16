@@ -22,6 +22,14 @@ class ArmsController < ApplicationController
     end
   end
   
+  def get_info
+    @weapon = Weapon.find(params[:weapon][:id])
+    
+    respond_to do |format|
+      format.json { render json: { piercing: "Base: #{@weapon.piercing}", resistance: "Base: #{@weapon.resistance}" } }
+    end
+  end
+  
   def new
     @arm = Arm.new
     @weapons = Weapon.order(:name) - @profile.weapons
