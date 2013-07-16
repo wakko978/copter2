@@ -14,7 +14,7 @@
 	</thead>
 
 	<% @loadouts.each do |loadout| %>
-		<% general = General.find(loadout.general.general_id) %>
+		<% general = General.find(loadout.general.general_id) unless loadout.general.nil? %>
 		<tr>
 			<td><%= loadout.name %></td>
 			<td><%= loadout.class_type %></td>
@@ -23,19 +23,37 @@
 			<td><%= loadout.e_attack %></td>
 			<td><%= loadout.e_defense %></td>
 			<td>
-				<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}", :size => "25x25" %>
-				<% if ['Annika','Aesir','Odin','Vanathan','Vanir'].include?(general.name) %>
-					<%= image_tag 'genally_link_primary.gif', height: '9' %>
+				<% unless loadout.general.nil? %>
+					<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}", :size => "25x25" %>
+					<% if ['Annika','Aesir','Odin','Vanathan','Vanir'].include?(general.name) %>
+						<%= image_tag 'genally_link_primary.gif', height: '9' %>
+					<% end %>
+					<br/>
 				<% end %>
-				<br/>
-				<%= image_tag loadout.weapon.image_path(:thumb), :alt  => "#{loadout.weapon.name}", :size => "25x25" %>
-				<%= image_tag loadout.shield.image_path(:thumb), :alt  => "#{loadout.shield.name}", :size => "25x25" %>
-				<%= image_tag loadout.helmet.image_path(:thumb), :alt  => "#{loadout.helmet.name}", :size => "25x25" %>
-				<%= image_tag loadout.armor.image_path(:thumb), :alt  => "#{loadout.armor.name}", :size => "25x25" %>
-				<%= image_tag loadout.amulet.image_path(:thumb), :alt  => "#{loadout.amulet.name}", :size => "25x25" %>
-				<%= image_tag loadout.glove.image_path(:thumb), :alt  => "#{loadout.glove.name}", :size => "25x25" %>
-				<%= image_tag loadout.boot.image_path(:thumb), :alt  => "#{loadout.boot.name}", :size => "25x25" %>
-				<%= image_tag loadout.power.image_path(:thumb), :alt  => "#{loadout.power.name}", :size => "25x25" %>
+				<% unless loadout.weapon.nil? %>
+					<%= image_tag loadout.weapon.image_path(:thumb), :alt  => "#{loadout.weapon.name}", :size => "25x25" %>
+				<% end %>
+				<% unless loadout.shield.nil? %>
+					<%= image_tag loadout.shield.image_path(:thumb), :alt  => "#{loadout.shield.name}", :size => "25x25" %>
+				<% end %>
+				<% unless loadout.helmet.nil? %>
+					<%= image_tag loadout.helmet.image_path(:thumb), :alt  => "#{loadout.helmet.name}", :size => "25x25" %>
+				<% end %>
+				<% unless loadout.armor.nil? %>
+					<%= image_tag loadout.armor.image_path(:thumb), :alt  => "#{loadout.armor.name}", :size => "25x25" %>
+				<% end %>
+				<% unless loadout.amulet.nil? %>
+					<%= image_tag loadout.amulet.image_path(:thumb), :alt  => "#{loadout.amulet.name}", :size => "25x25" %>
+				<% end %>
+				<% unless loadout.glove.nil? %>
+					<%= image_tag loadout.glove.image_path(:thumb), :alt  => "#{loadout.glove.name}", :size => "25x25" %>
+				<% end %>
+				<% unless loadout.boot.nil? %>
+					<%= image_tag loadout.boot.image_path(:thumb), :alt  => "#{loadout.boot.name}", :size => "25x25" %>
+				<% end %>
+				<% unless loadout.power.nil? %>
+					<%= image_tag loadout.power.image_path(:thumb), :alt  => "#{loadout.power.name}", :size => "25x25" %>
+				<% end %>
 			</td>
 			<td>
 				<%= link_to '[Edit]', edit_profile_loadout_path(@profile,loadout) %>

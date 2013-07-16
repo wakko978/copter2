@@ -4,7 +4,7 @@ class Vanathan < General
     if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Vanir'").first)
       case alliance.level
       when 1..4
-        mod = (recruit.level * 10) * 0.5
+        mod = (alliance.level * 10) * 0.5
       else
         mod = 40 * 0.5
       end
@@ -13,7 +13,7 @@ class Vanathan < General
     end
     case recruit.level
     when 1..4
-      return (recruit.level + 1) * 10 + mod
+      return ((recruit.level + 1) * 10) + mod
     else
       return 50 + mod
     end

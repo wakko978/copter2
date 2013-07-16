@@ -5,7 +5,7 @@ class Annika < General
       if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
         case alliance.level
         when 1..4
-          mod = (recruit.level * 10) * 0.5
+          mod = (alliance.level * 10) * 0.5
         else
           mod = 40 * 0.5
         end

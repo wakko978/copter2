@@ -30,7 +30,7 @@ class AddPierceResistanceData < ActiveRecord::Migration
     
     ### Helmets
     Item::Helmet.find_by_name('Warbringer Helm').update_attribute(:piercing,10)
-    Item::Helmet.create(name: 'Retribution Helm', attack: 55, defense: 63, resistance: 20, slots: 1, :url: 'http://images.wikia.com/castleage/images/c/c2/Retribution_Helm_conquest.jpg')
+    Item::Helmet.create(name: 'Retribution Helm', attack: 55, defense: 63, resistance: 20, slots: 1, url: 'http://images.wikia.com/castleage/images/c/c2/Retribution_Helm_conquest.jpg')
     
     ### Armors
     Item::Armor.find_by_name('Warbringer Plate').update_attribute(:piercing,10)
