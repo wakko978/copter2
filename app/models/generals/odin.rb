@@ -4,17 +4,17 @@ class Odin < General
     if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Annika'").first)
       case alliance.level
       when 1..4
-        mod += (alliance.level * 10) * 0.5
+        mod += ((alliance.level + 1) * 10) * 0.5
       else
         mod += 50 * 0.5
       end
     else
       mod += 0
     end
-    if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
-      case alliance.level
+    if (alliance2 = recruit.profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
+      case alliance2.level
       when 1..4
-        mod += ((alliance.level * 10) * 0.33).floor
+        mod += ((alliance2.level * 10) * 0.33).floor
       else
         mod += (40 * 0.33).floor
       end

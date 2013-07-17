@@ -308,17 +308,17 @@ class ProfilesController < ApplicationController
       @profile = current_user.profiles.find(params[:id])
     
       case params[:Filename]
-      when 'land.php', 'land.html', 'land.htm', 'land.php.htm'
+      when 'land.php', 'land.html', 'land.htm', 'land.php.htm', 'land.php.html'
         @profile.land = params[:file]
-      when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm'
+      when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm', 'generals.php.html'
         @profile.general = params[:file]
-      when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm'
+      when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm', 'soldiers.php.html'
         @profile.soldier = params[:file]
-      when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm'
+      when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm', 'magic.php.html'
         @profile.magic = params[:file]
-      when 'item.php', 'item.html', 'item.htm', 'item.php.htm'
+      when 'item.php', 'item.html', 'item.htm', 'item.php.htm', 'item.php.html'
         @profile.item = params[:file]
-      when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm'
+      when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm', 'keep.php.html'
         @profile.keep = params[:file]
       end
           
@@ -345,22 +345,22 @@ class ProfilesController < ApplicationController
     
       if params[:attachment]      
         case params[:attachment].original_filename
-        when 'land.php', 'land.html', 'land.htm', 'land.php.htm'
+        when 'land.php', 'land.html', 'land.htm', 'land.php.htm', 'land.php.html'
           @profile.land = params[:attachment]
           process.push("land")
-        when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm'
+        when 'generals.php', 'generals.html', 'generals.htm', 'generals.php.htm', 'generals.php.html'
           @profile.general = params[:attachment]
           process.push("general")
-        when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm'
+        when 'soldiers.php', 'soldiers.html', 'soldiers.htm', 'soldiers.php.htm', 'soldiers.php.html'
           @profile.soldier = params[:attachment]
           process.push("soldier")
-        when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm'
+        when 'magic.php', 'magic.html', 'magic.htm', 'magic.php.htm', 'magic.php.html'
           @profile.magic = params[:attachment]
           process.push("magic")
-        when 'item.php', 'item.html', 'item.htm', 'item.php.htm'
+        when 'item.php', 'item.html', 'item.htm', 'item.php.htm', 'item.php.html'
           @profile.item = params[:attachment]
           process.push("item")
-        when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm'
+        when 'keep.php', 'keep.html', 'keep.htm', 'keep.php.htm', 'keep.php.html'
           @profile.keep = params[:attachment]
           process.push("keep")
         else
