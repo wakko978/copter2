@@ -56,11 +56,17 @@
 		</tr>
 		<tr>
 			<td>Shield</td>
-			<td><%= f.collection_select :shield_id, @shields, :id, :name, {:include_blank => true},
+			<td><%= f.select :shield_id, @shields.collect{|w| ["#{w.name}(Slots: #{w.slots})",w.id]}, {:include_blank => true},
 				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
-			<td>N/A</td>
-			<td id="shield_piercing"><%= @loadout.shield.nil? ? nil : @loadout.shield.piercing %></td>
-			<td id="shield_resistance"><%= @loadout.shield.nil? ? nil : @loadout.shield.resistance %></td>
+			<td><%#= f.check_box :attack_rune_on_weapon %> <!-- Attack Rune Forged? --></td>
+			<td>
+				<span id="shield_piercing"><%= @loadout.shield.nil? ? nil : "Base: #{@loadout.shield.piercing}" %></span>
+				<%= f.text_field :shield_piercing, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+			<td>
+				<span id="shield_resistance"><%= @loadout.shield.nil? ? nil : "Base: #{@loadout.shield.resistance}" %></span>
+				<%#= f.text_field :shield_resistance, :size => 5, :onblur => "changeFormat();" %>
+			</td>
 		</tr>
 		<tr>
 			<td>Helmet</td>

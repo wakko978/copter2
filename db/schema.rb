@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130715160703) do
+ActiveRecord::Schema.define(:version => 20130719135914) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(:version => 20130715160703) do
     t.string   "type",                             :default => "General"
     t.string   "general_type",                     :default => "Balanced"
     t.string   "url"
-    t.integer  "base_piercing"
-    t.integer  "base_resistance"
+    t.integer  "base_piercing",                    :default => 0
+    t.integer  "base_resistance",                  :default => 0
   end
 
   add_index "generals", ["name"], :name => "index_generals_on_name"
@@ -124,6 +124,8 @@ ActiveRecord::Schema.define(:version => 20130715160703) do
     t.integer "armor_resistance",       :default => 0
     t.integer "helmet_piercing",        :default => 0
     t.integer "helmet_resistance",      :default => 0
+    t.integer "shield_piercing",        :default => 0
+    t.integer "shield_resistance",      :default => 0
   end
 
   create_table "messages", :force => true do |t|

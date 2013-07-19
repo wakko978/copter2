@@ -13,7 +13,7 @@ class Loadout < ActiveRecord::Base
   attr_accessible :profile_id, :profile, :name, :class_type, :general, :general_id, :weapon, :weapon_id,
     :shield, :shield_id, :helmet, :helmet_id, :armor, :armor_id, :amulet, :amulet_id, :glove, :glove_id, :boot, :boot_id,
     :power, :power_id, :attack_rune_on_weapon, :defense_rune_on_armor, :defense_rune_on_helmet, :weapon_piercing, :weapon_resistance,
-    :armor_piercing, :armor_resistance, :helmet_piercing, :helmet_resistance
+    :armor_piercing, :armor_resistance, :helmet_piercing, :helmet_resistance, :shield_piercing, :shield_resistance
   
   validates :name, :presence => :true
   validates :profile_id, :presence => true
@@ -50,7 +50,7 @@ class Loadout < ActiveRecord::Base
     total_piercing = [
       general.nil? ? 0 : general.piercing,
       weapon.nil? ? 0 : weapon.piercing + (weapon_piercing),
-      shield.nil? ? 0 : shield.piercing,
+      shield.nil? ? 0 : shield.piercing + (shield_piercing),
       helmet.nil? ? 0 : helmet.piercing + (helmet_piercing),
       armor.nil? ? 0 : armor.piercing + (armor_piercing),
       amulet.nil? ? 0 : amulet.piercing,
@@ -64,7 +64,7 @@ class Loadout < ActiveRecord::Base
     total_resistance = [
       general.nil? ? 0 : general.resistance,
       weapon.nil? ? 0 : weapon.resistance + (weapon_resistance),
-      shield.nil? ? 0 : shield.resistance,
+      shield.nil? ? 0 : shield.resistance + (shield_resistance),
       helmet.nil? ? 0 : helmet.resistance + (helmet_resistance),
       armor.nil? ? 0 : armor.resistance + (armor_resistance),
       amulet.nil? ? 0 : amulet.resistance,
