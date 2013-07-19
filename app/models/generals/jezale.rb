@@ -1,4 +1,4 @@
-class Jazale < General
+class Jezale < General
   def attack_with_mods(profile,recruit)
     ## recruit object used in cases where something unique
     ## occurs to the general's attack on a level up which is
