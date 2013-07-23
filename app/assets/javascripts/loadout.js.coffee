@@ -97,16 +97,16 @@ jQuery ->
 				alert(errors.join('\n'))
 		})
 		
-		$('body').on 'change', "#loadout_boot_id", (event) ->
-			$.ajax({
-				url: $('#loadout_boot_id').data('url'),
-				data: { item: {id: this.value}},
-				type: 'get',
-				dataType: 'json',
-				success: (data) ->
-		    	$('#boot_piercing').text(data.piercing)
-			    $('#boot_resistance').text(data.resistance)
-				error: (data) ->
-					errors = $.parseJSON(data.responseText).errors
-					alert(errors.join('\n'))
-			})
+	$('body').on 'change', "#loadout_boot_id", (event) ->
+		$.ajax({
+			url: $('#loadout_boot_id').data('url'),
+			data: { item: {id: this.value}},
+			type: 'get',
+			dataType: 'json',
+			success: (data) ->
+	    	$('#boot_piercing').text(data.piercing)
+		    $('#boot_resistance').text(data.resistance)
+			error: (data) ->
+				errors = $.parseJSON(data.responseText).errors
+				alert(errors.join('\n'))
+		})

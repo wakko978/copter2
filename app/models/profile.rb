@@ -547,6 +547,9 @@ class Profile < ActiveRecord::Base
     results = {}
     i = 0
     data['item'].each do |name,data|
+      ### Special case for Bladebourne Gauntlet
+      name = (name == 'Bladebounrne Gauntlet' ? 'Bladebourne Gauntlet' : name)
+      
       if (accessory = self.accessories.includes(:item).where(["items.name = ? AND items.attack = ? AND items.defense = ?",name,data[:attack],data[:defense]]).first)
         accessory.update_attributes(:owned => data[:owned])
         changes = accessory.previous_changes

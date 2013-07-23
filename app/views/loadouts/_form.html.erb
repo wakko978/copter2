@@ -20,7 +20,7 @@
 
 	<p>
 	  <%= f.label 'class_type', 'Class' %><br/>
-	  <%= f.select :class_type, options_for_select(['Cleric','Mage','Rogue','Warrior']) %>
+	  <%= f.select :class_type, options_for_select(['Cleric','Mage','Rogue','Warrior'],@loadout.class_type) %>
 	</p>
 
 	<table class="fixed">
