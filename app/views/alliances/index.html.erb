@@ -1,0 +1,35 @@
+<h1 class="pagetitle">Alliances for <%= @profile.name %></h1>
+
+<%= render :partial => "faq" %>
+
+<table class="non-fixed">
+	<caption>
+		<%= link_to "Create Piercing Alliance", new_profile_alliance_path(@profile,:alliance_type => 'piercing') %> |
+		<%= link_to "Create Resistance Alliance", new_profile_alliance_path(@profile,:alliance_type => 'resistance') %> |
+		<%= link_to "Create Monster Attack Alliance", new_profile_alliance_path(@profile,:alliance_type => 'monster_attack') %>
+	</caption>
+	<thead>
+		<th class="top" scope="col" width="5%">Type</th>
+		<th class="top" scope="col" width="30%">Primary</th>
+		<th class="top" scope="col" width="30%">Secondary</th>
+		<th class="top" scope="col" width="30%">Tertiary</th>
+		<th class="top" scope="col" width="5%">Options</th>
+	</thead>
+
+	<% @alliances.each do |alliance| %>
+		<tr>
+			<td><%= alliance.alliance_type.titleize %></td>
+			<td><%= alliance.primary.general.name %> (<%= alliance.primary.level %>)</td>
+			<td><%= alliance.secondary.general.name %> (<%= alliance.secondary.level %>)</td>
+			<td>
+				<% unless alliance.tertiary.nil? %>
+					<%= alliance.tertiary.general.name %> (<%= alliance.tertiary.level %>)
+				<% end %>
+			</td>
+			<td>
+				<%= link_to '[Edit]', edit_profile_alliance_path(@profile,alliance) %>
+				<%= link_to '[Remove]', profile_alliance_path(@profile,alliance), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

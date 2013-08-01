@@ -3,6 +3,10 @@ class IntrosController < ApplicationController
   
   def index
     @message = Message.first
+    
+    respond_to do |format|
+      format.html
+    end
   end
   
   def catcher

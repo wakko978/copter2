@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719135914) do
+ActiveRecord::Schema.define(:version => 20130731153046) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(:version => 20130719135914) do
   end
 
   add_index "accessories", ["profile_id", "owned"], :name => "index_accessories_on_profile_id_and_owned"
+
+  create_table "alliances", :force => true do |t|
+    t.integer "profile_id",     :null => false
+    t.string  "alliance_type",  :null => false
+    t.integer "primary_link"
+    t.integer "secondary_link"
+    t.integer "tertiary_link"
+  end
 
   create_table "arms", :force => true do |t|
     t.integer "profile_id",                :null => false

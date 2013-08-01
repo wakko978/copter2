@@ -1,31 +1,18 @@
 class Odin < General
   def piercing(recruit)
-    mod = 0
-    if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Annika'").first)
-      case alliance.level
-      when 1..4
-        mod += ((alliance.level + 1) * 10) * 0.5
-      else
-        mod += 50 * 0.5
-      end
-    else
-      mod += 0
+    mod1 = 0
+    mod2 = 0
+    
+    if (alliance = recruit.primary_alliance)
+      mod1 = (alliance.secondary.piercing * 0.5).floor
+      mod2 = (alliance.tertiary.piercing * 0.33).floor unless alliance.tertiary.nil?
     end
-    if (alliance2 = recruit.profile.recruits.includes(:general).where("generals.name = 'Aesir'").first)
-      case alliance2.level
-      when 1..4
-        mod += ((alliance2.level * 10) * 0.33).floor
-      else
-        mod += (40 * 0.33).floor
-      end
-    else
-      mod += 0
-    end
+      
     case recruit.level
     when 1..4
-      return (recruit.level + 1) * 10 + mod
+      return (recruit.level + 1) * 10 + mod1 + mod2
     else
-      return 50 + mod
+      return 50 + mod1 + mod2
     end
   end
   
@@ -80,7 +67,7 @@ class Odin < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
 
-    e_attack += (piercing(recruit) / 1000) * e_attack
+    e_attack += (piercing(recruit) / 1000.0) * e_attack
     
     return e_attack.round(1)
   end

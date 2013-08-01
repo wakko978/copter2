@@ -1,5 +1,5 @@
 require 'file_size_validator'
-class Profile < ActiveRecord::Base  
+class Profile < ActiveRecord::Base
   belongs_to :user
   has_many :properties, :dependent => :destroy
   has_many :fighters, :dependent => :destroy
@@ -8,6 +8,7 @@ class Profile < ActiveRecord::Base
   has_many :accessories, :dependent => :destroy
   has_many :recruits, :dependent => :destroy
   has_many :loadouts, :dependent => :destroy
+  has_many :alliances, :dependent => :destroy
   has_many :lands, :through => :properties
   has_many :soldiers, :through => :fighters
   has_many :powers, :through => :spells

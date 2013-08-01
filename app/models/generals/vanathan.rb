@@ -1,21 +1,18 @@
 class Vanathan < General
   def resistance(recruit)
-    mod = 0
-    if (alliance = recruit.profile.recruits.includes(:general).where("generals.name = 'Vanir'").first)
-      case alliance.level
-      when 1..4
-        mod = (alliance.level * 10) * 0.5
-      else
-        mod = 40 * 0.5
-      end
-    else
-      mod = 0
+    mod1 = 0
+    mod2 = 0
+    
+    if (alliance = recruit.primary_alliance)
+      mod1 = (alliance.secondary.resistance * 0.5).floor
+      mod2 = (alliance.tertiary.resistance * 0.33).floor unless alliance.tertiary.nil?
     end
+    
     case recruit.level
     when 1..4
-      return ((recruit.level + 1) * 10) + mod
+      return ((recruit.level + 1) * 10) + mod1 + mod2
     else
-      return 50 + mod
+      return 50 + mod1 + mod2
     end
   end
   
@@ -57,7 +54,7 @@ class Vanathan < General
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    e_defense += (resistance(recruit) / 1000) * e_defense
+    e_defense += (resistance(recruit) / 1000.0) * e_defense
 
     return e_defense.round(1)
   end

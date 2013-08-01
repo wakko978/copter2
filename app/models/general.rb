@@ -41,6 +41,14 @@ class General < ActiveRecord::Base
     false
   end
   
+  def monster_bonus_only?
+    false
+  end
+  
+  def monster_attack(recruit)
+    0
+  end
+  
   def resistance(recruit)
     base_resistance
   end
@@ -108,6 +116,10 @@ class #{class_name} < General
   end
   
   def has_special_leveling_increment?
+    false
+  end
+  
+  def monster_bonus_only?
     false
   end
   

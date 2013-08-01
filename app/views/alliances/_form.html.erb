@@ -1,0 +1,36 @@
+<%= render :partial => "faq" %>
+
+<%= form_for([@profile,@alliance]) do |f| %>
+  <% if @alliance.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@alliance.errors.count, "error") %> prohibited this alliance from being saved:</h2>
+
+      <ul>
+      <% @alliance.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	
+	<%= f.hidden_field :alliance_type, :value => params[:alliance_type] || 'piercing' %>
+	
+	<p>
+		<%= f.label 'primary_link', 'Primary' %>
+		<%= f.collection_select :primary_link, @collection, :id, :name, {:include_blank => true} %>
+	</p>
+	
+	<p>
+		<%= f.label 'secondary_link', 'Secondary' %>
+		<%= f.collection_select :secondary_link, @collection, :id, :name, {:include_blank => true} %>
+	</p>
+	
+	<p>
+		<%= f.label 'tertiary_link', 'Tertiary' %>
+		<%= f.collection_select :tertiary_link, @collection, :id, :name, {:include_blank => true} %>
+	</p>
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

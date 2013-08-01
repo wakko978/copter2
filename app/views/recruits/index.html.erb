@@ -37,7 +37,7 @@
 				<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to general.name, general_path(general) %>
-				<% if ['Annika','Aesir','Odin','Vanathan','Vanir'].include?(general.name) %>
+				<% if !recruit.primary_alliance.nil? %>
 					<%= image_tag 'genally_link_primary.gif', height: '18' %>
 				<% end %>
 			</td>
@@ -60,7 +60,9 @@
 			<td id="eDef_w_bonus_<%= recruit.id %>"><%= recruit.general.send("e_defense_with_bonus",@profile,recruit) %></td>
 			<td><%= truncate(general.general_type, length: 3, omission: '') %></td>
 			<td>
-				<%= link_to '[Remove]', profile_recruit_path(@profile,recruit), :confirm => 'Are you sure?', :method => :delete %>
+				<% unless recruit.primary_alliance || recruit.secondary_alliance || recruit.tertiary_alliance || !recruit.loadouts.empty? %>
+					<%= link_to '[Remove]', profile_recruit_path(@profile,recruit), :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
 			</td>
 		</tr>
 	<% end %>

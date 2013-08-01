@@ -6,6 +6,10 @@ class Recruit < ActiveRecord::Base
     
   belongs_to :profile
   belongs_to :general
+  has_one :primary_alliance, :class_name => "Alliance", :foreign_key => :primary_link
+  has_one :secondary_alliance, :class_name => "Alliance", :foreign_key => :secondary_link
+  has_one :tertiary_alliance, :class_name => "Alliance", :foreign_key => :tertiary_link
+  has_many :loadouts, :foreign_key => :general_id
   
   def name
     general.name
@@ -21,6 +25,14 @@ class Recruit < ActiveRecord::Base
   
   def resistance
     general.resistance(self)
+  end
+  
+  def monster_bonus_only?
+    general.monster_bonus_only?
+  end
+  
+  def monster_attack
+    general.monster_attack(self)
   end
   
   def attack

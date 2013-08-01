@@ -22,6 +22,7 @@ Copter2::Application.routes.draw do
       get 'get_info', :on => :collection
     end
     resources :loadouts
+    resources :alliances
     member do
       get 'updater'
       get 'army_stats'

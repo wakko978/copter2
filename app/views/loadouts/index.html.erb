@@ -25,7 +25,7 @@
 			<td>
 				<% unless loadout.general.nil? %>
 					<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}", :size => "25x25" %>
-					<% if ['Annika','Aesir','Odin','Vanathan','Vanir'].include?(general.name) %>
+					<% if !loadout.general.primary_alliance.nil? %>
 						<%= image_tag 'genally_link_primary.gif', height: '9' %>
 					<% end %>
 					<br/>

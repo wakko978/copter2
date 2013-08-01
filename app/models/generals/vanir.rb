@@ -1,10 +1,18 @@
 class Vanir < General
   def resistance(recruit)
+    mod1 = 0
+    mod2 = 0
+    
+    if (alliance = recruit.primary_alliance)
+      mod1 = (alliance.secondary.resistance * 0.5).floor
+      mod2 = (alliance.tertiary.resistance * 0.33).floor unless alliance.tertiary.nil?
+    end
+    
     case recruit.level
     when 1..4
-      return recruit.level * 10
+      return recruit.level * 10 + mod1 + mod2
     else
-      return 40
+      return 40 + mod1 + mod2
     end
   end
   
@@ -61,7 +69,7 @@ class Vanir < General
   def e_defense_with_bonus(profile,recruit)
     e_defense = super
     
-    e_defense += (resistance(recruit) / 1000) * e_defense
+    e_defense += (resistance(recruit) / 1000.0) * e_defense
     
     return e_defense.round(1)
   end

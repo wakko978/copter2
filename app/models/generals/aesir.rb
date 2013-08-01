@@ -1,10 +1,18 @@
 class Aesir < General
   def piercing(recruit)
+    mod1 = 0
+    mod2 = 0
+    
+    if (alliance = recruit.primary_alliance)
+      mod1 = (alliance.secondary.piercing * 0.5).floor
+      mod2 = (alliance.tertiary.piercing * 0.33).floor unless alliance.tertiary.nil?
+    end
+    
     case recruit.level
     when 1..4
-      return recruit.level * 10
+      return recruit.level * 10 + mod1 + mod2
     else
-      return 40
+      return 40 + mod1 + mod2
     end
   end
   
@@ -31,7 +39,7 @@ class Aesir < General
   def e_attack_with_bonus(profile,recruit)
     e_attack = super
     
-    e_attack += (piercing(recruit) / 1000) * e_attack
+    e_attack += (piercing(recruit) / 1000.0) * e_attack
     
     return e_attack.round(1)
   end
