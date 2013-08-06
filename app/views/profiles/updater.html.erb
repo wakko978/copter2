@@ -6,31 +6,31 @@
 	<table class="non-fixed">
 		<thead>
 			<th width="50%">File</th>
-			<th width="20%">Options</th>
 			<th width="30%">Parse/Output</th>
+			<th width="20%">Options</th>
 		</thead>
 	
 		<tr>
 			<td>
 				<b>Keep:</b>
 				<%= file_field_tag 'keep_file', id: 'keep_file',
-					accept: 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source',
 					data: {url: profile_path(@profile), update: update_all_profile_path(@profile)} %>
+			</td>
+			<td rowspan="6">
+				<div id="parse_output" style="width: 200px; height:100px; overflow-y:scroll; border:1px inset grey">
+				</div>
+				<div id="data_output" style="width: 200px; height:100px; overflow-y:scroll; border:1px inset grey">
+				</div>
 			</td>
 			<td rowspan="6">
 				<input id="update_button" type="button" value="Update DB" />
 				<input id="reset_form" type="reset" value="Clear Form" />
-			</td>
-			<td rowspan="6">
-				<div id="output" style="width: 100%px; height:100%; overflow-y:scroll; border:1px inset grey">
-				</div>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<b>Generals:</b>
 				<%= file_field_tag 'general_file', id: 'general_file',
-					accept: 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source',
 					data: {url: profile_recruits_path(@profile), update: update_all_profile_recruits_path(@profile)} %>
 			</td>
 		</tr>
@@ -38,7 +38,6 @@
 			<td>
 				<b>Soldiers:</b>
 				<%= file_field_tag 'soldier_file', id: 'soldier_file',
-					accept: 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source',
 					data: {url: profile_fighters_path(@profile), update: update_all_profile_fighters_path(@profile)} %>
 			</td>
 		</tr>
@@ -46,7 +45,6 @@
 			<td>
 				<b>Items & Weapons:</b>
 				<%= file_field_tag 'item_file', id: 'item_file',
-					accept: 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source',
 					data: {url: profile_accessories_path(@profile), update: update_all_profile_accessories_path(@profile)} %>
 			</td>
 		</tr>
@@ -54,7 +52,6 @@
 			<td>
 				<b>Magic:</b>
 				<%= file_field_tag 'magic_file', id: 'magic_file',
-					accept: 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source',
 					data: {url: profile_spells_path(@profile), update: update_all_profile_spells_path(@profile)} %>
 			</td>
 		</tr>
@@ -62,7 +59,6 @@
 			<td>
 				<b>Land:</b>
 				<%= file_field_tag 'land_file', id: 'land_file',
-					accept: 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source',
 					data: {url: profile_properties_path(@profile), update: update_all_profile_properties_path(@profile)} %>
 			</td>
 		</tr>

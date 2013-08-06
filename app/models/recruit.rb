@@ -70,6 +70,12 @@ class Recruit < ActiveRecord::Base
       attack += 25 if general.general_type == 'Balanced'
       attack += 30 if general.general_type == 'Defensive'
     end
+    
+    if (alliance = self.primary_alliance)
+      attack += (alliance.secondary.attack * 0.5).floor
+      attack += (alliance.tertiary.attack * 0.33).floor unless alliance.tertiary.nil?
+    end
+    
     return attack
   end
   
@@ -107,6 +113,12 @@ class Recruit < ActiveRecord::Base
       defense += 25 if general.general_type == 'Balanced'
       defense += 60 if general.general_type == 'Defensive'
     end
+    
+    if (alliance = self.primary_alliance)
+      defense += (alliance.secondary.defense * 0.5).floor
+      defense += (alliance.tertiary.defense * 0.33).floor unless alliance.tertiary.nil?
+    end
+    
     return defense
   end
   

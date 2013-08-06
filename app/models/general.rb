@@ -1,6 +1,7 @@
 class General < ActiveRecord::Base
   attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense, :div_power,
-    :attack_increment, :defense_increment, :description, :general_type, :url, :base_piercing, :base_resistance
+    :attack_increment, :defense_increment, :description, :general_type, :url, :base_piercing, :base_resistance,
+    :alliance_type
   
   validates :name, :presence => true
   validates :attack, :defense, :base_piercing, :base_resistance, :presence => true, :numericality => { :only_integer => true }

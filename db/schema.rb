@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731153046) do
+ActiveRecord::Schema.define(:version => 20130806182259) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20130731153046) do
     t.string   "url"
     t.integer  "base_piercing",                    :default => 0
     t.integer  "base_resistance",                  :default => 0
+    t.string   "alliance_type"
   end
 
   add_index "generals", ["name"], :name => "index_generals_on_name"

@@ -46,7 +46,14 @@
 	<p>
 	  <%= f.label 'general_type', 'General Type' %><br/>
 	  <%= f.select :general_type,
-	 		options_for_select(['Aggressive','Balanced','Defensive',@general.general_type]) %>
+	 		options_for_select(['Aggressive','Balanced','Defensive'],@general.general_type) %>
+	</p>
+	
+	<p>
+	  <%= f.label 'alliance_type', 'Alliance Type' %><br/>
+	  <%= f.select :alliance_type,
+	 		options_for_select(['piercing','resistance','monster_attack','damage','crits','deflect',
+				'cleric_splash','mage_splash','evade','whirlwind','healing'],@general.alliance_type) %>
 	</p>
 	
 	<p>

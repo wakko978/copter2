@@ -291,7 +291,8 @@ jQuery ->
     })
 
   $('body').on 'click', '#reset_form', (event) ->
-    $('#output').empty()
+    $('#parse_output').empty()
+    $('#data_output').empty()
 
 this.toggleDiv = (id) ->
   $('#'+id).toggle()
@@ -316,9 +317,6 @@ this.generalFileSelect = (current_generals) ->
     alert "Please select a file!"
     return
   general_file = files[0]
-  unless general_file.type.match(/text.*/)
-    alert "Invalid file format!"
-    return
   unless general_file.name.match(/generals\.(php|php.html|php.htm|html|htm)/)
     alert "Not a generals file"
     return
@@ -342,7 +340,7 @@ this.generalFileSelect = (current_generals) ->
       )
 
       if output.length
-        $('#output').html(output.join(""))
+        $('#parse_output').html($('#parse_output').html() + "<br/><b>Generals:</b><br/>" + output.join(""))
         $('body').on 'click', "#update_button", (event) ->
           $.ajax({
             url: $('#general_file').data('update'),
@@ -350,12 +348,12 @@ this.generalFileSelect = (current_generals) ->
             data: {to_update},
             dataType: 'html',
             success: (data) ->
-              $('#output').html(data)
+              $('#data_output').html($('#data_output').html() + '<br/><b>Generals Updated:</b><br/>' +  data)
               $('body').off('click', '#update_button')
               $('#my_form')[0].reset()
           })
       else
-        $('#output').html('<dd>Generals: Nothing to update</dd>')
+        $('#parse_output').html($('#parse_output').html() + '<br/><b>Generals:</b><br/><dd>Nothing to update</dd>')
   )(general_file,current_generals)
 
   # Read in the text file as a string.
@@ -368,9 +366,6 @@ this.soldierFileSelect = (current_soldiers) ->
     alert "Please select a file!"
     return
   soldier_file = files[0]
-  unless soldier_file.type.match(/text.*/)
-    alert "Invalid file format!"
-    return
   unless soldier_file.name.match(/soldiers\.(php|php.html|php.htm|html|htm)/)
     alert "Not a soldiers file"
     return
@@ -395,7 +390,7 @@ this.soldierFileSelect = (current_soldiers) ->
       )
 
       if output.length
-        $('#output').html(output.join(""))
+        $('#parse_output').html($('#parse_output').html() + "<br/><b>Soldiers:</b><br/>" + output.join(""))
         $('body').on 'click', "#update_button", (event) ->
           $.ajax({
             url: $('#soldier_file').data('update'),
@@ -403,12 +398,12 @@ this.soldierFileSelect = (current_soldiers) ->
             data: {to_update},
             dataType: 'html',
             success: (data) ->
-              $('#output').html(data)
+              $('#data_output').html($('#data_output').html() + '<br/><b>Soldiers Updated:</b><br/>' +  data)
               $('body').off('click', '#update_button')
               $('#my_form')[0].reset()
           })
       else
-        $('#output').html('<dd>Soldiers: Nothing to update</dd>')
+        $('#parse_output').html($('#parse_output').html() + '<br/><b>Soldiers:</b><br/><dd>Nothing to update</dd>')
   )(soldier_file,current_soldiers)
 
   # Read in the text file as a string.
@@ -421,9 +416,6 @@ this.itemFileSelect = (current_items) ->
     alert "Please select a file!"
     return
   item_file = files[0]
-  unless item_file.type.match(/text.*/)
-    alert "Invalid file format!"
-    return
   unless item_file.name.match(/item\.(php|php.html|php.htm|html|htm)/)
     alert "Not an item file"
     return
@@ -443,12 +435,12 @@ this.itemFileSelect = (current_items) ->
         defense = t.find('div div div:contains("Defense")').text().match(/\d+/)[0]
         amount = t.find('div div span:contains("Owned:")').text().match(/\d+/)[0]
         if !current_items[item] or (current_items[item][0] != amount && current_items[item][1] == attack && current_items[item][2] == defense)
-          output.push item + ": " + amount + "\n"
+          output.push "<dd>" + item + ": " + amount + "</dd>"
           to_update[item] = {owned: amount, attack: attack, defense: defense}
       )
 
       if output.length
-        $('#output').html(output.join(""))
+        $('#parse_output').html($('#parse_output').html() + "<br/><b>Items & Weapons:</b><br/>" + output.join(""))
         $('body').on 'click', "#update_button", (event) ->
           $.ajax({
             url: $('#item_file').data('update'),
@@ -456,12 +448,12 @@ this.itemFileSelect = (current_items) ->
             data: {to_update},
             dataType: 'html',
             success: (data) ->
-              $('#output').html(data)
+              $('#data_output').html($('#data_output').html() + '<br/><b>Items & Weapons Updated:</b><br/>' +  data)
               $('body').off('click', '#update_button')
               $('#my_form')[0].reset()
           })
       else
-        $('#output').html('<dd>Items: Nothing to update</dd>')
+        $('#parse_output').html($('#parse_output').html() + '<br/><b>Items & Weapons:</b><br/><dd>Nothing to update</dd>')
   )(item_file,current_items)
 
   # Read in the text file as a string.
@@ -474,9 +466,6 @@ this.magicFileSelect = (current_powers) ->
     alert "Please select a file!"
     return
   magic_file = files[0]
-  unless magic_file.type.match(/text.*/)
-    alert "Invalid file format!"
-    return
   unless magic_file.name.match(/magic\.(php|php.html|php.htm|html|htm)/)
     alert "Not a magic file"
     return
@@ -501,7 +490,7 @@ this.magicFileSelect = (current_powers) ->
       )
 
       if output.length
-        $('#output').html(output.join(""))
+        $('#parse_output').html($('#parse_output').html() + "<br/><b>Magic:</b><br/>" + output.join(""))
         $('body').on 'click', "#update_button", (event) ->
           $.ajax({
             url: $('#magic_file').data('update'),
@@ -509,12 +498,12 @@ this.magicFileSelect = (current_powers) ->
             data: {to_update},
             dataType: 'html',
             success: (data) ->
-              $('#output').html(data)
+              $('#data_output').html($('#data_output').html() + '<br/><b>Magic Updated:</b><br/>' +  data)
               $('body').off('click', '#update_button')
               $('#my_form')[0].reset()
           })
       else
-        $('#output').html('<dd>Magic: Nothing to update</dd>')
+        $('#parse_output').html($('#parse_output').html() + '<br/><b>Magic:</b><br/><dd>Nothing to update</dd>')
   )(magic_file,current_powers)
 
   # Read in the text file as a string.
@@ -527,9 +516,6 @@ this.landFileSelect = (current_lands) ->
     alert "Please select a file!"
     return
   land_file = files[0]
-  unless land_file.type.match(/text.*/)
-    alert "Invalid file format!"
-    return
   unless land_file.name.match(/land\.(php|php.html|php.htm|html|htm)/)
     alert "Not a land file"
     return
@@ -553,7 +539,7 @@ this.landFileSelect = (current_lands) ->
       )
 
       if output.length
-        $('#output').html(output.join(""))
+        $('#parse_output').html($('#parse_output').html() + "<br/><b>Land:</b><br/>" + output.join(""))
         $('body').on 'click', "#update_button", (event) ->
           $.ajax({
             url: $('#land_file').data('update'),
@@ -561,12 +547,12 @@ this.landFileSelect = (current_lands) ->
             data: {to_update},
             dataType: 'html',
             success: (data) ->
-              $('#output').html(data)
+              $('#data_output').html($('#data_output').html() + '<br/><b>Land Updated:</b><br/>' +  data)
               $('body').off('click', '#update_button')
               $('#my_form')[0].reset()
           })
       else
-        $('#output').html('<dd>Land: Nothing to update</dd>')
+        $('#parse_output').html($('#parse_output').html() + '<br/><b>Land:</b><br/><dd>Nothing to update</dd>')
   )(land_file,current_lands)
 
   # Read in the text file as a string.
@@ -579,9 +565,6 @@ this.keepFileSelect = (current_stats) ->
     alert "Please select a file!"
     return
   keep_file = files[0]
-  unless keep_file.type.match(/text.*/)
-    alert "Invalid file format!"
-    return
   unless keep_file.name.match(/keep\.(php|php.html|php.htm|html|htm)/)
     alert "Not a keep file"
     return
@@ -609,35 +592,35 @@ this.keepFileSelect = (current_stats) ->
       health_rune = parseInt(/(\d+) (Hth|Health)/.exec(doc.find('div#runes_2').text())[1], 10)
       damage_rune = parseInt(/(\d+) (Dmg|Damage)/.exec(doc.find('div#runes_2').text())[1], 10)
       
-      output.push "<dd>Level: " + level + "</dd>"
+      output.push "<dd>Level: " + level + "</dd>" unless current_stats['level'] == level
       to_update['level'] = level
-      output.push "<dd>Energy: " + energy + "</dd>"
+      output.push "<dd>Energy: " + energy + "</dd>" unless current_stats['energy'] == energy
       to_update['energy'] = energy
-      output.push "<dd>Stamina: " + stamina + "</dd>"
+      output.push "<dd>Stamina: " + stamina + "</dd>" unless current_stats['stamina'] == stamina
       to_update['stamina'] = stamina
-      output.push "<dd>Attack: " + attack + "</dd>"
+      output.push "<dd>Attack: " + attack + "</dd>" unless current_stats['attack'] == attack
       to_update['attack'] = attack
-      output.push "<dd>Defense: " + defense + "</dd>"
+      output.push "<dd>Defense: " + defense + "</dd>" unless current_stats['defense'] == defense
       to_update['defense'] = defense
-      output.push "<dd>Health: " + health + "</dd>"
+      output.push "<dd>Health: " + health + "</dd>" unless current_stats['health'] == health
       to_update['health'] = health
-      output.push "<dd>Army Size: " + army_size + "</dd>"
+      output.push "<dd>Army Size: " + army_size + "</dd>" unless current_stats['army_size'] == army_size
       to_update['army_size'] = army_size
-      output.push "<dd>Attack IA: " + attack_ia + "</dd>"
+      output.push "<dd>Attack IA: " + attack_ia + "</dd>" unless current_stats['attack_ia'] == attack_ia
       to_update['attack_ia'] = attack_ia
-      output.push "<dd>Defense IA: " + defense_ia + "</dd>"
+      output.push "<dd>Defense IA: " + defense_ia + "</dd>" unless current_stats['defense_ia'] == defense_ia
       to_update['defense_ia'] = defense_ia
-      output.push "<dd>Attack Rune: " + attack_rune + "</dd>"
+      output.push "<dd>Attack Rune: " + attack_rune + "</dd>" unless current_stats['attack_rune'] == attack_rune
       to_update['attack_rune'] = attack_rune
-      output.push "<dd>Defense Rune: " + defense_rune + "</dd>"
+      output.push "<dd>Defense Rune: " + defense_rune + "</dd>" unless current_stats['defense_rune'] == defense_rune
       to_update['defense_rune'] = defense_rune
-      output.push "<dd>Health Rune: " + health_rune + "</dd>"
+      output.push "<dd>Health Rune: " + health_rune + "</dd>" unless current_stats['health_rune'] == health_rune
       to_update['health_rune'] = health_rune
-      output.push "<dd>Damage Rune: " + damage_rune + "</dd>"
+      output.push "<dd>Damage Rune: " + damage_rune + "</dd>" unless current_stats['damage_rune'] == damage_rune
       to_update['damage_rune'] = damage_rune
 
       if output.length
-        $('#output').html(output.join(""))
+        $('#parse_output').html($('#parse_output').html() + "<br/><b>Stats:</b><br/>" + output.join(""))
         $('body').on 'click', "#update_button", (event) ->
           $.ajax({
             url: $('#keep_file').data('update'),
@@ -645,12 +628,12 @@ this.keepFileSelect = (current_stats) ->
             data: {to_update},
             dataType: 'html',
             success: (data) ->
-              $('#output').html(data)
+              $('#data_output').html($('#data_output').html() + '<br/><b>Stats Updated:</b><br/>' + data)
               $('body').off('click', '#update_button')
               $('#my_form')[0].reset()
           })
       else
-        $('#output').html('<dd>Stats: Nothing to update</dd>')
+        $('#parse_output').html($('#parse_output').html() + '<br/><b>Stats:</b><br/><dd>Nothing to update</dd>')
   )(keep_file,current_stats)
 
   # Read in the text file as a string.

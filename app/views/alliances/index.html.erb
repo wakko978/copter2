@@ -4,9 +4,18 @@
 
 <table class="non-fixed">
 	<caption>
-		<%= link_to "Create Piercing Alliance", new_profile_alliance_path(@profile,:alliance_type => 'piercing') %> |
-		<%= link_to "Create Resistance Alliance", new_profile_alliance_path(@profile,:alliance_type => 'resistance') %> |
-		<%= link_to "Create Monster Attack Alliance", new_profile_alliance_path(@profile,:alliance_type => 'monster_attack') %>
+		Create Alliance:<br/>
+		<%= link_to "Piercing", new_profile_alliance_path(@profile,:alliance_type => 'piercing') %> |
+		<%= link_to "Resistance", new_profile_alliance_path(@profile,:alliance_type => 'resistance') %> |
+		<%= link_to "Monster Attack", new_profile_alliance_path(@profile,:alliance_type => 'monster_attack') %> |
+		<%= link_to "Crits", new_profile_alliance_path(@profile,:alliance_type => 'crits') %> |
+		<%= link_to "GB Damage", new_profile_alliance_path(@profile,:alliance_type => 'damage') %> |
+		<%= link_to "Deflect", new_profile_alliance_path(@profile,:alliance_type => 'deflect') %> |
+		<%= link_to "Cleric Splash", new_profile_alliance_path(@profile,:alliance_type => 'cleric_splash') %> |
+		<%= link_to "Mage Splash", new_profile_alliance_path(@profile,:alliance_type => 'mage_splash') %> |
+		<%= link_to "Evade", new_profile_alliance_path(@profile,:alliance_type => 'evade') %> |
+		<%= link_to "Whirlwind", new_profile_alliance_path(@profile,:alliance_type => 'whirlwind') %> |
+		<%= link_to "Healing", new_profile_alliance_path(@profile,:alliance_type => 'healing') %>
 	</caption>
 	<thead>
 		<th class="top" scope="col" width="5%">Type</th>
