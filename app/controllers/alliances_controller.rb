@@ -11,17 +11,17 @@ class AlliancesController < ApplicationController
   
   def new
     @alliance = Alliance.new
+    @alliance_type = params[:alliance_type] || 'piercing'
     
     @collection = nil
-    case params[:alliance_type]
+    case @alliance_type
     when 'piercing'
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Odin','Annika','Aesir')")
     when 'resistance'
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vanathan','Vanir')")
     when 'monster_attack'
-      @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vancy','Sorkan','Feral','Therian','Elin','Zarevok')")
+      @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vancy','Sorkan','Sahar','Feral','Therian','Elin','Zarevok')")
     else
-      params[:alliance_type] = 'piercing'
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Odin','Annika','Aesir')")
     end
   end
@@ -36,7 +36,7 @@ class AlliancesController < ApplicationController
     when 'resistance'
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vanathan','Vanir')")
     when 'monster_attack'
-      @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vancy','Sorkan','Feral','Therian','Elin','Zarevok')")
+      @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vancy','Sorkan','Sahar','Feral','Therian','Elin','Zarevok')")
     else
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Odin','Annika','Aesir')")
     end
@@ -44,15 +44,16 @@ class AlliancesController < ApplicationController
   
   def create
     @alliance = @profile.alliances.new(params[:alliance])
+    @alliance_type = params[:alliance][:alliance_type] || 'piercing'
     
     @collection = nil
-    case @alliance.alliance_type
+    case @alliance_type
     when 'piercing'
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Odin','Annika','Aesir')")
     when 'resistance'
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vanathan','Vanir')")
     when 'monster_attack'
-      @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vancy','Sorkan','Feral','Therian','Elin','Zarevok')")
+      @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vancy','Sorkan','Sahar','Feral','Therian','Elin','Zarevok')")
     else
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Odin','Annika','Aesir')")
     end
@@ -61,7 +62,7 @@ class AlliancesController < ApplicationController
       if @alliance.save
         format.html { redirect_to profile_alliances_path(@profile) }
       else
-        format.html { render :action => 'new'}
+        format.html { render :action => 'new' }
       end
     end
   end
@@ -76,7 +77,7 @@ class AlliancesController < ApplicationController
     when 'resistance'
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vanathan','Vanir')")
     when 'monster_attack'
-      @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vancy','Sorkan','Feral','Therian','Elin','Zarevok')")
+      @collection = @profile.recruits.includes(:general).where("generals.name IN ('Vancy','Sorkan','Sahar','Feral','Therian','Elin','Zarevok')")
     else
       @collection = @profile.recruits.includes(:general).where("generals.name IN ('Odin','Annika','Aesir')")
     end

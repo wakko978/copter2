@@ -1,5 +1,5 @@
-<h1>Design <%= params[:alliance_type].titleize %> Alliance</h1>
+<h1>Design <%= @alliance_type.titleize %> Alliance</h1>
 
 <%= render :partial => "form" %>
 
-<%= link_to 'Back', :back %>
+<%= link_to 'Back', profile_alliances_path(@profile) %>

@@ -530,7 +530,7 @@ class Profile < ActiveRecord::Base
         soldier = Soldier.find_by_name_and_attack_and_defense(name,data[:attack],data[:defense])
         
         if soldier
-          self.fighters.create(:soldier_id => soldier.id, :owned => data[:owned])
+          self.fighters.create(:soldier_id => soldier.id, :owned => data.kind_of?(Integer) ? data : data[:owned])
           results[name] = "Added #{data[:owned]}"
           i += 1
         else

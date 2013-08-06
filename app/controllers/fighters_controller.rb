@@ -19,6 +19,13 @@ class FightersController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.json {
+        json = {}
+        @profile.fighters.includes(:soldier).each do |r|
+          json[r.soldier.name] = [r.owned.to_s, r.soldier.attack.to_s, r.soldier.defense.to_s]
+        end
+        render json: json
+      }
     end
   end
   
@@ -37,6 +44,16 @@ class FightersController < ApplicationController
       else
         format.html { render :action => 'new' }
       end
+    end
+  end
+  
+  def update_all
+    to_update = params['to_update']
+    @results = Hash.new
+    @result = @profile.update_soldiers('soldier' => to_update)
+    
+    respond_to do |format|
+      format.html { render partial: 'profiles/changes' }
     end
   end
   

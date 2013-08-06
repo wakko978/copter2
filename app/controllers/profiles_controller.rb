@@ -13,6 +13,27 @@ class ProfilesController < ApplicationController
   
   def show
     @profile = current_user.profiles.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+      format.json {
+        json = {}
+        json['level'] = @profile.level
+        json['energy'] = @profile.energy
+        json['stamina'] = @profile.stamina
+        json['attack'] = @profile.attack
+        json['defense'] = @profile.defense
+        json['health'] = @profile.health
+        json['army_size'] = @profile.army_size
+        json['attack_ia'] = @profile.attack_ia
+        json['defense_ia'] = @profile.defense_ia
+        json['attack_rune'] = @profile.attack_rune
+        json['defense_rune'] = @profile.defense_rune
+        json['health_rune'] = @profile.health_rune
+        json['damage_rune'] = @profile.damage_rune
+        render json: json
+      }
+    end
   end
   
   def div_stats
@@ -92,6 +113,17 @@ class ProfilesController < ApplicationController
       else
         format.html { render :action => "new" }
       end
+    end
+  end
+  
+  def update_all
+    @profile = current_user.profiles.find(params[:id])
+    to_update = params['to_update']
+    @results = Hash.new
+    @result = @profile.update_stats('keep' => to_update)
+    
+    respond_to do |format|
+      format.html { render partial: 'profiles/changes' }
     end
   end
   

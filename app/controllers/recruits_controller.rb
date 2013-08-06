@@ -39,6 +39,13 @@ class RecruitsController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.json {
+        json = {}
+        @profile.recruits.each do |r|
+          json[r.name] = r.level.to_s
+        end
+        render json: json
+      }
     end
   end
   
@@ -65,6 +72,16 @@ class RecruitsController < ApplicationController
       else
         format.html { render :action => 'new'}
       end
+    end
+  end
+  
+  def update_all
+    to_update = params['to_update']
+    @results = Hash.new
+    @result = @profile.update_generals('general' => to_update)
+    
+    respond_to do |format|
+      format.html { render partial: 'profiles/changes' }
     end
   end
   

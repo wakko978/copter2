@@ -9,17 +9,25 @@ Copter2::Application.routes.draw do
   resources :monsters, :only => [:index, :show]
   resources :generals, :only => [:index, :show]
   resources :profiles do
-    resources :properties, :only => [:update]
-    resources :fighters, :except => [:edit]
-    resources :spells, :except => [:edit]
+    resources :properties, :only => [:index, :update] do
+      post 'update_all', :on => :collection
+    end
+    resources :fighters, :except => [:edit] do
+      post 'update_all', :on => :collection
+    end
+    resources :spells, :except => [:edit] do
+      post 'update_all', :on => :collection
+    end
     resources :arms, :except => [:edit] do
       get 'get_info', :on => :collection
     end
     resources :accessories, :except => [:edit] do
       get 'get_info', :on => :collection
+      post 'update_all', :on => :collection
     end
     resources :recruits, :except => [:edit] do
       get 'get_info', :on => :collection
+      post 'update_all', :on => :collection
     end
     resources :loadouts
     resources :alliances
@@ -47,6 +55,7 @@ Copter2::Application.routes.draw do
       post 'defense'
       post 'defense_rune'
       post 'defense_ia'
+      post 'update_all'
     end
   end
   scope "/items" do

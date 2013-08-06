@@ -1,6 +1,6 @@
 <%= render :partial => "faq" %>
 
-<%= form_for([@profile,@alliance]) do |f| %>
+<%= form_for([@profile,@alliance], :alliance_type => @alliance_type || @alliance.alliance_type) do |f| %>
   <% if @alliance.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@alliance.errors.count, "error") %> prohibited this alliance from being saved:</h2>
@@ -13,7 +13,7 @@
     </div>
   <% end %>
 	
-	<%= f.hidden_field :alliance_type, :value => params[:alliance_type] || 'piercing' %>
+	<%= f.hidden_field :alliance_type, :value => @alliance_type || @alliance.alliance_type %>
 	
 	<p>
 		<%= f.label 'primary_link', 'Primary' %>

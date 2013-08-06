@@ -25,6 +25,16 @@ class AccessoriesController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.json {
+        json = {}
+        @profile.accessories.includes(:item).each do |r|
+            json[r.item.name] = [r.owned.to_s, r.item.attack.to_s, r.item.defense.to_s]
+        end
+        @profile.arms.includes(:weapon).each do |r|
+            json[r.weapon.name] = [r.owned.to_s, r.weapon.attack.to_s, r.weapon.defense.to_s]
+        end
+        render json: json
+      }
     end
   end
   
@@ -55,6 +65,16 @@ class AccessoriesController < ApplicationController
       else
         format.html { render :action => 'new'}
       end
+    end
+  end
+  
+  def update_all
+    to_update = params['to_update']
+    @results = Hash.new
+    @result = @profile.update_items('item' => to_update)
+    
+    respond_to do |format|
+      format.html { render partial: 'profiles/changes' }
     end
   end
   

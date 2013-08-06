@@ -19,6 +19,13 @@ class SpellsController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.json {
+        json = {}
+        @profile.spells.includes(:power).each do |r|
+          json[r.power.name] = [r.owned.to_s, r.power.attack.to_s, r.power.defense.to_s]
+        end
+        render json: json
+      }
     end
   end
   
@@ -37,6 +44,16 @@ class SpellsController < ApplicationController
       else
         format.html { render :action => 'new'}
       end
+    end
+  end
+  
+  def update_all
+    to_update = params['to_update']
+    @results = Hash.new
+    @result = @profile.update_magic('magic' => to_update)
+    
+    respond_to do |format|
+      format.html { render partial: 'profiles/changes' }
     end
   end
   
