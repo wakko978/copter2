@@ -53,7 +53,7 @@
 	  <%= f.label 'alliance_type', 'Alliance Type' %><br/>
 	  <%= f.select :alliance_type,
 	 		options_for_select(['piercing','resistance','monster_attack','damage','crits','deflect',
-				'cleric_splash','mage_splash','evade','whirlwind','healing'],@general.alliance_type) %>
+				'cleric_splash','mage_splash','evade','whirlwind','healing'],@general.alliance_type), :include_blank => true %>
 	</p>
 	
 	<p>

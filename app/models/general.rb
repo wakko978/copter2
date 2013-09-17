@@ -14,6 +14,9 @@ class General < ActiveRecord::Base
   validates_attachment :avatar,
     :size => { :in => 0..100.kilobytes }
   belongs_to :loadoutable, :polymorphic => true
+  has_many :weapons
+  has_many :items
+  has_many :powers
   
   before_save :update_e_attack
   before_save :update_e_defense
@@ -21,6 +24,10 @@ class General < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 25
   @permitted_columns = ['name','attack','defense','e_attack','e_defense','base_cost','upkeep','div_power','general_type']
+  
+  def self.max_level
+    80
+  end
   
   def is_unowned?
     !recruits.exists?
@@ -75,21 +82,63 @@ class General < ActiveRecord::Base
   end
   
   def attack_with_mods(profile,recruit)
-    return recruit.attack
+    return [
+      recruit.attack,
+      profile.weapons.attack.where(general_id: recruit.general_id).sum(:bonus),
+      profile.items.attack.where(general_id: recruit.general_id).sum(:bonus),
+      profile.powers.attack.where(general_id: recruit.general_id).sum(:bonus)
+    ].sum
   end
 
   def defense_with_mods(profile,recruit)
-    return recruit.defense
+    return [
+      recruit.defense,
+      profile.weapons.defense.where(general_id: recruit.general_id).sum(:bonus),
+      profile.items.defense.where(general_id: recruit.general_id).sum(:bonus),
+      profile.powers.defense.where(general_id: recruit.general_id).sum(:bonus)
+    ].sum
   end
   
   def e_attack_with_bonus(profile,recruit)
-    return ((attack_with_mods(profile,recruit) + profile.ri_attack) + (profile.ri_defense + defense_with_mods(profile,recruit))*0.7).round(1)
-    # return profile.ri_e_attack.round(1)
+    # return ((attack_with_mods(profile,recruit) + profile.ri_attack) + (profile.ri_defense + defense_with_mods(profile,recruit))*0.7).round(1)
+    e_attack = General.eatt(
+      [
+        attack_with_mods(profile,recruit),
+        attack_bonus(profile,recruit),
+        profile.ri_attack
+      ].sum,
+      [
+        defense_with_mods(profile,recruit),
+        defense_bonus(profile,recruit),
+        profile.ri_defense
+      ].sum
+    )
+    return (e_attack * (1 + (piercing(recruit) / 1000.0))).round(1)
   end
 
   def e_defense_with_bonus(profile,recruit)
-    return ((defense_with_mods(profile,recruit) + profile.ri_defense) + (profile.ri_attack + attack_with_mods(profile,recruit))*0.7).round(1)
-    # return profile.ri_e_defense.round(1)
+    # return ((defense_with_mods(profile,recruit) + profile.ri_defense) + (profile.ri_attack + attack_with_mods(profile,recruit))*0.7).round(1)
+    e_defense = General.edef(
+      [
+        attack_with_mods(profile,recruit),
+        attack_bonus(profile,recruit),
+        profile.ri_attack
+      ].sum,
+      [
+        defense_with_mods(profile,recruit),
+        defense_bonus(profile,recruit),
+        profile.ri_defense
+      ].sum
+    )
+    return (e_defense * (1 + (resistance(recruit) / 1000.0))).round(1)
+  end
+  
+  def attack_bonus(profile,recruit)
+    return 0
+  end
+  
+  def defense_bonus(profile,recruit)
+    return 0
   end
   
   def step_function(level=1,opts={})
@@ -101,6 +150,14 @@ class General < ActiveRecord::Base
     mod = opts[:pos_index] + opts[:multiplier]*level -
       ((level-opts[:offset])/opts[:period]).floor
     return mod
+  end
+  
+  def self.edef(attack,defense)
+    return defense + attack * 0.7
+  end
+  
+  def self.eatt(attack,defense)
+    return attack + defense * 0.7
   end
   
   def self.stub_model(name)

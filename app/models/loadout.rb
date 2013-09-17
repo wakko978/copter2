@@ -24,7 +24,8 @@ class Loadout < ActiveRecord::Base
     [
       profile.attack + profile.attack_ia,
       general.nil? ? 0 : general.monster_bonus_only? ? general.monster_attack : 0,
-      general.nil? ? 0 : general.attack,
+      general.nil? ? 0 : general.general.attack_with_mods(profile,general),
+      general.nil? ? 0 : general.general.attack_bonus(profile,general),
       weapon.nil? ? 0 : weapon.attack + (attack_rune_on_weapon? ? profile.attack_rune : 0),
       shield.nil? ? 0 : shield.attack,
       helmet.nil? ? 0 : helmet.attack,
@@ -38,18 +39,27 @@ class Loadout < ActiveRecord::Base
   def defense
     [
       profile.defense + profile.defense_ia,
-      general.nil? ? 0 : general.defense,
+      general.nil? ? 0 : general.general.defense_with_mods(profile,general),
+      general.nil? ? 0 : general.general.defense_bonus(profile,general),
       weapon.nil? ? 0 : weapon.defense,
+      weapon.nil? ? 0 : weapon.name == 'Tinkerer Wrench' ? 25 : (weapon.name == 'Elite Tinkerer Wrench' ? 35 : 0),
       shield.nil? ? 0 : shield.defense,
+      shield.nil? ? 0 : shield.name == 'Tinkerer Shield' ? 50 : (shield.name == 'Elite Tinkerer Shield' ? 65 : 0),
       helmet.nil? ? 0 : helmet.defense + (defense_rune_on_helmet? ? profile.defense_rune : 0),
+      helmet.nil? ? 0 : helmet.name == 'Tinkerer Goggles' ? 25 : (helmet.name == 'Elite Tinkerer Goggles' ? 35 : 0),
       armor.nil? ? 0 : armor.defense + (defense_rune_on_armor? ? profile.defense_rune : 0),
+      armor.nil? ? 0 : armor.name == 'Tinkerer Armor' ? 100 : (armor.name == 'Elite Tinkerer Armor' ? 100 : 0),
       amulet.nil? ? 0 : amulet.defense,
+      amulet.nil? ? 0 : amulet.name == 'Tinkerer Trinket' ? 50 : (amulet.name == 'Elite Tinkerer Trinket' ? 35 : 0),
       glove.nil? ? 0 : glove.defense,
+      glove.nil? ? 0 : glove.name == 'Tinkerer Power Glove' ? 175 : (helmet.name == 'Elite Tinkerer Power Glove' ? 175 : 0),
       boot.nil? ? 0 : boot.defense,
+      boot.nil? ? 0 : boot.name == 'Tinkerer Boot' ? 75 : (boot.name == 'Elite Tinkerer Boot' ? 65 : 0),
       power.nil? ? 0 : power.defense].sum
   end
   
   def e_attack
+    e_attack = General.eatt(attack,defense)
     total_piercing = [
       general.nil? ? 0 : general.piercing,
       weapon.nil? ? 0 : weapon.piercing + (weapon_piercing),
@@ -60,10 +70,11 @@ class Loadout < ActiveRecord::Base
       glove.nil? ? 0 : glove.piercing,
       boot.nil? ? 0 : boot.piercing,
       power.nil? ? 0 : power.piercing].sum
-    (((attack - (general.nil? ? 0 : (general.monster_bonus_only? ? general.monster_attack : 0))) + defense*0.7) * (1 + (total_piercing / 1000.0))).round(1)
+    return (e_attack * (1 + (total_piercing / 1000.0))).round(1)
   end
   
   def e_defense
+    e_defense = General.edef(attack,defense)
     total_resistance = [
       general.nil? ? 0 : general.resistance,
       weapon.nil? ? 0 : weapon.resistance + (weapon_resistance),
@@ -74,6 +85,6 @@ class Loadout < ActiveRecord::Base
       glove.nil? ? 0 : glove.resistance,
       boot.nil? ? 0 : boot.resistance,
       power.nil? ? 0 : power.resistance].sum
-    ((defense + (attack - (general.nil? ? 0 : (general.monster_bonus_only? ? general.monster_attack : 0)))*0.7) * (1 + (total_resistance / 1000.0))).round(1)
+    return (e_defense * (1 + (total_resistance / 1000.0))).round(1)
   end
 end

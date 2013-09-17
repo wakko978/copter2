@@ -9,6 +9,7 @@ ActiveSupport::Inflector.inflections do |inflect|
 #   inflect.uncountable %w( fish sheep )
   inflect.irregular 'glove', 'gloves'
   inflect.irregular 'magic', 'magic'
+  inflect.irregular 'gear_bonus', 'gear_bonuses'
 end
 #
 # These inflection rules are supported but not enabled by default:

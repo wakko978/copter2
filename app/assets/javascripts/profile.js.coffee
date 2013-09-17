@@ -578,7 +578,7 @@ this.keepFileSelect = (current_stats) ->
       to_update = {}
       doc = $(e.target.result)
 
-      level = parseInt(doc.find('div:contains("Level:"):last').text().match(/\d+/)[0])
+      level = parseInt(doc.find("a div:contains('Level:'):last").text().match(/\d+/)[0])
       energy = parseInt(doc.find('#app_body').find('div[style="width:240px;height:54px;overflow:hidden;"]').eq(0).text(), 10)
       stamina = parseInt(doc.find('#app_body').find('div[style="width:240px;height:54px;overflow:hidden;"]').eq(1).text(), 10)
       attack = parseInt(doc.find('#app_body').find('div[style="width:240px;height:54px;overflow:hidden;"]').eq(2).text(), 10)
@@ -587,10 +587,10 @@ this.keepFileSelect = (current_stats) ->
       army_size = parseInt(doc.find('#app_body').find('div[style="width:240px;height:54px;overflow:hidden;"]').eq(5).text(), 10)
       attack_ia = parseInt(/(\d+) Item Archive Bonus/.exec(doc.find('#app_body').find('div[style="width:240px;height:54px;overflow:hidden;"]').eq(2).text())[1], 10)
       defense_ia = parseInt(/(\d+) Item Archive Bonus/.exec(doc.find('#app_body').find('div[style="width:240px;height:54px;overflow:hidden;"]').eq(3).text())[1], 10)
-      attack_rune = parseInt(/(\d+) (Atk|Attack)/.exec(doc.find('div#runes_2').text())[1], 10)
-      defense_rune = parseInt(/(\d+) (Def|Defense)/.exec(doc.find('div#runes_2').text())[1], 10)
-      health_rune = parseInt(/(\d+) (Hth|Health)/.exec(doc.find('div#runes_2').text())[1], 10)
-      damage_rune = parseInt(/(\d+) (Dmg|Damage)/.exec(doc.find('div#runes_2').text())[1], 10)
+      attack_rune = parseInt(/(\d+).*(Atk|Attack)/.exec(doc.find('div#runes_2').text())[1], 10)
+      defense_rune = parseInt(/(\d+).*(Def|Defense)/.exec(doc.find('div#runes_2').text())[1], 10)
+      health_rune = parseInt(/(\d+).*(Hth|Health)/.exec(doc.find('div#runes_2').text())[1], 10)
+      damage_rune = parseInt(/(\d+).*(Dmg|Damage)/.exec(doc.find('div#runes_2').text())[1], 10)
       
       output.push "<dd>Level: " + level + "</dd>" unless current_stats['level'] == level
       to_update['level'] = level

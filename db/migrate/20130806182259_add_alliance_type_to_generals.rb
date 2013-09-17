@@ -18,7 +18,7 @@ class AddAllianceTypeToGenerals < ActiveRecord::Migration
       g.update_attribute(:alliance_type,'deflect')
     end
     General.find_all_by_name(['Kang','Dolomar','Charlotte','Lotus Ravenmoore','Lothar the Ranger','Slayer','Kaiser','Vorenus']).each do |g|
-      g.update_attribute(:alliance_type,'crit')
+      g.update_attribute(:alliance_type,'crits')
     end
     General.find_all_by_name(['Dawn','Sanna']).each do |g|
       g.update_attribute(:alliance_type,'cleric_splash')

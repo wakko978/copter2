@@ -42,6 +42,21 @@
 	</p>
 	
 	<p>
+		<%= f.label 'general_id', 'Bonus applies to general:' %><br/>
+		<%= f.collection_select :general_id, General.order(:name), :id, :name, {:include_blank => true} %>
+	</p>
+	
+	<p>
+	  <%= f.label 'bonus_type', 'Bonus Type' %><br/>
+	  <%= f.select :bonus_type, options_for_select(['','attack','defense'],@powers.bonus_type) %>
+	</p>
+	
+	<p>
+	  <%= f.label 'bonus', 'Bonus' %><br/>
+	  <%= f.text_field :bonus, :size => 10 %>
+	</p>
+	
+	<p>
 		<%= f.label 'url', 'URL to Wikia Image' %>
 		<%= f.text_field :url, :size => 100 %>
 	</p>

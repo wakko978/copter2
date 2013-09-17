@@ -55,7 +55,7 @@ class Recruit < ActiveRecord::Base
       attack += 15 if general.general_type == 'Balanced'
       attack += 15 if general.general_type == 'Defensive'
     end
-    if level >=40
+    if level >= 40
       attack += 25 if general.general_type == 'Aggressive'
       attack += 25 if general.general_type == 'Balanced'
       attack += 15 if general.general_type == 'Defensive'
@@ -70,7 +70,33 @@ class Recruit < ActiveRecord::Base
       attack += 25 if general.general_type == 'Balanced'
       attack += 30 if general.general_type == 'Defensive'
     end
-    
+    if level >= 55
+      attack += 80 if general.general_type == 'Aggressive'
+      attack += 25 if general.general_type == 'Balanced'
+      attack += 40 if general.general_type == 'Defensive'
+    end
+    [60, 65].each do |i|
+      if level >= i
+        attack += 60 if general.general_type == 'Aggressive'
+        attack += 50 if general.general_type == 'Balanced'
+        attack += 30 if general.general_type == 'Defensive'
+      end
+    end
+    if level >= 70
+      attack += 0 if general.general_type == 'Aggressive'
+      attack += 0 if general.general_type == 'Balanced'
+      attack += 0 if general.general_type == 'Defensive'
+    end
+    if level >= 75
+      attack += 0 if general.general_type == 'Aggressive'
+      attack += 0 if general.general_type == 'Balanced'
+      attack += 0 if general.general_type == 'Defensive'
+    end
+    if level >= 80
+      attack += 0 if general.general_type == 'Aggressive'
+      attack += 0 if general.general_type == 'Balanced'
+      attack += 0 if general.general_type == 'Defensive'
+    end
     if (alliance = self.primary_alliance)
       attack += (alliance.secondary.attack * 0.5).floor
       attack += (alliance.tertiary.attack * 0.33).floor unless alliance.tertiary.nil?
@@ -98,7 +124,7 @@ class Recruit < ActiveRecord::Base
       defense += 15 if general.general_type == 'Balanced'
       defense += 20 if general.general_type == 'Defensive'
     end
-    if level >=40
+    if level >= 40
       defense += 15 if general.general_type == 'Aggressive'
       defense += 25 if general.general_type == 'Balanced'
       defense += 25 if general.general_type == 'Defensive'
@@ -112,6 +138,33 @@ class Recruit < ActiveRecord::Base
       defense += 30 if general.general_type == 'Aggressive'
       defense += 25 if general.general_type == 'Balanced'
       defense += 60 if general.general_type == 'Defensive'
+    end
+    if level >= 55
+      defense += 40 if general.general_type == 'Aggressive'
+      defense += 25 if general.general_type == 'Balanced'
+      defense += 80 if general.general_type == 'Defensive'
+    end
+    [60, 65].each do |i|
+      if level >= i
+        defense += 30 if general.general_type == 'Aggressive'
+        defense += 50 if general.general_type == 'Balanced'
+        defense += 60 if general.general_type == 'Defensive'
+      end
+    end
+    if level >= 70
+      defense += 0 if general.general_type == 'Aggressive'
+      defense += 0 if general.general_type == 'Balanced'
+      defense += 0 if general.general_type == 'Defensive'
+    end
+    if level >= 75
+      defense += 0 if general.general_type == 'Aggressive'
+      defense += 0 if general.general_type == 'Balanced'
+      defense += 0 if general.general_type == 'Defensive'
+    end
+    if level >= 80
+      defense += 0 if general.general_type == 'Aggressive'
+      defense += 0 if general.general_type == 'Balanced'
+      defense += 0 if general.general_type == 'Defensive'
     end
     
     if (alliance = self.primary_alliance)

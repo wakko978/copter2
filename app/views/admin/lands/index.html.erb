@@ -18,7 +18,7 @@
 						:style => 'float:left' %>
 				<%# end %>
 				<%= image_tag land.image_path(:thumb), :alt  => "#{land.name}",
-					:style => 'float:left' %>
+					:style => 'float:left', :size => "50x25" %>
 				<%= link_to land.name, land_path(land) %>
 			</th>
 			<td><%= number_to_currency(land.base_cost) %></td>

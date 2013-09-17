@@ -4,6 +4,10 @@ module Admin
     before_filter :check_admin, :only => [:destroy]
   
     def index
+      # @ps = `ps -ef`
+      # @vmstat = `vmstat`
+      # @top = `top -b -n 1`
+      # @curl = `curl -w "Connect time: %{time_connect} Time to first byte: %{time_starttransfer} Total time: %{time_total} \n" -o /dev/null http://copter.aws.af.cm`
     end
     
     protected

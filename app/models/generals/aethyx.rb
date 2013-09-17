@@ -28,27 +28,13 @@ class Aethyx < General
     return defense
   end
 
-  def e_attack_with_bonus(profile,recruit)
-    e_attack = super
-
-    ## Aesir example
-    # case recruit.level
-    # when 1
-    #   e_attack += 0.01 * e_attack
-    # when 2
-    #   e_attack += 0.02 * e_attack
-    # when 3
-    #   e_attack += 0.03 * e_attack
-    # when 4
-    #   e_attack += 0.04 * e_attack
-    # else
-    #   e_attack += 0.04 * e_attack
-    # end
-    return e_attack.round(1)
+  def attack_bonus(profile,recruit)
+    bonus = super
+    return bonus.round()
   end
-
-  def e_defense_with_bonus(profile,recruit)
-    e_defense = super
-    return e_defense.round(1)
+  
+  def defense_bonus(profile,recruit)
+    bonus = super
+    return bonus.round()
   end
 end

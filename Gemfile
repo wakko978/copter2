@@ -9,7 +9,7 @@ gem 'mysql2'
 gem 'devise'
 gem 'paperclip', "~> 3.0"
 gem 'will_paginate', '~> 3.0.0'
-gem 'plupload-rails'
+# gem 'plupload-rails'
 gem 'nokogiri'
 gem 'seed_dump'
 gem 'airbrake'
@@ -27,6 +27,7 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'yui-compressor'
 end
 
 gem 'jquery-rails'

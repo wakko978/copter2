@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
-  attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense, :div_power, :url, :piercing, :resistance, :slots
+  attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense, :div_power,
+    :url, :piercing, :resistance, :slots, :general_id, :general, :bonus_type, :bonus
   
   validates :name, :presence => true
   validates :attack, :defense, :piercing, :resistance, :presence => true, :numericality => { :only_integer => true }
@@ -10,6 +11,7 @@ class Item < ActiveRecord::Base
   validates_attachment :avatar,
     :size => { :in => 0..100.kilobytes }
   belongs_to :loadoutable, :polymorphic => true
+  belongs_to :general
   
   before_save :update_e_attack
   before_save :update_e_defense
@@ -20,6 +22,8 @@ class Item < ActiveRecord::Base
   scope :helmet, :conditions => "type = 'Item::Helmet'"
   scope :glove, :conditions => "type = 'Item::Glove'"
   scope :shield, :conditions => "type = 'Item::Shield'"
+  scope :attack, -> { where(bonus_type: 'attack') }
+  scope :defense, -> { where(bonus_type: 'defense') }
   
   cattr_reader :per_page
   @@per_page = 25

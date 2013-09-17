@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806182259) do
+ActiveRecord::Schema.define(:version => 20130913143138) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -93,6 +93,9 @@ ActiveRecord::Schema.define(:version => 20130806182259) do
     t.string   "url"
     t.integer  "piercing",                         :default => 0
     t.integer  "resistance",                       :default => 0
+    t.integer  "general_id"
+    t.string   "bonus_type"
+    t.integer  "bonus",                            :default => 0
   end
 
   create_table "lands", :force => true do |t|
@@ -175,6 +178,9 @@ ActiveRecord::Schema.define(:version => 20130806182259) do
     t.string   "url"
     t.integer  "piercing",                         :default => 0
     t.integer  "resistance",                       :default => 0
+    t.integer  "general_id"
+    t.string   "bonus_type"
+    t.integer  "bonus",                            :default => 0
   end
 
   create_table "profiles", :force => true do |t|
@@ -297,6 +303,9 @@ ActiveRecord::Schema.define(:version => 20130806182259) do
     t.string   "url"
     t.integer  "piercing",                         :default => 0
     t.integer  "resistance",                       :default => 0
+    t.integer  "general_id"
+    t.string   "bonus_type"
+    t.integer  "bonus",                            :default => 0
   end
 
 end
