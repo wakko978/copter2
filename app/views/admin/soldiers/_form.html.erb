@@ -37,16 +37,23 @@
 	</p>
 	
 	<p>
-		<%= f.label 'url', 'URL to Wikia Image' %>
-		<%= f.text_field :url, :size => 100 %>
+		<%= f.label 'general_id', 'Bonus applies to general:' %><br/>
+		<%= f.collection_select :general_id, General.order(:name), :id, :name, {:include_blank => true} %>
 	</p>
 	
 	<p>
-		<%= f.label 'avatar', 'Image' %>
-		<% unless @soldier.avatar_file_name.nil? %>
-			<%= image_tag @soldier.avatar.url(:thumb) %><br/>
-		<% end %>
-		<%= f.file_field :avatar, :value => @soldier.avatar_file_name.nil? ? nil : @soldier.avatar_file_name %>
+	  <%= f.label 'bonus_type', 'Bonus Type' %><br/>
+	  <%= f.select :bonus_type, options_for_select(['','attack','defense','energy','stamina','health','crit','other'],@soldier.bonus_type) %>
+	</p>
+	
+	<p>
+	  <%= f.label 'bonus', 'Bonus' %><br/>
+	  <%= f.text_field :bonus, :size => 10 %>
+	</p>
+	
+	<p>
+		<%= f.label 'url', 'URL to Wikia Image' %>
+		<%= f.text_field :url, :size => 100 %>
 	</p>
 
 	<script type="text/javascript" language="Javascript">

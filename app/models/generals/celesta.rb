@@ -10,7 +10,7 @@ class Celesta < General
     when 3
       bonus += 5 + 10
     when 4..General.max_level
-      bonus += 15 + (6.5 * (recruit.level - 4)).to_i
+      bonus += 15 + (7 * (recruit.level - 4)).to_i
     end
     return bonus.round()
   end

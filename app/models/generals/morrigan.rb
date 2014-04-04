@@ -1,2 +1,0 @@
-class Morrigan < General
-end

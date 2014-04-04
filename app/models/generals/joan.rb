@@ -1,2 +1,0 @@
-class Joan < General
-end

@@ -1,2 +1,0 @@
-class Kang < General
-end

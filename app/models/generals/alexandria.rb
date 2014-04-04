@@ -1,2 +1,0 @@
-class Alexandria < General
-end

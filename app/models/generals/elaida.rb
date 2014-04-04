@@ -1,2 +1,0 @@
-class Elaida < General
-end

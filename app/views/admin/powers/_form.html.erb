@@ -48,7 +48,7 @@
 	
 	<p>
 	  <%= f.label 'bonus_type', 'Bonus Type' %><br/>
-	  <%= f.select :bonus_type, options_for_select(['','attack','defense'],@powers.bonus_type) %>
+	  <%= f.select :bonus_type, options_for_select(['','attack','defense','energy','stamina','health','crit','other'],@power.bonus_type) %>
 	</p>
 	
 	<p>
@@ -59,14 +59,6 @@
 	<p>
 		<%= f.label 'url', 'URL to Wikia Image' %>
 		<%= f.text_field :url, :size => 100 %>
-	</p>
-	
-	<p>
-		<%= f.label 'avatar', 'Image' %>
-		<% unless @power.avatar_file_name.nil? %>
-			<%= image_tag @power.avatar.url(:thumb) %><br/>
-		<% end %>
-		<%= f.file_field :avatar, :value => @power.avatar_file_name.nil? ? nil : @power.avatar_file_name %>
 	</p>
 
 	<script type="text/javascript" language="Javascript">

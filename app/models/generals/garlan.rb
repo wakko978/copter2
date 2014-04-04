@@ -1,2 +1,0 @@
-class Garlan < General
-end

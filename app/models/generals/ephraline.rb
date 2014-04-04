@@ -1,2 +1,0 @@
-class Ephraline < General
-end

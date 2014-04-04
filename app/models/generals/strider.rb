@@ -1,2 +1,0 @@
-class Strider < General
-end

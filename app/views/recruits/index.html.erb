@@ -6,9 +6,8 @@
 	<%= will_paginate @recruits %>
 	<caption><%= link_to "Acquire General(s)", new_profile_recruit_path(@profile) %></caption>
 	<thead>
-		<th class="top" scope="col" width="18%"><%= sort_link 'General', 'name' %></th>
+		<th class="top" scope="col" width="26%"><%= sort_link 'General', 'name' %></th>
 		<th class="top" scope="col" width="2%"><%= sort_link 'Level', 'level' %></th>
-		<th class="top" scope="col" width="8%">Base<br/>Stats</th>
 		<th class="top" scope="col" width="13%">Stats w/<br/>Gear Bonus</th>
 		<th class="top" scope="col" width="10%">
 			<%= sort_link 'General<br/>eAtt w/ Gear', 'e_attack' %>
@@ -30,10 +29,6 @@
 		<% general = recruit.general %>
 		<tr id="row_<%= recruit.id %>">
 			<td>
-				<%# unless general.avatar_file_name.nil? %>
-					<%#= image_tag general.avatar.url(:thumb), :alt  => "#{general.name}",
-						:style => 'float:left' %>
-				<%# end %>
 				<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to general.name, general_path(general) %>
@@ -45,10 +40,6 @@
 				<%= text_field_tag "recruit_#{recruit.id}", recruit.level, :size => 2,
 					:class => 'recruit', data: {url: profile_recruit_path(@profile,recruit),
 						field: "recruit_#{recruit.id}"} %>
-			</td>
-			<td>
-				<span id="attack_<%= recruit.id %>"><%= recruit.attack %></span> /
-				<span id="defense_<%= recruit.id %>"><%= recruit.defense %></span>
 			</td>
 			<td>
 				<span id="attack_w_mods_<%= recruit.id %>"><%= recruit.general.send("attack_with_mods",@profile,recruit) %></span> /

@@ -1,2 +1,0 @@
-class Tyrant < General
-end

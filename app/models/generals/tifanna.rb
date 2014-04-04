@@ -1,2 +1,0 @@
-class Tifanna < General
-end

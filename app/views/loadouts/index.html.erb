@@ -5,11 +5,11 @@
 	<thead>
 		<th class="top" scope="col" width="10%"><%= sort_link 'Name', 'name' %></th>
 		<th class="top" scope="col" width="5%"><%= sort_link 'Class', 'class_type' %></th>
-		<th class="top" scope="col" width="10%"><%= sort_link 'Attack', 'attack' %></th>
-		<th class="top" scope="col" width="10%"><%= sort_link 'Defense', 'defense' %></th>
-		<th class="top" scope="col" width="10%"><%= sort_link 'eAttack', 'e_attack' %></th>
-		<th class="top" scope="col" width="10%"><%= sort_link 'eDefense', 'e_defense' %></th>
-		<th class="top" scope="col" width="40%">Gear</th>
+		<th class="top" scope="col" width="5%"><%= sort_link 'Attack', 'attack' %></th>
+		<th class="top" scope="col" width="5%"><%= sort_link 'Defense', 'defense' %></th>
+		<th class="top" scope="col" width="5%"><%= sort_link 'eAttack', 'e_attack' %></th>
+		<th class="top" scope="col" width="5%"><%= sort_link 'eDefense', 'e_defense' %></th>
+		<th class="top" scope="col" width="30%">Gear</th>
 		<th class="top" scope="col" width="5%">Options</th>
 	</thead>
 
@@ -18,9 +18,13 @@
 		<tr>
 			<td><%= loadout.name %></td>
 			<td><%= loadout.class_type %></td>
-			<td><%= loadout.attack %></td>
+			<td>
+				<%= loadout.attack %><% if general.monster_bonus_only? %>*<% end %>
+			</td>
 			<td><%= loadout.defense %></td>
-			<td><%= loadout.e_attack %></td>
+			<td>
+				<%= loadout.e_attack %><% if general.monster_bonus_only? %>*<% end %>
+			</td>
 			<td><%= loadout.e_defense %></td>
 			<td>
 				<% unless loadout.general.nil? %>
@@ -62,3 +66,4 @@
 		</tr>
 	<% end %>
 </table>
+<span class="note">* General has a monster bonus, which increases your attack against monsters only, but is not applicable for eAttack.</span>

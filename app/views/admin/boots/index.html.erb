@@ -20,10 +20,6 @@
 	<% @boots.each do |boot| %>
 		<tr>
 			<th scope="row">
-				<%# unless boot.avatar_file_name.nil? %>
-					<%#= image_tag boot.avatar.url(:thumb), :alt  => "#{boot.name}",
-						:style => 'float:left' %>
-				<%# end %>
 				<%= image_tag boot.image_path(:thumb), :alt  => "#{boot.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to boot.name, boot_path(boot) %>

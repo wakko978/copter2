@@ -65,7 +65,7 @@
 			</td>
 			<td>
 				<span id="shield_resistance"><%= @loadout.shield.nil? ? nil : "Base: #{@loadout.shield.resistance}" %></span>
-				<%#= f.text_field :shield_resistance, :size => 5, :onblur => "changeFormat();" %>
+				<%= f.text_field :shield_resistance, :size => 5, :onblur => "changeFormat();" %>
 			</td>
 		</tr>
 		<tr>
@@ -78,7 +78,7 @@
 				<%#= f.text_field :helmet_piercing, :size => 5, :onblur => "changeFormat();" %>
 			</td>
 			<td>
-				<span id="helmet_piercing"><%= @loadout.helmet.nil? ? nil : "Base: #{@loadout.helmet.resistance}" %></span>
+				<span id="helmet_resistance"><%= @loadout.helmet.nil? ? nil : "Base: #{@loadout.helmet.resistance}" %></span>
 				<%= f.text_field :helmet_resistance, :size => 5, :onblur => "changeFormat();" %>
 			</td>
 		</tr>
@@ -92,7 +92,7 @@
 				<%#= f.text_field :armor_piercing, :size => 5, :onblur => "changeFormat();" %>
 			</td>
 			<td>
-				<span id="armor_piercing"><%= @loadout.armor.nil? ? nil : "Base: #{@loadout.armor.resistance}" %></span>
+				<span id="armor_resistance"><%= @loadout.armor.nil? ? nil : "Base: #{@loadout.armor.resistance}" %></span>
 				<%= f.text_field :armor_resistance, :size => 5, :onblur => "changeFormat();" %>
 			</td>
 		</tr>
@@ -106,11 +106,17 @@
 		</tr>
 		<tr>
 			<td>Glove</td>
-			<td><%= f.collection_select :glove_id, @gloves, :id, :name, {:include_blank => true},
+			<td><%= f.select :glove_id, @gloves.collect{|w| ["#{w.name}(Slots: #{w.slots})",w.id]}, {:include_blank => true},
 				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
 			<td>N/A</td>
-			<td id="glove_piercing"><%= @loadout.glove.nil? ? nil : @loadout.glove.piercing %></td>
-			<td id="glove_resistance"><%= @loadout.glove.nil? ? nil : @loadout.glove.resistance %></td>
+			<td>
+				<span id="glove_piercing"><%= @loadout.glove.nil? ? nil : "Base: #{@loadout.glove.piercing}" %></span>
+				<%= f.text_field :glove_piercing, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+			<td>
+				<span id="glove_resistance"><%= @loadout.glove.nil? ? nil : "Base: #{@loadout.glove.resistance}" %></span>
+				<%#= f.text_field :glove_resistance, :size => 5, :onblur => "changeFormat();" %>
+			</td>
 		</tr>
 		<tr>
 			<td>Boot</td>

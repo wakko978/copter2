@@ -18,10 +18,6 @@
 	<% @amulets.each do |amulet| %>
 		<tr>
 			<th scope="row">
-				<%# unless amulet.avatar_file_name.nil? %>
-					<%#= image_tag amulet.avatar.url(:thumb), :alt  => "#{amulet.name}",
-						:style => 'float:left' %>
-				<%# end %>
 				<%= image_tag amulet.image_path(:thumb), :alt  => "#{amulet.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to amulet.name, amulet_path(amulet) %>

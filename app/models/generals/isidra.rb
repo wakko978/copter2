@@ -1,2 +1,0 @@
-class Isidra < General
-end

@@ -1,2 +1,0 @@
-class Syren < General
-end

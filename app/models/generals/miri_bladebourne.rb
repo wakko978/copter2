@@ -1,2 +1,0 @@
-class MiriBladebourne < General
-end

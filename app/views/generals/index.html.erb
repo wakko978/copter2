@@ -19,10 +19,6 @@
 	<% @generals.each do |general| %>
 		<tr>
 			<th scope="row">
-				<%# unless general.avatar_file_name.nil? %>
-					<%#= image_tag general.avatar.url(:thumb), :alt  => "#{general.name}",
-						:style => 'float:left' %>
-				<%# end %>
 				<%= image_tag general.image_path(:thumb), :alt  => "#{general.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to general.name, general_path(general) %>

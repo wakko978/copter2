@@ -1,22 +1,20 @@
 class General < ActiveRecord::Base
-  attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense, :div_power,
+  attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :e_attack, :e_defense, :div_power,
     :attack_increment, :defense_increment, :description, :general_type, :url, :base_piercing, :base_resistance,
-    :alliance_type
+    :alliance_type, :general_id, :general, :bonus_type, :bonus
   
   validates :name, :presence => true
   validates :attack, :defense, :base_piercing, :base_resistance, :presence => true, :numericality => { :only_integer => true }
   validates :attack_increment, :defense_increment, :base_cost, :upkeep, :div_power, :numericality => { :only_integer => true }, :allow_nil => true
   
   has_many :recruits
-  has_attached_file :avatar, :styles => { :medium => "160x160>", :thumb => "50x50>" },
-    :path => ":rails_root/public/system/generals/:attachment/:id_partition/:style/:basename.:extension",
-    :url => "/system/generals/:attachment/:id_partition/:style/:basename.:extension"
-  validates_attachment :avatar,
-    :size => { :in => 0..100.kilobytes }
   belongs_to :loadoutable, :polymorphic => true
+  belongs_to :general
   has_many :weapons
   has_many :items
   has_many :powers
+  has_many :soldiers
+  has_many :generals
   
   before_save :update_e_attack
   before_save :update_e_defense
@@ -37,16 +35,21 @@ class General < ActiveRecord::Base
     unless url.blank?
       url
     else
-      unless avatar_file_name.nil?
-        avatar.url(t)
-      else
-        'favor_clear.gif'
-      end
+      'favor_clear.gif'
     end
   end
   
   def has_special_leveling_increment?
     false
+  end
+  
+  def has_at_least?(num,profile,recruit)
+    [
+      profile.weapons.where(general_id: recruit.general_id).count,
+      profile.items.where(general_id: recruit.general_id).count,
+      profile.powers.where(general_id: recruit.general_id).count,
+      (['Dragan','Strider','Sophia','Penelope'].include?(self.name) && profile.weapons.find_by_name('Soulforge')) ? 1 : 0
+    ].sum >= num
   end
   
   def monster_bonus_only?
@@ -84,6 +87,7 @@ class General < ActiveRecord::Base
   def attack_with_mods(profile,recruit)
     return [
       recruit.attack,
+      recruit.attack_set_bonus,
       profile.weapons.attack.where(general_id: recruit.general_id).sum(:bonus),
       profile.items.attack.where(general_id: recruit.general_id).sum(:bonus),
       profile.powers.attack.where(general_id: recruit.general_id).sum(:bonus)
@@ -93,6 +97,7 @@ class General < ActiveRecord::Base
   def defense_with_mods(profile,recruit)
     return [
       recruit.defense,
+      recruit.defense_set_bonus,
       profile.weapons.defense.where(general_id: recruit.general_id).sum(:bonus),
       profile.items.defense.where(general_id: recruit.general_id).sum(:bonus),
       profile.powers.defense.where(general_id: recruit.general_id).sum(:bonus)

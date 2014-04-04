@@ -1,2 +1,0 @@
-class Axxon < General
-end

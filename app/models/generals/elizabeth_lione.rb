@@ -1,2 +1,0 @@
-class ElizabethLione < General
-end

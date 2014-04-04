@@ -1,2 +1,0 @@
-class Minerva < General
-end

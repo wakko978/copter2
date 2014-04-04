@@ -1,2 +1,0 @@
-class Hyperion < General
-end

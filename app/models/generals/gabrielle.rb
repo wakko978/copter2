@@ -1,2 +1,0 @@
-class Gabrielle < General
-end

@@ -1,2 +1,0 @@
-class Darius < General
-end

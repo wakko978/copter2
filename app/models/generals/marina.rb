@@ -4,17 +4,13 @@ class Marina < General
     
     case recruit.level
     when 1
-      bonus += 1
+      bonus += 4
     when 2
-      bonus += 3
-    when 3
       bonus += 6
-    when 4
-      bonus += 12
-    when 5
-      bonus += 13
-    when 6..General.max_level
-      bonus += step_function(recruit.level,{pos_index: 7, offset: 5, period: 2})
+    when 3
+      bonus += 9
+    when 4..General.max_level
+      bonus += step_function(recruit.level,{pos_index: 12, offset: 3, period: 2})
     end
     
     return bonus.round()

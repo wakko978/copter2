@@ -1,2 +1,0 @@
-class Muse < General
-end

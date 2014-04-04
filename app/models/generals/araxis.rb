@@ -1,2 +1,0 @@
-class Araxis < General
-end

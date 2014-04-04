@@ -1,2 +1,0 @@
-class Kothas < General
-end

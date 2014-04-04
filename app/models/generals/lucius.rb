@@ -1,2 +1,0 @@
-class Lucius < General
-end

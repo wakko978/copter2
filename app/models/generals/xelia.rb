@@ -1,2 +1,0 @@
-class Xelia < General
-end

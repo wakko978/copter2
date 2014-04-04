@@ -1,5 +1,5 @@
 class Weapon < ActiveRecord::Base
-  attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :avatar, :e_attack, :e_defense, :div_power, :slots,
+  attr_accessible :name, :attack, :defense, :upkeep, :base_cost, :e_attack, :e_defense, :div_power, :slots,
     :url, :piercing, :resistance, :general_id, :general, :bonus_type, :bonus
   
   validates :name, :presence => true
@@ -7,9 +7,6 @@ class Weapon < ActiveRecord::Base
   validates :base_cost, :upkeep, :div_power, :numericality => { :only_integer => true }, :allow_nil => true
   
   has_many :arms
-  has_attached_file :avatar, :styles => { :medium => "160x160>", :thumb => "50x50>" }
-  validates_attachment :avatar,
-    :size => { :in => 0..100.kilobytes }
   belongs_to :loadoutable, :polymorphic => true
   belongs_to :general
   
@@ -31,11 +28,7 @@ class Weapon < ActiveRecord::Base
     unless url.blank?
       url
     else
-      unless avatar_file_name.nil?
-        avatar.url(t)
-      else
-        'favor_clear.gif'
-      end
+      'favor_clear.gif'
     end
   end
   

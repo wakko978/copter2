@@ -1,2 +1,0 @@
-class LotharTheRanger < General
-end

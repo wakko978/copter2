@@ -1,2 +1,0 @@
-class Jera < General
-end

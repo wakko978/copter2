@@ -1,2 +1,0 @@
-class Kilgore < General
-end

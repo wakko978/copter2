@@ -1,2 +1,0 @@
-class Elena < General
-end

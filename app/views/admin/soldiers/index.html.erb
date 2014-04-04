@@ -17,10 +17,6 @@
 	<% @soldiers.each do |soldier| %>
 		<tr>
 			<th scope="row">
-				<%# unless soldier.avatar_file_name.nil? %>
-					<%#= image_tag soldier.avatar.url(:thumb), :alt  => "#{soldier.name}",
-						:style => 'float:left' %>
-				<%# end %>
 				<%= image_tag soldier.image_path(:thumb), :alt  => "#{soldier.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to soldier.name, soldier_path(soldier) %>

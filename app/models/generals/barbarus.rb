@@ -1,2 +1,0 @@
-class Barbarus < General
-end

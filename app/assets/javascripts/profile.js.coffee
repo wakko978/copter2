@@ -431,12 +431,13 @@ this.itemFileSelect = (current_items) ->
       items = doc.find("div[style*=town_unit_bar]").each((i,e) ->
         t = $(this)
         item = t.find("div div strong:first").text().trim()
-        attack = t.find('div div div:contains("Attack")').text().match(/\d+/)[0]
-        defense = t.find('div div div:contains("Defense")').text().match(/\d+/)[0]
-        amount = t.find('div div span:contains("Owned:")').text().match(/\d+/)[0]
-        if !current_items[item] or (current_items[item][0] != amount && current_items[item][1] == attack && current_items[item][2] == defense)
-          output.push "<dd>" + item + ": " + amount + "</dd>"
-          to_update[item] = {owned: amount, attack: attack, defense: defense}
+        if item.length > 0
+          attack = t.find('div div div:contains("Attack")').text().match(/\d+/)[0]
+          defense = t.find('div div div:contains("Defense")').text().match(/\d+/)[0]
+          amount = t.find('div div span:contains("Owned:")').text().match(/\d+/)[0]
+          if !current_items[item] or (current_items[item][0] != amount && current_items[item][1] == attack && current_items[item][2] == defense)
+            output.push "<dd>" + item + ": " + amount + "</dd>"
+            to_update[item] = {owned: amount, attack: attack, defense: defense}
       )
 
       if output.length

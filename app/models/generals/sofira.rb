@@ -1,2 +1,0 @@
-class Sofira < General
-end

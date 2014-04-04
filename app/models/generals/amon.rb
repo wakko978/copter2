@@ -1,2 +1,0 @@
-class Amon < General
-end

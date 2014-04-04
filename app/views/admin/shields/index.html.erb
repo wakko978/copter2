@@ -20,10 +20,6 @@
 	<% @shields.each do |shield| %>
 		<tr>
 			<th scope="row">
-				<%# unless shield.avatar_file_name.nil? %>
-					<%#= image_tag shield.avatar.url(:thumb), :alt  => "#{shield.name}",
-						:style => 'float:left' %>
-				<%# end %>
 				<%= image_tag shield.image_path(:thumb), :alt  => "#{shield.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to shield.name, shield_path(shield) %>

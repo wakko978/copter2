@@ -1,2 +1,0 @@
-class Mercedes < General
-end

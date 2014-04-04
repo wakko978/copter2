@@ -2,14 +2,6 @@
 
 <%= image_tag @shield.image_path(:original), :alt  => "#{@shield.name}",
 	:style => 'float:right' %>
-<%# unless @shield.avatar_file_name.nil? %>
-  <%#= image_tag @shield.avatar.url, :alt  => "#{@shield.name}",
-    :style => 'float:right' %>
-<%# else %>
-	<!-- <div style="float:right">
-		No Image Available
-	</div> -->
-<%# end %>
 
 <p>
   <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@shield.name}", :target => "_blank" %><br/>

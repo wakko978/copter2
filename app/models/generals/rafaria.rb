@@ -1,2 +1,0 @@
-class Rafaria < General
-end

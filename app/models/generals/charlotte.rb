@@ -1,2 +1,0 @@
-class Charlotte < General
-end

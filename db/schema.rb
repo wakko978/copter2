@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130913143138) do
+ActiveRecord::Schema.define(:version => 20140319170014) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -46,69 +46,60 @@ ActiveRecord::Schema.define(:version => 20130913143138) do
   add_index "fighters", ["profile_id", "owned"], :name => "index_fighters_on_profile_id_and_owned"
 
   create_table "generals", :force => true do |t|
-    t.string   "name",                                                     :null => false
-    t.integer  "attack",                                                   :null => false
-    t.integer  "defense",                                                  :null => false
-    t.float    "e_attack",                                                 :null => false
-    t.float    "e_defense",                                                :null => false
-    t.integer  "base_cost",           :limit => 8
-    t.integer  "upkeep",              :limit => 8
-    t.integer  "attack_increment",                 :default => 1
-    t.integer  "defense_increment",                :default => 1
+    t.string   "name",                                                   :null => false
+    t.integer  "attack",                                                 :null => false
+    t.integer  "defense",                                                :null => false
+    t.float    "e_attack",                                               :null => false
+    t.float    "e_defense",                                              :null => false
+    t.integer  "base_cost",         :limit => 8
+    t.integer  "upkeep",            :limit => 8
+    t.integer  "attack_increment",               :default => 1
+    t.integer  "defense_increment",              :default => 1
     t.integer  "div_power"
     t.string   "description"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
-    t.string   "type",                             :default => "General"
-    t.string   "general_type",                     :default => "Balanced"
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
+    t.string   "type",                           :default => "General"
+    t.string   "general_type",                   :default => "Balanced"
     t.string   "url"
-    t.integer  "base_piercing",                    :default => 0
-    t.integer  "base_resistance",                  :default => 0
+    t.integer  "base_piercing",                  :default => 0
+    t.integer  "base_resistance",                :default => 0
     t.string   "alliance_type"
+    t.integer  "general_id"
+    t.string   "bonus_type"
+    t.integer  "bonus",                          :default => 0
   end
 
   add_index "generals", ["name"], :name => "index_generals_on_name"
 
   create_table "items", :force => true do |t|
-    t.string   "name",                                            :null => false
-    t.string   "type",                                            :null => false
-    t.integer  "attack",                                          :null => false
-    t.integer  "defense",                                         :null => false
-    t.float    "e_attack",                                        :null => false
-    t.float    "e_defense",                                       :null => false
-    t.integer  "base_cost",           :limit => 8
-    t.integer  "upkeep",              :limit => 8
+    t.string   "name",                                   :null => false
+    t.string   "type",                                   :null => false
+    t.integer  "attack",                                 :null => false
+    t.integer  "defense",                                :null => false
+    t.float    "e_attack",                               :null => false
+    t.float    "e_defense",                              :null => false
+    t.integer  "base_cost",  :limit => 8
+    t.integer  "upkeep",     :limit => 8
     t.integer  "div_power"
-    t.integer  "slots",                            :default => 0
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.integer  "slots",                   :default => 0
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "url"
-    t.integer  "piercing",                         :default => 0
-    t.integer  "resistance",                       :default => 0
+    t.integer  "piercing",                :default => 0
+    t.integer  "resistance",              :default => 0
     t.integer  "general_id"
     t.string   "bonus_type"
-    t.integer  "bonus",                            :default => 0
+    t.integer  "bonus",                   :default => 0
   end
 
   create_table "lands", :force => true do |t|
-    t.string   "name",                             :null => false
-    t.integer  "base_cost",           :limit => 8, :null => false
-    t.integer  "income",              :limit => 8, :null => false
-    t.float    "incremental_cost",                 :null => false
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.string   "name",                          :null => false
+    t.integer  "base_cost",        :limit => 8, :null => false
+    t.integer  "income",           :limit => 8, :null => false
+    t.float    "incremental_cost",              :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "url"
   end
 
@@ -161,26 +152,22 @@ ActiveRecord::Schema.define(:version => 20130913143138) do
   end
 
   create_table "powers", :force => true do |t|
-    t.string   "name",                                            :null => false
-    t.integer  "attack",                                          :null => false
-    t.integer  "defense",                                         :null => false
-    t.float    "e_attack",                                        :null => false
-    t.float    "e_defense",                                       :null => false
-    t.integer  "base_cost",           :limit => 8
-    t.integer  "upkeep",              :limit => 8
+    t.string   "name",                                   :null => false
+    t.integer  "attack",                                 :null => false
+    t.integer  "defense",                                :null => false
+    t.float    "e_attack",                               :null => false
+    t.float    "e_defense",                              :null => false
+    t.integer  "base_cost",  :limit => 8
+    t.integer  "upkeep",     :limit => 8
     t.integer  "div_power"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "url"
-    t.integer  "piercing",                         :default => 0
-    t.integer  "resistance",                       :default => 0
+    t.integer  "piercing",                :default => 0
+    t.integer  "resistance",              :default => 0
     t.integer  "general_id"
     t.string   "bonus_type"
-    t.integer  "bonus",                            :default => 0
+    t.integer  "bonus",                   :default => 0
   end
 
   create_table "profiles", :force => true do |t|
@@ -242,20 +229,19 @@ ActiveRecord::Schema.define(:version => 20130913143138) do
   end
 
   create_table "soldiers", :force => true do |t|
-    t.string   "name",                             :null => false
-    t.integer  "attack",                           :null => false
-    t.integer  "defense",                          :null => false
-    t.float    "e_attack",                         :null => false
-    t.float    "e_defense",                        :null => false
-    t.integer  "base_cost",           :limit => 8
-    t.integer  "upkeep",              :limit => 8
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.string   "name",                                   :null => false
+    t.integer  "attack",                                 :null => false
+    t.integer  "defense",                                :null => false
+    t.float    "e_attack",                               :null => false
+    t.float    "e_defense",                              :null => false
+    t.integer  "base_cost",  :limit => 8
+    t.integer  "upkeep",     :limit => 8
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "url"
+    t.integer  "general_id"
+    t.string   "bonus_type"
+    t.integer  "bonus",                   :default => 0
   end
 
   create_table "spells", :force => true do |t|
@@ -285,27 +271,23 @@ ActiveRecord::Schema.define(:version => 20130913143138) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "weapons", :force => true do |t|
-    t.string   "name",                                            :null => false
-    t.integer  "attack",                                          :null => false
-    t.integer  "defense",                                         :null => false
-    t.float    "e_attack",                                        :null => false
-    t.float    "e_defense",                                       :null => false
-    t.integer  "base_cost",           :limit => 8
-    t.integer  "upkeep",              :limit => 8
+    t.string   "name",                                   :null => false
+    t.integer  "attack",                                 :null => false
+    t.integer  "defense",                                :null => false
+    t.float    "e_attack",                               :null => false
+    t.float    "e_defense",                              :null => false
+    t.integer  "base_cost",  :limit => 8
+    t.integer  "upkeep",     :limit => 8
     t.integer  "div_power"
-    t.integer  "slots",                            :default => 0
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.integer  "slots",                   :default => 0
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "url"
-    t.integer  "piercing",                         :default => 0
-    t.integer  "resistance",                       :default => 0
+    t.integer  "piercing",                :default => 0
+    t.integer  "resistance",              :default => 0
     t.integer  "general_id"
     t.string   "bonus_type"
-    t.integer  "bonus",                            :default => 0
+    t.integer  "bonus",                   :default => 0
   end
 
 end

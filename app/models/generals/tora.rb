@@ -1,2 +1,0 @@
-class Tora < General
-end

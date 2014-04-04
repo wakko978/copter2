@@ -1,2 +1,0 @@
-class Alperon < General
-end

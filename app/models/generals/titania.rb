@@ -1,2 +1,0 @@
-class Titania < General
-end

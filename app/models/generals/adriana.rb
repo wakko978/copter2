@@ -1,2 +1,0 @@
-class Adriana < General
-end

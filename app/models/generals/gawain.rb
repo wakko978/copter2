@@ -1,2 +1,0 @@
-class Gawain < General
-end

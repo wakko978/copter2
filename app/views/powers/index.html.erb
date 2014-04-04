@@ -16,10 +16,6 @@
 	<% @powers.each do |power| %>
 		<tr>
 			<th scope="row">
-				<%# unless power.avatar_file_name.nil? %>
-					<%#= image_tag power.avatar.url(:thumb), :alt  => "#{power.name}",
-						:style => 'float:left' %>
-				<%# end %>
 				<%= image_tag power.image_path(:thumb), :alt  => "#{power.name}",
 					:style => 'float:left', :size => "50x50" %>
 				<%= link_to power.name, power_path(power) %>

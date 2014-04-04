@@ -5,15 +5,15 @@ class Adaya < General
     
     case recruit.level
     when 1
-      bonus += attack_rune * 1.05
+      bonus += attack_rune * 0.05
     when 2
-      bonus += attack_rune * 1.06
+      bonus += attack_rune * 0.06
     when 3
-      bonus += attack_rune * 1.07
+      bonus += attack_rune * 0.07
     when 4
-      bonus += attack_rune * 1.08
+      bonus += attack_rune * 0.08
     when 5..General.max_level
-      bonus += attack_rune * 1.09
+      bonus += attack_rune * 0.09
     end
     
     return bonus.round()

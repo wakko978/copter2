@@ -4,36 +4,41 @@
 
 <table class="non-fixed">
 	<caption>
-		Create Alliance:<br/>
-		<%= link_to "Piercing", new_profile_alliance_path(@profile,:alliance_type => 'piercing') %> |
-		<%= link_to "Resistance", new_profile_alliance_path(@profile,:alliance_type => 'resistance') %> |
-		<%= link_to "Monster Attack", new_profile_alliance_path(@profile,:alliance_type => 'monster_attack') %> |
-		<%= link_to "Crits", new_profile_alliance_path(@profile,:alliance_type => 'crits') %> |
-		<%= link_to "GB Damage", new_profile_alliance_path(@profile,:alliance_type => 'damage') %> |
-		<%= link_to "Deflect", new_profile_alliance_path(@profile,:alliance_type => 'deflect') %> |
-		<%= link_to "Cleric Splash", new_profile_alliance_path(@profile,:alliance_type => 'cleric_splash') %> |
-		<%= link_to "Mage Splash", new_profile_alliance_path(@profile,:alliance_type => 'mage_splash') %> |
-		<%= link_to "Evade", new_profile_alliance_path(@profile,:alliance_type => 'evade') %> |
-		<%= link_to "Whirlwind", new_profile_alliance_path(@profile,:alliance_type => 'whirlwind') %> |
-		<%= link_to "Healing", new_profile_alliance_path(@profile,:alliance_type => 'healing') %>
+		<%= link_to "Create Alliance", new_profile_alliance_path(@profile) %>
+		<!-- Create Alliance:<br/>
+		<%#= link_to "Piercing", new_profile_alliance_path(@profile,:alliance_type => 'piercing') %> |
+		<%#= link_to "Resistance", new_profile_alliance_path(@profile,:alliance_type => 'resistance') %> |
+		<%#= link_to "Monster Attack", new_profile_alliance_path(@profile,:alliance_type => 'monster_attack') %> |
+		<%#= link_to "Crits", new_profile_alliance_path(@profile,:alliance_type => 'crits') %> |
+		<%#= link_to "GB Damage", new_profile_alliance_path(@profile,:alliance_type => 'damage') %> |
+		<%#= link_to "Deflect", new_profile_alliance_path(@profile,:alliance_type => 'deflect') %> |
+		<%#= link_to "Cleric Splash", new_profile_alliance_path(@profile,:alliance_type => 'cleric_splash') %> |
+		<%#= link_to "Mage Splash", new_profile_alliance_path(@profile,:alliance_type => 'mage_splash') %> |
+		<%#= link_to "Evade", new_profile_alliance_path(@profile,:alliance_type => 'evade') %> |
+		<%#= link_to "Whirlwind", new_profile_alliance_path(@profile,:alliance_type => 'whirlwind') %> |
+		<%#= link_to "Healing", new_profile_alliance_path(@profile,:alliance_type => 'healing') %> |
+		<%#= link_to "DP Attack", new_profile_alliance_path(@profile,:alliance_type => 'dp_attack') %> -->
 	</caption>
 	<thead>
-		<th class="top" scope="col" width="5%">Type</th>
-		<th class="top" scope="col" width="30%">Primary</th>
-		<th class="top" scope="col" width="30%">Secondary</th>
-		<th class="top" scope="col" width="30%">Tertiary</th>
-		<th class="top" scope="col" width="5%">Options</th>
+		<th class="top" scope="col" width="20%">Primary</th>
+		<th class="top" scope="col" width="20%">Secondary</th>
+		<th class="top" scope="col" width="20%">Tertiary</th>
+		<th class="top" scope="col" width="30%">Estimated Atk/Def</th>
+		<th class="top" scope="col" width="10%">Options</th>
 	</thead>
 
 	<% @alliances.each do |alliance| %>
 		<tr>
-			<td><%= alliance.alliance_type.titleize %></td>
 			<td><%= alliance.primary.general.name %> (<%= alliance.primary.level %>)</td>
 			<td><%= alliance.secondary.general.name %> (<%= alliance.secondary.level %>)</td>
 			<td>
 				<% unless alliance.tertiary.nil? %>
 					<%= alliance.tertiary.general.name %> (<%= alliance.tertiary.level %>)
 				<% end %>
+			</td>
+			<td>
+				<%= alliance.primary.general.send("attack_with_mods",@profile,alliance.primary) %> /
+				<%= alliance.primary.general.send("defense_with_mods",@profile,alliance.primary) %>
 			</td>
 			<td>
 				<%= link_to '[Edit]', edit_profile_alliance_path(@profile,alliance) %>

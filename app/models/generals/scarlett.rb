@@ -1,2 +1,0 @@
-class Scarlett < General
-end

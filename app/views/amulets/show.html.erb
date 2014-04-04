@@ -1,15 +1,7 @@
 <h1 class="pagetitle"><%= @amulet.name %></h1>
 
-<%# unless @amulet.avatar_file_name.nil? %>
-  <%#= image_tag @amulet.avatar.url, :alt  => "#{@amulet.name}",
-    :style => 'float:right' %>
-	<%= image_tag @amulet.image_path(:original), :alt  => "#{@amulet.name}",
+<%= image_tag @amulet.image_path(:original), :alt  => "#{@amulet.name}",
 		:style => 'float:right' %>
-<%# else %>
-	<!-- <div style="float:right">
-		No Image Available
-	</div> -->
-<%# end %>
 
 <p>
   <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@amulet.name}", :target => "_blank" %><br/>

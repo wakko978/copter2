@@ -1,2 +1,0 @@
-class Theorin < General
-end

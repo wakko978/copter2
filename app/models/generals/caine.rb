@@ -1,2 +1,0 @@
-class Caine < General
-end

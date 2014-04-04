@@ -1,2 +1,0 @@
-class Vorenus < General
-end

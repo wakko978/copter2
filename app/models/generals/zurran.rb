@@ -1,2 +1,0 @@
-class Zurran < General
-end

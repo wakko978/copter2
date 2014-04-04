@@ -1,2 +1,0 @@
-class Azalia < General
-end

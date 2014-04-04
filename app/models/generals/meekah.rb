@@ -1,2 +1,0 @@
-class Meekah < General
-end

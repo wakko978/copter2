@@ -2,14 +2,6 @@
 
 <%= image_tag @land.image_path(:original), :alt  => "#{@land.name}",
 	:style => 'float:right' %>
-<%# unless @land.avatar_file_name.nil? %>
-  <%#= image_tag @land.avatar.url, :alt  => "#{@land.name}",
-    :style => 'float:right' %>
-<%# else %>
-	<!-- <div style="float:right">
-		No Image Available
-	</div> -->
-<%# end %>
 
 <p>
   <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@land.name}", :target => "_blank" %><br/>

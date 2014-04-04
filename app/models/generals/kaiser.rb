@@ -1,2 +1,0 @@
-class Kaiser < General
-end

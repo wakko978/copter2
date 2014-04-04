@@ -1,2 +1,0 @@
-class Elyvita < General
-end

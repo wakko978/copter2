@@ -2,14 +2,6 @@
 
 <%= image_tag @power.image_path(:original), :alt  => "#{@power.name}",
 	:style => 'float:right' %>
-<%# unless @power.avatar_file_name.nil? %>
-  <%#= image_tag @power.avatar.url, :alt  => "#{@power.name}",
-    :style => 'float:right' %>
-<%# else %>
-	<!-- <div style="float:right">
-		No Image Available
-	</div> -->
-<%# end %>
 
 <p>
   <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@power.name}", :target => "_blank" %><br/>

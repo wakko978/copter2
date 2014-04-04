@@ -1,2 +1,0 @@
-class LeonIronhart < General
-end

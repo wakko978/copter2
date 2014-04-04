@@ -1,2 +1,0 @@
-class KarnTheMinotaur < General
-end

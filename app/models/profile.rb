@@ -480,7 +480,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added at level #{level}"
           i += 1
         else
-          UserMailer.notify_admin("#{name}").deliver
+          UserMailer.notify_admin("#{name}",self).deliver
           results[name] = 'Not found'
         end
       end
@@ -507,7 +507,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added #{owned}"
           i += 1
         else
-          UserMailer.notify_admin("#{name}").deliver
+          UserMailer.notify_admin("#{name}",self).deliver
           results[name] = 'Not found'
         end
       end
@@ -534,7 +534,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added #{data[:owned]}"
           i += 1
         else
-          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}").deliver
+          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}",self).deliver
           results[name] = 'Not found'
         end
       end
@@ -571,7 +571,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added #{data[:owned]}"
           i += 1
         else
-          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}").deliver
+          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}",self).deliver
           results[name] = 'Not found'
         end
       end
@@ -598,7 +598,7 @@ class Profile < ActiveRecord::Base
           results[name] = "Added #{data[:owned]}"
           i += 1
         else
-          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}").deliver
+          UserMailer.notify_admin("#{name} #{data[:attack]}/#{data[:defense]}",self).deliver
           results[name] = 'Not found'
         end
       end

@@ -1,2 +1,0 @@
-class Deshara < General
-end

@@ -1,2 +1,0 @@
-class Oberon < General
-end

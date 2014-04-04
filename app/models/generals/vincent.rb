@@ -1,2 +1,0 @@
-class Vincent < General
-end

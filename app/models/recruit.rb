@@ -2,7 +2,7 @@ class Recruit < ActiveRecord::Base
   attr_accessible :name, :general, :general_id, :profile_id, :level
   
   validates :general_id, :presence => true
-  validates :level, :presence => true, :numericality => { :only_integer => true, :less_than_or_equal_to => 50 }
+  validates :level, :presence => true, :numericality => { :only_integer => true, :less_than_or_equal_to => 100 }
     
   belongs_to :profile
   belongs_to :general
@@ -52,7 +52,7 @@ class Recruit < ActiveRecord::Base
     end
     if level >= 35
       attack += 20 if general.general_type == 'Aggressive'
-      attack += 15 if general.general_type == 'Balanced'
+      attack += 20 if general.general_type == 'Balanced'
       attack += 15 if general.general_type == 'Defensive'
     end
     if level >= 40
@@ -75,34 +75,47 @@ class Recruit < ActiveRecord::Base
       attack += 25 if general.general_type == 'Balanced'
       attack += 40 if general.general_type == 'Defensive'
     end
-    [60, 65].each do |i|
+    [60, 65, 70, 75, 80].each do |i|
       if level >= i
         attack += 60 if general.general_type == 'Aggressive'
         attack += 50 if general.general_type == 'Balanced'
         attack += 30 if general.general_type == 'Defensive'
       end
     end
-    if level >= 70
-      attack += 0 if general.general_type == 'Aggressive'
-      attack += 0 if general.general_type == 'Balanced'
-      attack += 0 if general.general_type == 'Defensive'
-    end
-    if level >= 75
-      attack += 0 if general.general_type == 'Aggressive'
-      attack += 0 if general.general_type == 'Balanced'
-      attack += 0 if general.general_type == 'Defensive'
-    end
-    if level >= 80
-      attack += 0 if general.general_type == 'Aggressive'
-      attack += 0 if general.general_type == 'Balanced'
-      attack += 0 if general.general_type == 'Defensive'
-    end
-    if (alliance = self.primary_alliance)
-      attack += (alliance.secondary.attack * 0.5).floor
-      attack += (alliance.tertiary.attack * 0.33).floor unless alliance.tertiary.nil?
-    end
+    # if level >= 70
+    #   attack += 0 if general.general_type == 'Aggressive'
+    #   attack += 0 if general.general_type == 'Balanced'
+    #   attack += 0 if general.general_type == 'Defensive'
+    # end
+    # if level >= 75
+    #   attack += 0 if general.general_type == 'Aggressive'
+    #   attack += 0 if general.general_type == 'Balanced'
+    #   attack += 0 if general.general_type == 'Defensive'
+    # end
+    # if level >= 80
+    #   attack += 0 if general.general_type == 'Aggressive'
+    #   attack += 0 if general.general_type == 'Balanced'
+    #   attack += 0 if general.general_type == 'Defensive'
+    # end
     
-    return attack
+    return attack + attack_alliance_bonus
+  end
+  
+  def attack_alliance_bonus
+    bonus = 0
+    if (alliance = self.primary_alliance)
+      bonus += (alliance.secondary.attack * 0.5).floor
+      bonus += (alliance.tertiary.attack * 0.25).floor unless alliance.tertiary.nil?
+      return bonus
+    end
+    return bonus
+  end
+  
+  def attack_set_bonus
+    if general.has_at_least?(3,profile,self)
+      return ((attack - attack_alliance_bonus) * 0.1).floor
+    end
+    return 0
   end
   
   def defense
@@ -121,7 +134,7 @@ class Recruit < ActiveRecord::Base
     end
     if level >= 35
       defense += 15 if general.general_type == 'Aggressive'
-      defense += 15 if general.general_type == 'Balanced'
+      defense += 20 if general.general_type == 'Balanced'
       defense += 20 if general.general_type == 'Defensive'
     end
     if level >= 40
@@ -144,35 +157,47 @@ class Recruit < ActiveRecord::Base
       defense += 25 if general.general_type == 'Balanced'
       defense += 80 if general.general_type == 'Defensive'
     end
-    [60, 65].each do |i|
+    [60, 65, 70, 75, 80].each do |i|
       if level >= i
         defense += 30 if general.general_type == 'Aggressive'
         defense += 50 if general.general_type == 'Balanced'
         defense += 60 if general.general_type == 'Defensive'
       end
     end
-    if level >= 70
-      defense += 0 if general.general_type == 'Aggressive'
-      defense += 0 if general.general_type == 'Balanced'
-      defense += 0 if general.general_type == 'Defensive'
-    end
-    if level >= 75
-      defense += 0 if general.general_type == 'Aggressive'
-      defense += 0 if general.general_type == 'Balanced'
-      defense += 0 if general.general_type == 'Defensive'
-    end
-    if level >= 80
-      defense += 0 if general.general_type == 'Aggressive'
-      defense += 0 if general.general_type == 'Balanced'
-      defense += 0 if general.general_type == 'Defensive'
-    end
+    # if level >= 70
+    #   defense += 0 if general.general_type == 'Aggressive'
+    #   defense += 0 if general.general_type == 'Balanced'
+    #   defense += 0 if general.general_type == 'Defensive'
+    # end
+    # if level >= 75
+    #   defense += 0 if general.general_type == 'Aggressive'
+    #   defense += 0 if general.general_type == 'Balanced'
+    #   defense += 0 if general.general_type == 'Defensive'
+    # end
+    # if level >= 80
+    #   defense += 0 if general.general_type == 'Aggressive'
+    #   defense += 0 if general.general_type == 'Balanced'
+    #   defense += 0 if general.general_type == 'Defensive'
+    # end
     
+    return defense + defense_alliance_bonus
+  end
+  
+  def defense_alliance_bonus
+    bonus = 0
     if (alliance = self.primary_alliance)
-      defense += (alliance.secondary.defense * 0.5).floor
-      defense += (alliance.tertiary.defense * 0.33).floor unless alliance.tertiary.nil?
+      bonus += (alliance.secondary.defense * 0.5).floor
+      bonus += (alliance.tertiary.defense * 0.25).floor unless alliance.tertiary.nil?
+      return bonus
     end
-    
-    return defense
+    return bonus
+  end
+  
+  def defense_set_bonus
+    if general.has_at_least?(3,profile,self)
+      return ((defense - defense_alliance_bonus) * 0.1).floor
+    end
+    return 0
   end
   
   def e_attack

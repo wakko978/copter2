@@ -1,2 +1,0 @@
-class Deianira < General
-end

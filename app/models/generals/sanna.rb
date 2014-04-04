@@ -1,2 +1,0 @@
-class Sanna < General
-end

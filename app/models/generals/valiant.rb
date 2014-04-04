@@ -1,2 +1,0 @@
-class Valiant < General
-end

@@ -1,2 +1,0 @@
-class Hyacinth < General
-end

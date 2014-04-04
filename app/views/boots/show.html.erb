@@ -2,14 +2,6 @@
 
 <%= image_tag @boot.image_path(:original), :alt  => "#{@boot.name}",
 	:style => 'float:right' %>
-<%# unless @boot.avatar_file_name.nil? %>
-  <%#= image_tag @boot.avatar.url, :alt  => "#{@boot.name}",
-    :style => 'float:right' %>
-<%# else %>
-	<!-- <div style="float:right">
-		No Image Available
-	</div> -->
-<%# end %>
 
 <p>
   <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/index.php?search=#{@boot.name}", :target => "_blank" %><br/>

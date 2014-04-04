@@ -1,2 +1,0 @@
-class Chase < General
-end

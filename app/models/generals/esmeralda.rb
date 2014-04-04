@@ -1,2 +1,0 @@
-class Esmeralda < General
-end

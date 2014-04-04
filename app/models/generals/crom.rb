@@ -1,2 +1,0 @@
-class Crom < General
-end

@@ -13,23 +13,26 @@ class AlliancesController < ApplicationController
     @alliance = Alliance.new
     @alliance_type = params[:alliance_type] || 'piercing'
     
-    @collection = @profile.recruits.includes(:general).where("generals.alliance_type = ?",@alliance_type)
+    @collection = @profile.recruits.includes(:general).order("generals.name").delete_if{|r| r.primary_alliance}
   end
   
   def edit
     @alliance = @profile.alliances.find(params[:id])
     
-    @collection = @profile.recruits.includes(:general).where("generals.alliance_type = ?",@alliance.alliance_type)
+    @collection = @profile.recruits.includes(:general).order("generals.name").delete_if{|r| !r.primary_alliance.nil? unless @alliance.primary == r}
   end
   
   def create
     @alliance = @profile.alliances.new(params[:alliance])
     @alliance_type = params[:alliance][:alliance_type] || 'piercing'
     
-    @collection = @profile.recruits.includes(:general).where("generals.alliance_type = ?",@alliance_type)
+    @collection = @profile.recruits.includes(:general).order("generals.name").delete_if{|r| r.primary_alliance}
     
     respond_to do |format|
-      if @alliance.save
+      if params[:alliance][:primary_link] == params[:alliance][:secondary_link] || params[:alliance][:primary_link] == params[:alliance][:tertiary_link] || params[:alliance][:secondary_link] == params[:alliance][:tertiary_link]
+        flash[:alert] = "A general cannot be a link to itself."
+        format.html { render :action => 'new' }
+      elsif @alliance.save
         format.html { redirect_to profile_alliances_path(@profile) }
       else
         format.html { render :action => 'new' }
@@ -40,10 +43,13 @@ class AlliancesController < ApplicationController
   def update
     @alliance = @profile.alliances.find(params[:id])
     
-    @collection = @profile.recruits.includes(:general).where("generals.alliance_type = ?",@alliance.alliance_type)
+    @collection = @profile.recruits.includes(:general).order("generals.name")
     
     respond_to do |format|
-      if @alliance.update_attributes(params[:alliance])
+      if params[:alliance][:primary_link] == params[:alliance][:secondary_link] || params[:alliance][:primary_link] == params[:alliance][:tertiary_link] || params[:alliance][:secondary_link] == params[:alliance][:tertiary_link]
+        flash[:alert] = "A general cannot be a link to itself."
+        format.html { render :action => 'edit' }
+      elsif @alliance.update_attributes(params[:alliance])
         format.html { redirect_to profile_alliances_path(@profile) }
       else
         format.html { render :action => 'edit' }

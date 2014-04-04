@@ -1,2 +1,0 @@
-class Dawn < General
-end

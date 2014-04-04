@@ -1,2 +1,0 @@
-class Savannah < General
-end

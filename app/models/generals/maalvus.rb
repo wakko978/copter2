@@ -1,2 +1,0 @@
-class Maalvus < General
-end

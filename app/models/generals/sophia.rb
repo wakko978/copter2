@@ -1,2 +1,0 @@
-class Sophia < General
-end
