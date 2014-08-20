@@ -87,6 +87,7 @@ class General < ActiveRecord::Base
   def attack_with_mods(profile,recruit)
     return [
       recruit.attack,
+      recruit.attack_alliance_bonus,
       recruit.attack_set_bonus,
       profile.weapons.attack.where(general_id: recruit.general_id).sum(:bonus),
       profile.items.attack.where(general_id: recruit.general_id).sum(:bonus),
@@ -97,6 +98,7 @@ class General < ActiveRecord::Base
   def defense_with_mods(profile,recruit)
     return [
       recruit.defense,
+      recruit.defense_alliance_bonus,
       recruit.defense_set_bonus,
       profile.weapons.defense.where(general_id: recruit.general_id).sum(:bonus),
       profile.items.defense.where(general_id: recruit.general_id).sum(:bonus),

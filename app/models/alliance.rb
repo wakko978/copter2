@@ -4,8 +4,9 @@ class Alliance < ActiveRecord::Base
   belongs_to :secondary, :class_name => "Recruit", :foreign_key => :secondary_link
   belongs_to :tertiary, :class_name => "Recruit", :foreign_key => :tertiary_link
   
-  attr_accessible :profile_id, :primary_link, :secondary_link, :tertiary_link, :alliance_type
+  attr_accessible :profile_id, :primary_link, :secondary_link, :tertiary_link
   
-  validates :profile_id, :alliance_type, :presence => true
-  validates :primary_link, :secondary_link, :presence => true
+  validates :profile_id, :presence => true
+  validates :primary_link, :secondary_link, presence: true
+  validates :primary_link, uniqueness: {scope: :profile_id}
 end

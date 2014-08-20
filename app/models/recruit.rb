@@ -7,8 +7,8 @@ class Recruit < ActiveRecord::Base
   belongs_to :profile
   belongs_to :general
   has_one :primary_alliance, :class_name => "Alliance", :foreign_key => :primary_link
-  has_one :secondary_alliance, :class_name => "Alliance", :foreign_key => :secondary_link
-  has_one :tertiary_alliance, :class_name => "Alliance", :foreign_key => :tertiary_link
+  has_many :secondary_alliances, :class_name => "Alliance", :foreign_key => :secondary_link
+  has_many :tertiary_alliances, :class_name => "Alliance", :foreign_key => :tertiary_link
   has_many :loadouts, :foreign_key => :general_id
   
   def name
@@ -82,28 +82,14 @@ class Recruit < ActiveRecord::Base
         attack += 30 if general.general_type == 'Defensive'
       end
     end
-    # if level >= 70
-    #   attack += 0 if general.general_type == 'Aggressive'
-    #   attack += 0 if general.general_type == 'Balanced'
-    #   attack += 0 if general.general_type == 'Defensive'
-    # end
-    # if level >= 75
-    #   attack += 0 if general.general_type == 'Aggressive'
-    #   attack += 0 if general.general_type == 'Balanced'
-    #   attack += 0 if general.general_type == 'Defensive'
-    # end
-    # if level >= 80
-    #   attack += 0 if general.general_type == 'Aggressive'
-    #   attack += 0 if general.general_type == 'Balanced'
-    #   attack += 0 if general.general_type == 'Defensive'
-    # end
     
-    return attack + attack_alliance_bonus
+    return attack
   end
   
   def attack_alliance_bonus
     bonus = 0
-    if (alliance = self.primary_alliance)
+    if self.primary_alliance
+      alliance = self.primary_alliance
       bonus += (alliance.secondary.attack * 0.5).floor
       bonus += (alliance.tertiary.attack * 0.25).floor unless alliance.tertiary.nil?
       return bonus
@@ -164,28 +150,14 @@ class Recruit < ActiveRecord::Base
         defense += 60 if general.general_type == 'Defensive'
       end
     end
-    # if level >= 70
-    #   defense += 0 if general.general_type == 'Aggressive'
-    #   defense += 0 if general.general_type == 'Balanced'
-    #   defense += 0 if general.general_type == 'Defensive'
-    # end
-    # if level >= 75
-    #   defense += 0 if general.general_type == 'Aggressive'
-    #   defense += 0 if general.general_type == 'Balanced'
-    #   defense += 0 if general.general_type == 'Defensive'
-    # end
-    # if level >= 80
-    #   defense += 0 if general.general_type == 'Aggressive'
-    #   defense += 0 if general.general_type == 'Balanced'
-    #   defense += 0 if general.general_type == 'Defensive'
-    # end
     
-    return defense + defense_alliance_bonus
+    return defense
   end
   
   def defense_alliance_bonus
     bonus = 0
-    if (alliance = self.primary_alliance)
+    if self.primary_alliance
+      alliance = self.primary_alliance
       bonus += (alliance.secondary.defense * 0.5).floor
       bonus += (alliance.tertiary.defense * 0.25).floor unless alliance.tertiary.nil?
       return bonus

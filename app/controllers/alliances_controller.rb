@@ -11,22 +11,21 @@ class AlliancesController < ApplicationController
   
   def new
     @alliance = Alliance.new
-    @alliance_type = params[:alliance_type] || 'piercing'
     
-    @collection = @profile.recruits.includes(:general).order("generals.name").delete_if{|r| r.primary_alliance}
+    @collection = @profile.recruits.includes(:general).order("generals.name")
   end
   
   def edit
     @alliance = @profile.alliances.find(params[:id])
     
-    @collection = @profile.recruits.includes(:general).order("generals.name").delete_if{|r| !r.primary_alliance.nil? unless @alliance.primary == r}
+    @collection = @profile.recruits.includes(:general).order("generals.name")
   end
   
   def create
     @alliance = @profile.alliances.new(params[:alliance])
-    @alliance_type = params[:alliance][:alliance_type] || 'piercing'
+    @alliance.alliance_type = 'any'
     
-    @collection = @profile.recruits.includes(:general).order("generals.name").delete_if{|r| r.primary_alliance}
+    @collection = @profile.recruits.includes(:general).order("generals.name")
     
     respond_to do |format|
       if params[:alliance][:primary_link] == params[:alliance][:secondary_link] || params[:alliance][:primary_link] == params[:alliance][:tertiary_link] || params[:alliance][:secondary_link] == params[:alliance][:tertiary_link]

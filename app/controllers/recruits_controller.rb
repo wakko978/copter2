@@ -13,7 +13,7 @@ class RecruitsController < ApplicationController
       end
     end
 
-    @permitted_columns = ['name','level','e_attack','e_defense',
+    @permitted_columns = ['name','level','attack','defense','e_attack','e_defense',
       'e_defense_with_bonus','e_attack_with_bonus','generals.general_type']
 
     params[:c] = @permitted_columns.include?(params[:c]) ? params[:c] : 'e_attack_with_bonus'
@@ -25,6 +25,8 @@ class RecruitsController < ApplicationController
         [a.general.general_type, a.e_attack]
       elsif params[:c] == 'level'
         [a.level, a.e_attack]
+      elsif params[:c] == 'attack' || params[:c] == 'defense'
+        [a.send(params[:c]),a.name]
       elsif params[:c] == 'e_attack' || params[:c] == 'e_defense'
         [a.send(params[:c]), a.general.send("e_attack_with_bonus",@profile,a)]
       else

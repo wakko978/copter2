@@ -13,8 +13,6 @@
     </div>
   <% end %>
 	
-	<%= f.hidden_field :alliance_type, :value => 'any' %>
-	
 	<p>
 		<%= f.label 'primary_link', 'Primary' %>
 		<%= f.collection_select :primary_link, @collection, :id, :name, {:include_blank => true} %>

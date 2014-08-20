@@ -8,6 +8,8 @@
 	<thead>
 		<th class="top" scope="col" width="26%"><%= sort_link 'General', 'name' %></th>
 		<th class="top" scope="col" width="2%"><%= sort_link 'Level', 'level' %></th>
+		<th class="top" scope="col" width="5%"><%= sort_link 'Lvld Att', 'attack' %></th>
+		<th class="top" scope="col" width="5%"><%= sort_link 'Lvld Def', 'defense' %></th>
 		<th class="top" scope="col" width="13%">Stats w/<br/>Gear Bonus</th>
 		<th class="top" scope="col" width="10%">
 			<%= sort_link 'General<br/>eAtt w/ Gear', 'e_attack' %>
@@ -15,13 +17,13 @@
 		<th class="top" scope="col" width="10%">
 			<%= sort_link 'General<br/>eDef w/ Gear', 'e_defense' %>
 		</th>
-		<th class="top" scope="col" width="18%">
+		<th class="top" scope="col" width="13%">
 			<%= sort_link 'Profile+Gen<br/>eAtt w/ Bonus', 'e_attack_with_bonus' %>
 		</th>
-		<th class="top" scope="col" width="18%">
+		<th class="top" scope="col" width="13%">
 			<%= sort_link 'Profile+Gen<br/>eDef w/ Bonus', 'e_defense_with_bonus'  %>
 		</th>
-		<th class="top" scope="col" width="3%"><%= sort_link "General<br/>Type".html_safe, 'generals.general_type' %></th>
+		<th class="top" scope="col" width="3%"><%= sort_link "Type".html_safe, 'generals.general_type' %></th>
 		<th class="top" scope="col" width="5%">Options</th>
 	</thead>
 
@@ -41,6 +43,8 @@
 					:class => 'recruit', data: {url: profile_recruit_path(@profile,recruit),
 						field: "recruit_#{recruit.id}"} %>
 			</td>
+      <td><%= recruit.attack %></td>
+      <td><%= recruit.defense %></td>
 			<td>
 				<span id="attack_w_mods_<%= recruit.id %>"><%= recruit.general.send("attack_with_mods",@profile,recruit) %></span> /
 				<span id="defense_w_mods_<%= recruit.id %>"><%= recruit.general.send("defense_with_mods",@profile,recruit) %></span>
@@ -51,7 +55,7 @@
 			<td id="eDef_w_bonus_<%= recruit.id %>"><%= recruit.general.send("e_defense_with_bonus",@profile,recruit) %></td>
 			<td><%= truncate(general.general_type, length: 3, omission: '') %></td>
 			<td>
-				<% unless recruit.primary_alliance || recruit.secondary_alliance || recruit.tertiary_alliance || !recruit.loadouts.empty? %>
+				<% unless recruit.primary_alliance || !recruit.secondary_alliances.empty? || !recruit.tertiary_alliances.empty? || !recruit.loadouts.empty? %>
 					<%= link_to '[Remove]', profile_recruit_path(@profile,recruit), :confirm => 'Are you sure?', :method => :delete %>
 				<% end %>
 			</td>

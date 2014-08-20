@@ -51,7 +51,7 @@ class Loadout < ActiveRecord::Base
       amulet.nil? ? 0 : amulet.defense,
       amulet.nil? ? 0 : amulet.name == 'Tinkerer Trinket' ? 50 : (amulet.name == 'Elite Tinkerer Trinket' ? 35 : 0),
       glove.nil? ? 0 : glove.defense,
-      glove.nil? ? 0 : glove.name == 'Tinkerer Power Glove' ? 175 : (helmet.name == 'Elite Tinkerer Power Glove' ? 175 : 0),
+      glove.nil? ? 0 : glove.name == 'Tinkerer Power Glove' ? 175 : (glove.name == 'Elite Tinkerer Power Glove' ? 175 : 0),
       boot.nil? ? 0 : boot.defense,
       boot.nil? ? 0 : boot.name == 'Tinkerer Boot' ? 75 : (boot.name == 'Elite Tinkerer Boot' ? 65 : 0),
       power.nil? ? 0 : power.defense].sum
