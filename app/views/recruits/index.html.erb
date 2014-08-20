@@ -43,8 +43,8 @@
 					:class => 'recruit', data: {url: profile_recruit_path(@profile,recruit),
 						field: "recruit_#{recruit.id}"} %>
 			</td>
-      <td><%= recruit.attack %></td>
-      <td><%= recruit.defense %></td>
+      <td id="attack_<%= recruit.id %>"><%= recruit.attack %></td>
+      <td id="defense_<%= recruit.id %>"><%= recruit.defense %></td>
 			<td>
 				<span id="attack_w_mods_<%= recruit.id %>"><%= recruit.general.send("attack_with_mods",@profile,recruit) %></span> /
 				<span id="defense_w_mods_<%= recruit.id %>"><%= recruit.general.send("defense_with_mods",@profile,recruit) %></span>
