@@ -45,6 +45,7 @@ class General < ActiveRecord::Base
   
   def has_at_least?(num,profile,recruit)
     [
+      profile.generals.where(general_id: recruit.general_id).count,
       profile.weapons.where(general_id: recruit.general_id).count,
       profile.items.where(general_id: recruit.general_id).count,
       profile.powers.where(general_id: recruit.general_id).count,

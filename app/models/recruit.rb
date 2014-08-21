@@ -99,7 +99,7 @@ class Recruit < ActiveRecord::Base
   
   def attack_set_bonus
     if general.has_at_least?(3,profile,self)
-      return ((attack - attack_alliance_bonus) * 0.1).floor
+      return (attack * 0.1).floor
     end
     return 0
   end
@@ -167,7 +167,7 @@ class Recruit < ActiveRecord::Base
   
   def defense_set_bonus
     if general.has_at_least?(3,profile,self)
-      return ((defense - defense_alliance_bonus) * 0.1).floor
+      return (defense * 0.1).floor
     end
     return 0
   end
