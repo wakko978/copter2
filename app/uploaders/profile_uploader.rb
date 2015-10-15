@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class ProfileUploader < CarrierWave::Uploader::Base
+# class ProfileUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -22,10 +22,10 @@ class ProfileUploader < CarrierWave::Uploader::Base
   #   "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   # end
 
-  def cache_dir
-    # should return path to cache dir
-    Rails.root.join 'tmp/uploads'
-  end
+  # def cache_dir
+  #   # should return path to cache dir
+  #   Rails.root.join 'tmp/uploads'
+  # end
   
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -59,4 +59,4 @@ class ProfileUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
-end
+# end
