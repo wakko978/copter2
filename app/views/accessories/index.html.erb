@@ -1,4 +1,4 @@
-<h1 class="pagetitle"><%= params[:item_type].titleize.pluralize %> acquired for <%= @profile.name %></h1>
+<h1 class="pagetitle"><%= params[:item_type].titleize.pluralize %> acquired for <%= @profile.name.html_safe %></h1>
 
 <table class="non-fixed">
 	<%= will_paginate @accessories %>

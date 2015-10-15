@@ -1,5 +1,5 @@
 class Malekus < General
-  def piercing(recruit)
+  def piercing(recruit,skip_alliance=false)
     case recruit.level
     when 5..General.max_level
       return step_function(recruit.level,{pos_index: -1, offset: 6, period: 2})

@@ -57,15 +57,15 @@ class General < ActiveRecord::Base
     false
   end
   
-  def monster_attack(recruit)
+  def monster_attack(recruit,skip_alliance=false)
     0
   end
   
-  def resistance(recruit)
+  def resistance(recruit,skip_alliance=false)
     base_resistance
   end
   
-  def piercing(recruit)
+  def piercing(recruit,skip_alliance=false)
     base_piercing
   end
   

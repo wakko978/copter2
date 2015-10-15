@@ -28,12 +28,7 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
-    airbrake (3.1.12)
-      activesupport
-      builder
-      json
     arel (3.0.2)
-    aws_cf_signer (0.1.1)
     bcrypt-ruby (3.0.1)
     better_errors (0.9.0)
       coderay (>= 1.0.0)
@@ -42,14 +37,8 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.0.4)
     callsite (0.0.11)
-    carrierwave (0.8.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
-    cloudinary (1.0.60)
-      aws_cf_signer
-      rest-client
     cocaine (0.5.1)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.9)
@@ -80,8 +69,7 @@ GEM
     jquery-ui-rails (4.0.3)
       jquery-rails
       railties (>= 3.1.0)
-    json (1.6.8)
-    le (2.1.8)
+    json (1.8.1)
     libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -92,7 +80,7 @@ GEM
       railties
     mime-types (1.23)
     mini_portile (0.5.0)
-    multi_json (1.7.7)
+    multi_json (1.10.1)
     mysql2 (0.3.11)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -132,8 +120,6 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
     sass (3.2.9)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -170,16 +156,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake
   better_errors
   binding_of_caller
-  carrierwave
-  cloudinary
   coffee-rails (~> 3.2.1)
   devise
   jquery-rails
   jquery-ui-rails
-  le
   meta_request
   mysql2
   nokogiri

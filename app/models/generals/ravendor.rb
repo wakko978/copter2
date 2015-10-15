@@ -1,5 +1,5 @@
 class Ravendor < General
-  def resistance(recruit)
+  def resistance(recruit,skip_alliance=false)
     case recruit.level
     when 1
       return 5

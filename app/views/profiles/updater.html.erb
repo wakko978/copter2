@@ -1,4 +1,4 @@
-<h1 class="pagetitle">Upload Keep, Generals, Soldiers, Items, Magic and Land for <%= @profile.name %></h1>
+<h1 class="pagetitle">Upload Keep, Generals, Soldiers, Items, Magic and Land for <%= @profile.name.html_safe %></h1>
 
 <%= render :partial => 'faq' %>
 
@@ -65,33 +65,33 @@
 	</table>
 </form>
 
-If your browser is having trouble parsing files, <%= link_to_function "Click here", "toggleDiv('sf_upload')" %>
+<!-- If your browser is having trouble parsing files, <%#= link_to_function "Click here", "toggleDiv('sf_upload')" %>
 
 <br/>
 
 <div id="sf_upload" style="display:none">
-	<br/>
-	<%= form_for @profile, :url => upload_file_profile_path(@profile), :method => 'post', :html => {:id => 'alt_form', :multipart => true} do |f| %>
-		<p>
-			I can take uploads and process them. I accept the following files:
-			<ul>
-				<li>generals.php, generals.php.html, generals.php.htm</li>
-				<li>soldiers.php, soldiers.php.html, soldiers.php.htm</li>
-				<li>magic.php, magic.php.html, magic.php.htm</li>
-				<li>item.php, item.php.html, item.php.htm</li>
-				<li>land.php, land.php.html, land.php.htm</li>
-				<li>keep.php, keep.php.html, keep.php.htm</li>
-			</ul>
-			<%= label_tag "upload", "File" %><br/>
-			<%= file_field_tag 'attachment',
-			 	:accept => 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source' %>
-		</p>
-	
-		<p>
-	    <%= f.submit 'Process Single File' %>
-	  </p>
-	<% end %>
-</div>
+  <br/>
+  <%#= form_for @profile, :url => upload_file_profile_path(@profile), :method => 'post', :html => {:id => 'alt_form', :multipart => true} do |f| %>
+    <p>
+      I can take uploads and process them. I accept the following files:
+      <ul>
+        <li>generals.php, generals.php.html, generals.php.htm</li>
+        <li>soldiers.php, soldiers.php.html, soldiers.php.htm</li>
+        <li>magic.php, magic.php.html, magic.php.htm</li>
+        <li>item.php, item.php.html, item.php.htm</li>
+        <li>land.php, land.php.html, land.php.htm</li>
+        <li>keep.php, keep.php.html, keep.php.htm</li>
+      </ul>
+      <%#= label_tag "upload", "File" %><br/>
+      <%#= file_field_tag 'attachment',
+         :accept => 'text/html,text/php,application/php,text/x-php,application/x-php,application/x-httpd-php,application/x-httpd-php-source' %>
+    </p>
+
+    <p>
+      <%#= f.submit 'Process Single File' %>
+    </p>
+  <%# end %>
+</div> -->
 
 <br/>
 

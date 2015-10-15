@@ -19,20 +19,20 @@ class Recruit < ActiveRecord::Base
     self[:name] = val
   end
   
-  def piercing
-    general.piercing(self)
+  def piercing(skip_allaince=false)
+    general.piercing(self,skip_allaince)
   end
   
-  def resistance
-    general.resistance(self)
+  def resistance(skip_allaince=false)
+    general.resistance(self,skip_allaince)
   end
   
   def monster_bonus_only?
     general.monster_bonus_only?
   end
   
-  def monster_attack
-    general.monster_attack(self)
+  def monster_attack(skip_alliance=false)
+    general.monster_attack(self,skip_alliance)
   end
   
   def attack

@@ -10,7 +10,7 @@ class ProfileUploader < CarrierWave::Uploader::Base
   # include Sprockets::Helpers::RailsHelper
   # include Sprockets::Helpers::IsolatedHelper
   
-  include Cloudinary::CarrierWave
+  # include Cloudinary::CarrierWave
 
   # Choose what kind of storage to use for this uploader:
   # storage :file

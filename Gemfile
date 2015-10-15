@@ -5,17 +5,16 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
 gem 'devise'
 gem 'paperclip', "~> 3.0"
 gem 'will_paginate', '~> 3.0.0'
 # gem 'plupload-rails'
 gem 'nokogiri'
 gem 'seed_dump'
-gem 'airbrake'
-gem 'le'
-gem 'carrierwave'
-gem 'cloudinary'
+# gem 'airbrake'
+# gem 'le'
+# gem 'carrierwave'
+# gem 'cloudinary'
 gem 'thin'
 
 # Gems used only for assets and not required
@@ -35,9 +34,15 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 group :development do
+  # gem 'sqlite3'
+  gem 'mysql2'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+end
+
+group :production do
+  gem 'mysql2'
 end
 
 # To use ActiveModel has_secure_password

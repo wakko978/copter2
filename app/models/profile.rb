@@ -1,4 +1,4 @@
-require 'file_size_validator'
+#require 'file_size_validator'
 class Profile < ActiveRecord::Base
   belongs_to :user
   has_many :properties, :dependent => :destroy
@@ -32,15 +32,15 @@ class Profile < ActiveRecord::Base
   before_save :update_e_defense
   after_create :populate_lands
   
-  validates :land, :general, :soldier, :item, :magic, :keep,
-    :file_size => { :in => 0..5.megabytes }
+  # validates :land, :general, :soldier, :item, :magic, :keep,
+  #   :file_size => { :in => 0..5.megabytes }
   
-  mount_uploader :keep, ProfileUploader
-  mount_uploader :land, ProfileUploader
-  mount_uploader :general, ProfileUploader
-  mount_uploader :soldier, ProfileUploader
-  mount_uploader :item, ProfileUploader
-  mount_uploader :magic, ProfileUploader
+  # mount_uploader :keep, ProfileUploader
+  # mount_uploader :land, ProfileUploader
+  # mount_uploader :general, ProfileUploader
+  # mount_uploader :soldier, ProfileUploader
+  # mount_uploader :item, ProfileUploader
+  # mount_uploader :magic, ProfileUploader
   
   cattr_reader :per_page
   @@per_page = 25

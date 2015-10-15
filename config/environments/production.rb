@@ -80,4 +80,4 @@ Copter2::Application.configure do
 end
 
 ### Logentries
-Rails.logger = Le.new(ENV['LOGENTRIES_TOKEN'])
+# Rails.logger = Le.new(ENV['LOGENTRIES_TOKEN'])

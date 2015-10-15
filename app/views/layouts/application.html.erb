@@ -43,7 +43,7 @@
 							<!--[if lte IE 6]><table><tr><td><![endif]-->
 							<ul>
 					  		<% current_user.profiles.each do |profile| %>
-									<li><%= link_to profile.name, profile_path(profile) %></li>
+									<li><%= link_to profile.name.html_safe, profile_path(profile) %></li>
 					  		<% end %>
 							</ul>
 							<!--[if lte IE 6]></td></tr></table></a><![endif]-->

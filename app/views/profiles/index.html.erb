@@ -18,7 +18,7 @@
 	<% @profiles.each do |profile| %>
 		<tr>
 			<th scope="row">
-				<%= link_to profile.name, profile_path(profile) %>
+				<%= link_to profile.name.html_safe, profile_path(profile) %>
 			</th>
 			<td><%= profile.level %></td>
 			<td><%= profile.army_size %></td>

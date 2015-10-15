@@ -1,4 +1,4 @@
-<h1 class="pagetitle">Loadouts for <%= @profile.name %></h1>
+<h1 class="pagetitle">Loadouts for <%= @profile.name.html_safe %></h1>
 
 <table class="non-fixed">
 	<caption><%= link_to "Create Loadout", new_profile_loadout_path(@profile) %></caption>

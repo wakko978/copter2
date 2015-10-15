@@ -3,7 +3,7 @@ class Agamemnon < General
     true
   end
   
-  def monster_attack(recruit)
+  def monster_attack(recruit,skip_alliance=false)
     monster_attack = 0
     
     case recruit.level

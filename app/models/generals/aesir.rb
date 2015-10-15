@@ -1,11 +1,12 @@
 class Aesir < General
-  def piercing(recruit)
+  def piercing(recruit,skip_alliance=false)
     mod1 = 0
     mod2 = 0
     
-    if (alliance = recruit.primary_alliance)
-      mod1 = (alliance.secondary.piercing * 0.5).floor
-      mod2 = (alliance.tertiary.piercing * 0.33).floor unless alliance.tertiary.nil?
+    if recruit.primary_alliance && !skip_alliance
+      alliance = recruit.primary_alliance
+      mod1 = (alliance.secondary.piercing(true) * 0.5).floor
+      mod2 = (alliance.tertiary.piercing(true) * 0.33).floor unless alliance.tertiary.nil?
     end
     
     case recruit.level

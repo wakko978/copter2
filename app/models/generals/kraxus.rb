@@ -1,5 +1,5 @@
 class Kraxus < General
-  def piercing(recruit)
+  def piercing(recruit,skip_alliance=false)
     case recruit.level
     when 1..4
       return (recruit.level + 1) * 10
@@ -8,7 +8,7 @@ class Kraxus < General
     end
   end
   
-  def resistance(recruit)
+  def resistance(recruit,skip_alliance=false)
     case recruit.level
     when 5
       return 10
