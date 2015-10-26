@@ -85,6 +85,7 @@ GEM
     mini_portile (0.5.0)
     multi_json (1.10.1)
     mysql2 (0.3.11)
+    newrelic_rpm (3.14.0.305)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
@@ -161,6 +162,7 @@ DEPENDENCIES
   jquery-ui-rails
   meta_request
   mysql2
+  newrelic_rpm
   nokogiri
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)

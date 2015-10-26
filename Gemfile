@@ -25,6 +25,7 @@ end
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'mysql2'
+gem 'newrelic_rpm'
 
 group :development do
   # gem 'seed_dump'
