@@ -3,17 +3,13 @@ class Adaya < General
     bonus = super
     attack_rune = profile.attack_rune
     
-    case recruit.level
-    when 1
-      bonus += attack_rune * 0.05
-    when 2
-      bonus += attack_rune * 0.06
-    when 3
-      bonus += attack_rune * 0.07
-    when 4
-      bonus += attack_rune * 0.08
-    when 5..General.max_level
-      bonus += attack_rune * 0.09
+    case recruit.promote_level_bonus
+    when 1..6
+      bonus += attack_rune * (0.004 + (recruit.promote_level_bonus * 0.001))
+    when 7
+      bonus += attack_rune * 0.0125
+    when 8..General.max_level
+      bonus += attack_rune * (0.0125 + ((recruit.promote_level_bonus - 7) * 0.0015))
     end
     
     return bonus.round()

@@ -54,7 +54,21 @@ jQuery ->
 				errors = $.parseJSON(data.responseText).errors
 				alert(errors.join('\n'))
 		})
-		
+	
+	$('body').on 'change', "#loadout_power_id", (event) ->
+		$.ajax({
+			url: $('#loadout_power_id').data('url'),
+			data: { item: {id: this.value}},
+			type: 'get',
+			dataType: 'json',
+			success: (data) ->
+	    	$('#power_piercing').text(data.piercing)
+		    $('#power_resistance').text(data.resistance)
+			error: (data) ->
+				errors = $.parseJSON(data.responseText).errors
+				alert(errors.join('\n'))
+		})
+  
 	$('body').on 'change', "#loadout_armor_id", (event) ->
 		$.ajax({
 			url: $('#loadout_armor_id').data('url'),

@@ -3,14 +3,14 @@ class Agamemnon < General
     true
   end
   
-  def monster_attack(recruit,skip_alliance=false)
+  def monster_attack(recruit)
     monster_attack = 0
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1..4
-      monster_attack += 10 + (recruit.level * 5)
+      monster_attack += 10 + (recruit.promote_level_bonus * 5)
     when 5..General.max_level
-      monster_attack += 30 + ((recruit.level - 4) * 13)
+      monster_attack += 30 + ((recruit.promote_level_bonus - 4) * 13)
     end
     
     return monster_attack

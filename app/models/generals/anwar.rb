@@ -3,7 +3,7 @@ class Anwar < General
     bonus = super
     
     count = profile.inventory_count('powers','Wolf Spirit') / 3
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += (count * 0.4) > 10 ? 10 : (count * 0.4)
     when 2

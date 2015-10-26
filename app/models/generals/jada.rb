@@ -3,7 +3,7 @@ class Jada < General
     bonus = super
     
     count = profile.inventory_count('powers','Arcane Blast') / 10
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += (count * 0.4) > 10 ? 10 : (count * 0.4)
     when 2
@@ -13,7 +13,7 @@ class Jada < General
     when 4
       bonus += count > 10 ? 10 : count
     when 5..General.max_level
-      max = step_function(recruit.level,{pos_index: -2, multiplier: 3, offset: 4, period: 3})
+      max = step_function(recruit.promote_level_bonus,{pos_index: -2, multiplier: 3, offset: 4, period: 3})
       bonus += count > max ? max : count
     end
     return bonus.round()

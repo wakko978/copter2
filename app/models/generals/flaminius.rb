@@ -3,7 +3,7 @@ class Flaminius < General
     bonus = super
     
     count = profile.inventory_count('weapons','Flamewalker')
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += (count * 0.5) > 50 ? 50 : (count * 0.5)
     when 2

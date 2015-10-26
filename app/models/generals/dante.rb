@@ -2,7 +2,7 @@ class Dante < General
   def attack_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus -= 5
     when 2
@@ -12,7 +12,7 @@ class Dante < General
     when 4, 5
       bonus -= 25
     when 6..General.max_level
-      bonus -= step_function(recruit.level,{pos_index: 20, offset: 5, period: 2})
+      bonus -= step_function(recruit.promote_level_bonus,{pos_index: 20, offset: 5, period: 2})
     end
     return bonus.round()
   end
@@ -20,7 +20,7 @@ class Dante < General
   def defense_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += 4
     when 2
@@ -30,7 +30,7 @@ class Dante < General
     when 4, 5
       bonus += 20
     when 6..General.max_level
-      bonus += step_function(recruit.level,{pos_index: 15, offset: 5, period: 2})
+      bonus += step_function(recruit.promote_level_bonus,{pos_index: 15, offset: 5, period: 2})
     end
     return bonus.round()
   end

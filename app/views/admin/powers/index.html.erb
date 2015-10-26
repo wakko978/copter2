@@ -12,6 +12,8 @@
 		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
 		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
 		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
 		<th class="top" scope="col">Options</th>
 	</thead>
 	
@@ -29,6 +31,8 @@
 			<td><%= number_to_currency(power.base_cost) %></td>
 			<td><%= number_to_currency(power.upkeep) %></td>
 			<td><%= power.div_power %></td>
+			<td><%= power.piercing %></td>
+			<td><%= power.resistance %></td>
 			<td>
 				<%= link_to '[Edit]', edit_admin_power_path(power) %>
 				<% if current_user.is_admin? && power.is_unowned? %>

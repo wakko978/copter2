@@ -4,20 +4,20 @@ class SkaarDeathrune < General
   end
 
   def special_leveling_increment(recruit,stat)
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       return 0
     when 2..4
-      return (recruit.level - 1) * 3
+      return (recruit.promote_level_bonus - 1) * 3
     else
-      return 9 + (recruit.level - 4)
+      return 9 + (recruit.promote_level_bonus - 4)
     end
   end
   
   def attack_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += 6
     when 2
@@ -25,7 +25,7 @@ class SkaarDeathrune < General
     when 3
       bonus += 24
     when 4..General.max_level
-      bonus += step_function(recruit.level,{pos_index: 36, offset: 3, period: 2})
+      bonus += step_function(recruit.promote_level_bonus,{pos_index: 36, offset: 3, period: 2})
     end
     return bonus.round()
   end

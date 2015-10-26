@@ -466,18 +466,19 @@ class Profile < ActiveRecord::Base
   def update_generals(data)
     results = {}
     i = 0
-    data['general'].each do |name,level|
+    data['general'].each do |name,level_promo|
+      (level,promo) = level_promo.split(":")
       if (recruit = self.recruits.includes(:general).where(["generals.name = ?",name]).first)
-        recruit.update_attributes(:level => level)
+        recruit.update_attributes(:level => level, :promote_level => promo)
         changes = recruit.previous_changes
-        results[name] = "Set to level #{level}" unless changes.empty?
-        i += 1 unless changes[:level].nil?
+        results[name] = "Set to level #{level}, #{promo} Star(s)" unless changes.empty?
+        i += 1 unless (changes[:level].nil? or changes[:promote_level].nil?)
       else
         general = General.find_by_name(name)
         
         if general
-          self.recruits.create(:general_id => general.id, :level => level)
-          results[name] = "Added at level #{level}"
+          self.recruits.create(:general_id => general.id, :level => level, :promote_level => promo)
+          results[name] = "Added at level #{level}, #{promo} Star(s)"
           i += 1
         else
           UserMailer.notify_admin("#{name}",self).deliver

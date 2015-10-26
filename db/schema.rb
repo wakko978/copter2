@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140319170014) do
+ActiveRecord::Schema.define(:version => 20151016205518) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -129,6 +129,10 @@ ActiveRecord::Schema.define(:version => 20140319170014) do
     t.integer "helmet_resistance",      :default => 0
     t.integer "shield_piercing",        :default => 0
     t.integer "shield_resistance",      :default => 0
+    t.integer "boot_piercing",          :default => 0
+    t.integer "boot_resistance",        :default => 0
+    t.integer "power_piercing",         :default => 0
+    t.integer "power_resistance",       :default => 0
   end
 
   create_table "messages", :force => true do |t|
@@ -210,9 +214,10 @@ ActiveRecord::Schema.define(:version => 20140319170014) do
   add_index "properties", ["profile_id", "owned"], :name => "index_properties_on_profile_id_and_owned"
 
   create_table "recruits", :force => true do |t|
-    t.integer "general_id",                :null => false
-    t.integer "profile_id",                :null => false
-    t.integer "level",      :default => 1, :null => false
+    t.integer "general_id",                   :null => false
+    t.integer "profile_id",                   :null => false
+    t.integer "level",         :default => 1, :null => false
+    t.integer "promote_level", :default => 1
   end
 
   add_index "recruits", ["profile_id", "level"], :name => "index_recruits_on_profile_id_and_level"

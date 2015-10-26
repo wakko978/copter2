@@ -4,24 +4,24 @@ class Sylvana < General
   end
 
   def special_leveling_increment(recruit,stat)
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       return 0
     when 2..4
-      return (recruit.level - 1) * 3
+      return (recruit.promote_level_bonus - 1) * 3
     else
-      return 9 + (recruit.level - 4)
+      return 9 + (recruit.promote_level_bonus - 4)
     end
   end
   
   def attack_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1..3
-      bonus += recruit.level * 3
+      bonus += recruit.promote_level_bonus * 3
     when 4..General.max_level
-      bonus += step_function((recruit.level * 3),{pos_index: 1, offset: 3, period: 2})
+      bonus += step_function((recruit.promote_level_bonus * 3),{pos_index: 1, offset: 3, period: 2})
     end
     return bonus.round()
   end
@@ -29,7 +29,7 @@ class Sylvana < General
   def defense_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += 6
     when 2
@@ -39,9 +39,9 @@ class Sylvana < General
     when 4
       bonus += 25
     when 5
-      bonus += 25 + 6.5.to_i
+      bonus += 31
     when 6..General.max_level
-      bonus += 25 + (6.5 * (recruit.level - 4).to_i)
+      bonus += 31 + (6.5 * (recruit.promote_level_bonus - 5)).ceil
     end
     return bonus.round()
   end

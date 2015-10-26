@@ -1,19 +1,10 @@
 class Vanir < General
-  def resistance(recruit,skip_alliance=false)
-    mod1 = 0
-    mod2 = 0
-    
-    if recruit.primary_alliance && !skip_alliance
-      alliance = recruit.primary_alliance
-      mod1 = (alliance.secondary.resistance(true) * 0.5).floor
-      mod2 = (alliance.tertiary.resistance(true) * 0.33).floor unless alliance.tertiary.nil?
-    end
-    
-    case recruit.level
+  def resistance(recruit)
+    case recruit.promote_level_bonus
     when 1..4
-      return recruit.level * 10 + mod1 + mod2
+      return recruit.promote_level_bonus * 10
     else
-      return 40 + mod1 + mod2
+      return 40 + ((recruit.promote_level_bonus - 4) * 0.5).floor
     end
   end
 end

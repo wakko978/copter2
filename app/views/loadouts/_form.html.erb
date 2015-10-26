@@ -128,10 +128,11 @@
 		</tr>
 		<tr>
 			<td>Magic</td>
-			<td><%= f.collection_select :power_id, @powers, :id, :name, {:include_blank => true} %></td>
+			<td><%= f.collection_select :power_id, @powers, :id, :name, {:include_blank => true},
+        {:data => {url: get_info_profile_spells_path(@profile)}} %></td>
 			<td>N/A</td>
-			<td>N/A</td>
-			<td>N/A</td>
+			<td id="power_piercing"><%= @loadout.power.nil? ? nil : @loadout.power.piercing %></td>
+			<td id="power_resistance"><%= @loadout.power.nil? ? nil : @loadout.power.resistance %></td>
 		</tr>
 	</table>
 

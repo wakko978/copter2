@@ -42,6 +42,16 @@
 	</p>
 	
 	<p>
+	  <%= f.label 'piercing', 'Piercing' %><br/>
+	  <%= f.text_field :piercing, :size => 10 %>
+	</p>
+	
+	<p>
+	  <%= f.label 'resistance', 'Resistance' %><br/>
+	  <%= f.text_field :resistance, :size => 10 %>
+	</p>
+  
+	<p>
 		<%= f.label 'general_id', 'Bonus applies to general:' %><br/>
 		<%= f.collection_select :general_id, General.order(:name), :id, :name, {:include_blank => true} %>
 	</p>

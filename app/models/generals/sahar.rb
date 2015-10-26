@@ -3,28 +3,20 @@ class Sahar < General
     true
   end
   
-  def monster_attack(recruit,skip_alliance=false)
+  def monster_attack(recruit)
     monster_attack = 0
-    mod1 = 0
-    mod2 = 0
     
-    if recruit.primary_alliance && !skip_alliance
-      alliance = recruit.primary_alliance
-      mod1 = (alliance.secondary.monster_attack(true) * 0.5).floor
-      mod2 = (alliance.tertiary.monster_attack(true) * 0.33).floor unless alliance.tertiary.nil?
-    end
-    
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
-      monster_attack += 212 + mod1 + mod2
+      monster_attack += 212
     when 2
-      monster_attack += 230 + mod1 + mod2
+      monster_attack += 230
     when 3
-      monster_attack += 245 + mod1 + mod2
+      monster_attack += 245
     when 4
-      monster_attack += 260 + mod1 + mod2
+      monster_attack += 260
     when 5..General.max_level
-      monster_attack += ((recruit.level - 4) * 30) + 260 + mod1 + mod2
+      monster_attack += ((recruit.promote_level_bonus - 4) * 30) + 260
     end
     
     return monster_attack

@@ -16,6 +16,7 @@ Copter2::Application.routes.draw do
       post 'update_all', :on => :collection
     end
     resources :spells, :except => [:edit] do
+      get 'get_info', :on => :collection
       post 'update_all', :on => :collection
     end
     resources :arms, :except => [:edit] do

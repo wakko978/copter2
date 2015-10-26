@@ -3,28 +3,20 @@ class Feral < General
     true
   end
   
-  def monster_attack(recruit,skip_alliance=false)
+  def monster_attack(recruit)
     monster_attack = 0
-    mod1 = 0
-    mod2 = 0
     
-    if recruit.primary_alliance && !skip_alliance
-      alliance = recruit.primary_alliance
-      mod1 = (alliance.secondary.monster_attack(true) * 0.5).floor
-      mod2 = (alliance.tertiary.monster_attack(true) * 0.33).floor unless alliance.tertiary.nil?
-    end
-    
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1..3
-      monster_attack += recruit.level * 5 + 7 + mod1 + mod2
+      monster_attack += recruit.promote_level_bonus * 5 + 7
     when 4
-      monster_attack += recruit.level * 5 + 8 + mod1 + mod2
+      monster_attack += recruit.promote_level_bonus * 5 + 8
     when 5
-      monster_attack += recruit.level * 8 + 8 + mod1 + mod2
+      monster_attack += recruit.promote_level_bonus * 8 + 8
     when 6
-      monster_attack += recruit.level * 8 + 40 + mod1 + mod2
+      monster_attack += recruit.promote_level_bonus * 8 + 40
     when 7..General.max_level
-      monster_attack += (recruit.level - 6) * 30 + 88 + mod1 + mod2
+      monster_attack += (recruit.promote_level_bonus - 6) * 30 + 88
     end
     
     return monster_attack

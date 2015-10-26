@@ -334,9 +334,10 @@ this.generalFileSelect = (current_generals) ->
         t = $(this)
         general = t.find("div .general_name_div3_padding").text().trim()
         level = /\d+/.exec(t.find('div:contains("Level"):last').text().trim())[0]
-        if !current_generals[general] or current_generals[general] != level
-          output.push "<dd>" + general + ": " + level + "</dd>"
-          to_update[general] = level
+        promo = parseInt(/.*banner_star_(\d).*/.exec(t.find("div .stars img[src]")[0].src)[1])
+        if !current_generals[general] or current_generals[general] != (level + ":" + promo)
+          output.push "<dd>" + general + ": " + level + ":" + promo + "</dd>"
+          to_update[general] = level + ":" + promo
       )
 
       if output.length

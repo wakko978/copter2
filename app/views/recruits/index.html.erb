@@ -7,7 +7,7 @@
 	<caption><%= link_to "Acquire General(s)", new_profile_recruit_path(@profile) %></caption>
 	<thead>
 		<th class="top" scope="col" width="26%"><%= sort_link 'General', 'name' %></th>
-		<th class="top" scope="col" width="2%"><%= sort_link 'Level', 'level' %></th>
+		<th class="top" scope="col" width="2%"><%= sort_link 'Level/<br/>Promo', 'level' %></th>
 		<th class="top" scope="col" width="5%"><%= sort_link 'Lvld Att', 'attack' %></th>
 		<th class="top" scope="col" width="5%"><%= sort_link 'Lvld Def', 'defense' %></th>
 		<th class="top" scope="col" width="13%">Stats w/<br/>Gear Bonus</th>
@@ -42,6 +42,10 @@
 				<%= text_field_tag "recruit_#{recruit.id}", recruit.level, :size => 2,
 					:class => 'recruit', data: {url: profile_recruit_path(@profile,recruit),
 						field: "recruit_#{recruit.id}"} %>
+        <br/>
+				<%= text_field_tag "recruitp_#{recruit.id}", recruit.promote_level, :size => 2,
+					:class => 'recruitp', data: {url: profile_recruit_path(@profile,recruit),
+						field: "recruitp_#{recruit.id}"} %>
 			</td>
       <td id="attack_<%= recruit.id %>"><%= recruit.attack %></td>
       <td id="defense_<%= recruit.id %>"><%= recruit.defense %></td>

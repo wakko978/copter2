@@ -13,11 +13,12 @@ class Loadout < ActiveRecord::Base
   attr_accessible :profile_id, :profile, :name, :class_type, :general, :general_id, :weapon, :weapon_id,
     :shield, :shield_id, :helmet, :helmet_id, :armor, :armor_id, :amulet, :amulet_id, :glove, :glove_id, :boot, :boot_id,
     :power, :power_id, :attack_rune_on_weapon, :defense_rune_on_armor, :defense_rune_on_helmet, :weapon_piercing, :weapon_resistance,
-    :armor_piercing, :armor_resistance, :helmet_piercing, :helmet_resistance, :shield_piercing, :shield_resistance, :glove_piercing, :glove_resistance
+    :armor_piercing, :armor_resistance, :helmet_piercing, :helmet_resistance, :shield_piercing, :shield_resistance, :glove_piercing, :glove_resistance, :boot_piercing, :boot_resistance, :power_piercing, :power_resistance
   
   validates :name, :profile_id, :general_id, :presence => true
-  validates :weapon_piercing, :weapon_resistance, :armor_piercing, :armor_resistance, :helmet_piercing, :helmet_resistance,
-    :shield_piercing, :shield_resistance, :glove_resistance, :glove_piercing, :numericality => { :only_integer => true }
+  validates :weapon_piercing, :weapon_resistance, :armor_piercing, :armor_resistance, :helmet_piercing, 
+    :helmet_resistance, :shield_piercing, :shield_resistance, :glove_resistance, :glove_piercing,
+    :boot_piercing, :boot_resistance, :power_piercing, :power_resistance, :numericality => { :only_integer => true }
     
   def attack
     [

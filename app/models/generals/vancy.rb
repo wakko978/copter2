@@ -3,28 +3,20 @@ class Vancy < General
     true
   end
   
-  def monster_attack(recruit,skip_alliance=false)
+  def monster_attack(recruit)
     monster_attack = 0
-    mod1 = 0
-    mod2 = 0
     
-    if recruit.primary_alliance && !skip_alliance
-      alliance = recruit.primary_alliance
-      mod1 = (alliance.secondary.monster_attack(true) * 0.5).floor
-      mod2 = (alliance.tertiary.monster_attack(true) * 0.33).floor unless alliance.tertiary.nil?
-    end
-    
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
-      monster_attack += 230 + mod1 + mod2
+      monster_attack += 230
     when 2
-      monster_attack += 250 + mod1 + mod2
+      monster_attack += 250
     when 3
-      monster_attack += 270 + mod1 + mod2
+      monster_attack += 270
     when 4
-      monster_attack += 290 + mod1 + mod2
+      monster_attack += 290
     when 5..General.max_level
-      monster_attack += ((recruit.level - 2) * 30) + 230 + mod1 + mod2
+      monster_attack += ((recruit.promote_level_bonus - 2) * 30) + 230
     end
     
     return monster_attack

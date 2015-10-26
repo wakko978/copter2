@@ -2,11 +2,11 @@ class Serylius < General
   def attack_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1..3
       bonus += 1
     when 4..General.max_level
-      bonus += step_function(recruit.level,{offset: 3, period: 2})
+      bonus += step_function(recruit.promote_level_bonus,{offset: 3, period: 2})
     end
     return bonus.round()
   end
@@ -14,11 +14,11 @@ class Serylius < General
   def defense_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1..3
       bonus += 1
     when 4..General.max_level
-      bonus += step_function(recruit.level,{offset: 3, period: 2})
+      bonus += step_function(recruit.promote_level_bonus,{offset: 3, period: 2})
     end
     return bonus.round()
   end

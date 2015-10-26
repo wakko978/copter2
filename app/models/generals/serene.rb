@@ -2,7 +2,7 @@ class Serene < General
   def attack_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += 2
     when 2
@@ -10,7 +10,7 @@ class Serene < General
     when 3
       bonus += 10
     when 4..General.max_level
-      bonus += step_function(recruit.level,{pos_index: 10, offset: 3, period: 2})
+      bonus += step_function(recruit.promote_level_bonus,{pos_index: 10, offset: 3, period: 2})
     end
     return bonus.round()
   end

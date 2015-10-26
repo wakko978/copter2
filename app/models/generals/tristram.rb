@@ -3,7 +3,7 @@ class Tristram < General
     bonus = super
     
     isolde = profile.recruits.includes(:general).where("generals.name = 'Isolde'").first
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += 4 if isolde
     when 2
@@ -13,7 +13,7 @@ class Tristram < General
     when 4
       bonus += 7 if isolde
     when 5..General.max_level
-      bonus += (recruit.level * 2) - 1 if isolde
+      bonus += (recruit.promote_level_bonus * 2) - 1 if isolde
     end
     return bonus.round()
   end

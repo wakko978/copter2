@@ -1,9 +1,9 @@
 class Aurelius < General
   def defense_bonus(profile,recruit)
     bonus = super
-    
     count = profile.health / 3
-    case recruit.level
+    
+    case recruit.promote_level_bonus
     when 1
       bonus += count * 0.6
     when 2

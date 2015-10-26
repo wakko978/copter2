@@ -6,16 +6,8 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'devise'
-# gem 'paperclip', "~> 3.0"
 gem 'will_paginate', '~> 3.0.0'
-# gem 'plupload-rails'
 gem 'nokogiri'
-gem 'seed_dump'
-# gem 'airbrake'
-# gem 'le'
-# gem 'carrierwave'
-# gem 'cloudinary'
-gem 'thin'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -32,17 +24,18 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'mysql2'
 
 group :development do
-  # gem 'sqlite3'
-  gem 'mysql2'
+  # gem 'seed_dump'
+  gem 'thin'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+  gem 'debugger'
 end
 
 group :production do
-  gem 'mysql2'
 end
 
 # To use ActiveModel has_secure_password

@@ -4,7 +4,7 @@ class Evalice < General
     
     defense = profile.defense
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += (defense * 0.15)
     when 2
@@ -22,7 +22,7 @@ class Evalice < General
     
     defense = profile.defense
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus -= (defense * 0.15)
     when 2

@@ -4,7 +4,7 @@ class Kataan < General
   end
   
   def special_leveling_increment(recruit,stat)
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       return 0
     when 2

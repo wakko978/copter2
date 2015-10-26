@@ -1,5 +1,5 @@
 class Recruit < ActiveRecord::Base
-  attr_accessible :name, :general, :general_id, :profile_id, :level
+  attr_accessible :name, :general, :general_id, :profile_id, :level, :promote_level
   
   validates :general_id, :presence => true
   validates :level, :presence => true, :numericality => { :only_integer => true, :less_than_or_equal_to => 100 }
@@ -19,20 +19,41 @@ class Recruit < ActiveRecord::Base
     self[:name] = val
   end
   
-  def piercing(skip_allaince=false)
-    general.piercing(self,skip_allaince)
+  def piercing
+    general.piercing(self)
   end
-  
-  def resistance(skip_allaince=false)
-    general.resistance(self,skip_allaince)
+
+  def resistance
+    general.resistance(self)
   end
   
   def monster_bonus_only?
     general.monster_bonus_only?
   end
   
-  def monster_attack(skip_alliance=false)
-    general.monster_attack(self,skip_alliance)
+  def monster_attack
+    general.monster_attack(self)
+  end
+  
+  def promote_level_bonus
+    case promote_level
+    when 1
+      return level + 0
+    when 2
+      return level + 3
+    when 3
+      return level + 7
+    when 4
+      return level + 12
+    when 5
+      return level + 18
+    when 6
+      return level + 25
+    when 7
+      return level + 33
+    when 8
+      return level + 42
+    end
   end
   
   def attack
@@ -81,6 +102,25 @@ class Recruit < ActiveRecord::Base
         attack += 50 if general.general_type == 'Balanced'
         attack += 30 if general.general_type == 'Defensive'
       end
+    end
+    
+    case promote_level
+    when 2
+      attack = ((attack * 1.3) + 7).floor
+    when 3
+      attack = ((attack * 1.6) + 17).floor
+    when 4
+      attack = ((attack * 2.0) + 25).floor
+    when 5
+      attack = ((attack * 2.4) + 44).floor
+    when 6
+      attack = ((attack * 2.6) + 61).floor
+    # when 7
+    #   attack = ((attack * ?) + ?).floor
+    # when 8
+    #   attack = ((attack * ?) + ?).floor
+    else
+      attack = attack
     end
     
     return attack
@@ -149,6 +189,25 @@ class Recruit < ActiveRecord::Base
         defense += 50 if general.general_type == 'Balanced'
         defense += 60 if general.general_type == 'Defensive'
       end
+    end
+    
+    case promote_level
+    when 2
+      defense = ((defense * 1.3) + 7).floor
+    when 3
+      defense = ((defense * 1.6) + 17).floor
+    when 4
+      defense = ((defense * 2.0) + 25).floor
+    when 5
+      defense = ((defense * 2.4) + 44).floor
+    when 6
+      defense = ((defense * 2.6) + 61).floor
+    # when 7
+    #   defense = ((defense * ?) + ?).floor
+    # when 8
+    #   defense = ((defense * ?) + ?).floor
+    else
+      defense = defense
     end
     
     return defense

@@ -44,7 +44,7 @@ class RecruitsController < ApplicationController
       format.json {
         json = {}
         @profile.recruits.each do |r|
-          json[r.name] = r.level.to_s
+          json[r.name] = "#{r.level.to_s}:#{r.promote_level.to_s}"
         end
         render json: json
       }

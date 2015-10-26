@@ -69,6 +69,14 @@ class SpellsController < ApplicationController
     end
   end
   
+  def get_info
+    @power = Power.find(params[:power][:id])
+    
+    respond_to do |format|
+      format.json { render json: { piercing: "Base: #{@power.piercing}", resistance: "Base: #{@power.resistance}" } }
+    end
+  end
+  
   def destroy
     @spell = @profile.spells.find(params[:id])
     

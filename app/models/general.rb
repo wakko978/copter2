@@ -24,7 +24,7 @@ class General < ActiveRecord::Base
   @permitted_columns = ['name','attack','defense','e_attack','e_defense','base_cost','upkeep','div_power','general_type']
   
   def self.max_level
-    80
+    122
   end
   
   def is_unowned?
@@ -57,15 +57,15 @@ class General < ActiveRecord::Base
     false
   end
   
-  def monster_attack(recruit,skip_alliance=false)
+  def monster_attack(recruit)
     0
   end
   
-  def resistance(recruit,skip_alliance=false)
+  def resistance(recruit)
     base_resistance
   end
   
-  def piercing(recruit,skip_alliance=false)
+  def piercing(recruit)
     base_piercing
   end
   

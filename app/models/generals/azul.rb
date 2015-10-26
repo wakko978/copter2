@@ -2,11 +2,11 @@ class Azul < General
   def attack_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1, 2, 3
-      bonus += 1 + recruit.level
+      bonus += 1 + recruit.promote_level_bonus
     when 4..General.max_level
-      bonus += step_function(recruit.level,{offset: 5, period: 2})
+      bonus += step_function(recruit.promote_level_bonus,{offset: 5, period: 2})
     end
     return bonus.round()
   end
@@ -14,11 +14,11 @@ class Azul < General
   def defense_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1, 2, 3
-      bonus += 1 + recruit.level
+      bonus += 1 + recruit.promote_level_bonus
     when 4..General.max_level
-      bonus += step_function(recruit.level,{offset: 5, period: 2})
+      bonus += step_function(recruit.promote_level_bonus,{offset: 5, period: 2})
     end
     return bonus.round()
   end

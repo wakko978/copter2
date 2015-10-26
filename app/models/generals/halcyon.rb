@@ -4,7 +4,7 @@ class Halcyon < General
     
     attack = profile.attack
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus -= (attack * 0.10)
     when 2
@@ -22,7 +22,7 @@ class Halcyon < General
     
     attack = profile.attack
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += (attack * 0.10)
     when 2

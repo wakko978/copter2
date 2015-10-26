@@ -2,7 +2,7 @@ class Scourge < General
   def attack_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus += 5
     when 2
@@ -10,7 +10,7 @@ class Scourge < General
     when 3
       bonus += 13
     when 4..General.max_level
-      bonus += step_function(recruit.level,{pos_index: 16, offset: 5, period: 2})
+      bonus += step_function(recruit.promote_level_bonus,{pos_index: 16, offset: 5, period: 2})
     end
     return bonus.round()
   end
@@ -18,7 +18,7 @@ class Scourge < General
   def defense_bonus(profile,recruit)
     bonus = super
     
-    case recruit.level
+    case recruit.promote_level_bonus
     when 1
       bonus -= 5
     when 2
@@ -26,7 +26,7 @@ class Scourge < General
     when 3
       bonus -= 15
     when 4..General.max_level
-      bonus -= (recruit.level + 20)
+      bonus -= (recruit.promote_level_bonus + 20)
     end
     return bonus.round()
   end
