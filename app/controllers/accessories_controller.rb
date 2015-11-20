@@ -2,7 +2,7 @@ class AccessoriesController < ApplicationController
   before_filter :load_profile
   
   def index
-    permitted_scopes = ['amulet','armor','boot','helmet','glove','shield']
+    permitted_scopes = ['amulet','armor','boot','helmet','glove','shield','banner']
     params[:item_type] = permitted_scopes.include?(params[:item_type]) ? params[:item_type] : 'amulet'
     
     @accessories = @profile.accessories.joins(:item).send(params[:item_type]).scoped
@@ -47,7 +47,7 @@ class AccessoriesController < ApplicationController
   end
   
   def new
-    permitted_scopes = ['amulet','armor','boot','helmet','glove','shield']
+    permitted_scopes = ['amulet','armor','boot','helmet','glove','shield','banner']
     
     params[:item_type] = permitted_scopes.include?(params[:item_type]) ? params[:item_type] : 'amulet'
     

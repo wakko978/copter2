@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151016205518) do
+ActiveRecord::Schema.define(:version => 20151120134428) do
 
   create_table "accessories", :force => true do |t|
     t.integer "profile_id",                :null => false
@@ -133,6 +133,10 @@ ActiveRecord::Schema.define(:version => 20151016205518) do
     t.integer "boot_resistance",        :default => 0
     t.integer "power_piercing",         :default => 0
     t.integer "power_resistance",       :default => 0
+    t.boolean "attack_rune_on_banner",  :default => false
+    t.integer "banner_id"
+    t.integer "banner_piercing",        :default => 0
+    t.integer "banner_resistance",      :default => 0
   end
 
   create_table "messages", :force => true do |t|

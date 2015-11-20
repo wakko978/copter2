@@ -9,16 +9,18 @@ class Loadout < ActiveRecord::Base
   belongs_to :amulet, :class_name => "Item::Amulet"
   belongs_to :glove, :class_name => "Item::Glove"
   belongs_to :boot, :class_name => "Item::Boot"
+  belongs_to :banner, :class_name => "Item::Banner"
   
   attr_accessible :profile_id, :profile, :name, :class_type, :general, :general_id, :weapon, :weapon_id,
     :shield, :shield_id, :helmet, :helmet_id, :armor, :armor_id, :amulet, :amulet_id, :glove, :glove_id, :boot, :boot_id,
     :power, :power_id, :attack_rune_on_weapon, :defense_rune_on_armor, :defense_rune_on_helmet, :weapon_piercing, :weapon_resistance,
-    :armor_piercing, :armor_resistance, :helmet_piercing, :helmet_resistance, :shield_piercing, :shield_resistance, :glove_piercing, :glove_resistance, :boot_piercing, :boot_resistance, :power_piercing, :power_resistance
+    :armor_piercing, :armor_resistance, :helmet_piercing, :helmet_resistance, :shield_piercing, :shield_resistance, :glove_piercing, :glove_resistance, :boot_piercing, :boot_resistance, :power_piercing, :power_resistance, :banner, :banner_id, :attack_rune_on_banner, :banner_piercing, :banner_resistance
   
   validates :name, :profile_id, :general_id, :presence => true
   validates :weapon_piercing, :weapon_resistance, :armor_piercing, :armor_resistance, :helmet_piercing, 
     :helmet_resistance, :shield_piercing, :shield_resistance, :glove_resistance, :glove_piercing,
-    :boot_piercing, :boot_resistance, :power_piercing, :power_resistance, :numericality => { :only_integer => true }
+    :boot_piercing, :boot_resistance, :power_piercing, :power_resistance, :banner_piercing,
+    :banner_resistance, :numericality => { :only_integer => true }
     
   def attack
     [
@@ -27,6 +29,7 @@ class Loadout < ActiveRecord::Base
       general.nil? ? 0 : general.general.attack_with_mods(profile,general),
       general.nil? ? 0 : general.general.attack_bonus(profile,general),
       weapon.nil? ? 0 : weapon.attack + (attack_rune_on_weapon? ? profile.attack_rune : 0),
+      banner.nil? ? 0 : banner.attack + (attack_rune_on_banner? ? profile.attack_rune : 0),
       shield.nil? ? 0 : shield.attack,
       helmet.nil? ? 0 : helmet.attack,
       armor.nil? ? 0 : armor.attack,
@@ -41,6 +44,7 @@ class Loadout < ActiveRecord::Base
       profile.defense + profile.defense_ia,
       general.nil? ? 0 : general.general.defense_with_mods(profile,general),
       general.nil? ? 0 : general.general.defense_bonus(profile,general),
+      banner.nil? ? 0 : banner.defense,
       weapon.nil? ? 0 : weapon.defense,
       weapon.nil? ? 0 : weapon.name == 'Tinkerer Wrench' ? 25 : (weapon.name == 'Elite Tinkerer Wrench' ? 35 : 0),
       shield.nil? ? 0 : shield.defense,
@@ -69,6 +73,7 @@ class Loadout < ActiveRecord::Base
       amulet.nil? ? 0 : amulet.piercing,
       glove.nil? ? 0 : glove.piercing + (glove_piercing),
       boot.nil? ? 0 : boot.piercing,
+      banner.nil? ? 0 : banner.piercing + (banner_piercing),
       power.nil? ? 0 : power.piercing].sum
     return (e_attack * (1 + (total_piercing / 1000.0))).round(1)
   end
@@ -84,6 +89,7 @@ class Loadout < ActiveRecord::Base
       amulet.nil? ? 0 : amulet.resistance,
       glove.nil? ? 0 : glove.resistance,
       boot.nil? ? 0 : boot.resistance,
+      banner.nil? ? 0 : banner.resistance + (banner_resistance),
       power.nil? ? 0 : power.resistance].sum
     return (e_defense * (1 + (total_resistance / 1000.0))).round(1)
   end

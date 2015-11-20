@@ -1,0 +1,51 @@
+<h1 class="pagetitle"><%= @banner.name %></h1>
+
+<%= image_tag @banner.image_path(:original), :alt  => "#{@banner.name}",
+	:style => 'float:right' %>
+
+<p>
+  <%= link_to "Lookup on Wiki", "http://castleage.wikia.com/wiki/Special:Search?fulltext=Search&search=#{@banner.name}", :target => "_blank" %><br/>
+  http://castleage.wikia.com/wiki/Castle_Age_Wiki
+</p>
+
+<p>
+	<b>Type:</b> <%= @banner.class.name.titleize %>
+</p>
+
+<p>
+	<b>Attack:</b> <%= @banner.attack %>
+</p>
+
+<p>
+	<b>Defense:</b> <%= @banner.defense %>
+</p>
+
+<p>
+	<b>eAttack:</b> <%= @banner.e_attack %>
+</p>
+
+<p>
+	<b>eDefense:</b> <%= @banner.e_defense %>
+</p>
+
+<p>
+	<b>Base Cost:</b> <%= number_to_currency(@banner.base_cost) %>
+</p>
+
+<p>
+	<b>Upkeep:</b> <%= number_to_currency(@banner.upkeep) %>
+</p>
+
+<p>
+	<b>Divine Power:</b> <%= @banner.div_power %>
+</p>
+
+<p>
+	<b>Piercing:</b> <%= @banner.piercing %>
+</p>
+
+<p>
+	<b>Resistance:</b> <%= @banner.resistance %>
+</p>
+
+<%= link_to 'Back', banners_path %>

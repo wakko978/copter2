@@ -44,6 +44,7 @@ class LoadoutsController < ApplicationController
     @amulets = @profile.items.amulet.order('e_attack DESC')
     @gloves = @profile.items.glove.order('e_attack DESC')
     @boots = @profile.items.boot.order('e_attack DESC')
+    @banners = @profile.items.banner.order('e_attack DESC')
     @powers = @profile.powers.order('e_attack DESC')
   end
   
@@ -57,6 +58,7 @@ class LoadoutsController < ApplicationController
     @amulets = @profile.items.amulet.order('e_attack DESC')
     @gloves = @profile.items.glove.order('e_attack DESC')
     @boots = @profile.items.boot.order('e_attack DESC')
+    @banners = @profile.items.banner.order('e_attack DESC')
     @powers = @profile.powers.order('e_attack DESC')
   end
   
@@ -70,6 +72,7 @@ class LoadoutsController < ApplicationController
     @amulets = @profile.items.amulet.order('e_attack DESC')
     @gloves = @profile.items.glove.order('e_attack DESC')
     @boots = @profile.items.boot.order('e_attack DESC')
+    @banners = @profile.items.banner.order('e_attack DESC')
     @powers = @profile.powers.order('e_attack DESC')
     
     respond_to do |format|
@@ -91,6 +94,7 @@ class LoadoutsController < ApplicationController
     @amulets = @profile.items.amulet.order('e_attack DESC')
     @gloves = @profile.items.glove.order('e_attack DESC')
     @boots = @profile.items.boot.order('e_attack DESC')
+    @banners = @profile.items.banner.order('e_attack DESC')
     @powers = @profile.powers.order('e_attack DESC')
     
     respond_to do |format|

@@ -8,7 +8,7 @@
 				riAtt: <%= @profile.ri_e_attack.round(1) %><br/>
    	    eGear: <%= gear_sum([
 					@duel_weapons,@duel_shields,@duel_helmets,@duel_armors,@duel_amulets,
-					@duel_powers,@duel_gloves,@duel_boots],'attack').round(1) %><br/>
+					@duel_powers,@duel_gloves,@duel_boots,@duel_banners],'attack').round(1) %><br/>
     	  <span class="note">(Equipped general not factored in yet)</span>
     	</span>
 		</th>
@@ -54,6 +54,11 @@
 			:locals => {best: @duel_boots[:best_attack], better: @duel_boots[:better_attack],
 				obj: 'boot', stat: 'att'} %>
  	</tr>
+	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_banners[:best_attack], better: @duel_banners[:better_attack],
+				obj: 'banner', stat: 'att'} %>
+ 	</tr>
 	
 	<thead>
   	<th class="top" scope="col" colspan="2">
@@ -64,7 +69,7 @@
 		   	riDef: <%= @profile.ri_e_defense.round(1) %><br/>
    	    eGear: <%= gear_sum([
 					@duel_weapons,@duel_shields,@duel_helmets,@duel_armors,@duel_amulets,
-					@duel_powers,@duel_gloves,@duel_boots],'defense').round(1) %><br/>
+					@duel_powers,@duel_gloves,@duel_boots,@duel_banners],'defense').round(1) %><br/>
    	    <span class="note">(Equipped general not factored in yet)</span>
    	  </span>
   	</th>
@@ -110,5 +115,10 @@
  		<%= render :partial => 'duel_line',
 			:locals => {best: @duel_boots[:best_defense], better: @duel_boots[:better_defense],
 				obj: 'boot', stat: 'def'} %>
+ 	</tr>
+ 	<tr>
+ 		<%= render :partial => 'duel_line',
+			:locals => {best: @duel_banners[:best_defense], better: @duel_banners[:better_defense],
+				obj: 'banner', stat: 'def'} %>
  	</tr>
 </table>

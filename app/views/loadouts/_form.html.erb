@@ -134,6 +134,20 @@
 			<td id="power_piercing"><%= @loadout.power.nil? ? nil : @loadout.power.piercing %></td>
 			<td id="power_resistance"><%= @loadout.power.nil? ? nil : @loadout.power.resistance %></td>
 		</tr>
+		<tr>
+			<td>Banner</td>
+			<td><%= f.select :banner_id, @banners.collect{|w| ["#{w.name}(Slots: #{w.slots})",w.id]}, {:include_blank => true},
+				{:data => {url: get_info_profile_accessories_path(@profile)}} %></td>
+			<td><%= f.check_box :attack_rune_on_banner %> Attack Rune Forged?</td>
+			<td>
+				<span id="banner_piercing"><%= @loadout.banner.nil? ? nil : "Base: #{@loadout.banner.piercing}" %></span>
+				<%= f.text_field :banner_piercing, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+			<td>
+				<span id="banner_resistance"><%= @loadout.banner.nil? ? nil : "Base: #{@loadout.banner.resistance}" %></span>
+				<%= f.text_field :banner_resistance, :size => 5, :onblur => "changeFormat();" %>
+			</td>
+		</tr>
 	</table>
 
 	<script type="text/javascript" language="Javascript">

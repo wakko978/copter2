@@ -5,7 +5,7 @@
     	<span style="float:right; text-align:right">
     		Total Divine Power <%= total_div_power([
 				@div_weapons,@div_shields,@div_helmets,@div_armors,@div_amulets,
-				@div_gloves,@div_boots,@div_powers,@div_generals]) %>
+				@div_gloves,@div_boots,@div_powers,@div_banners,@div_generals]) %>
     	</span>
 		</th>
 	</thead>
@@ -45,5 +45,9 @@
 	<tr>
 		<%= render :partial => 'div_line',
 			:locals => {best: @div_boots[:best], better: @div_boots[:better],	obj: 'boot'} %>
+ 	</tr>
+	<tr>
+		<%= render :partial => 'div_line',
+			:locals => {best: @div_banners[:best], better: @div_banners[:better],	obj: 'banner'} %>
  	</tr>
 </table>

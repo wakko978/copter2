@@ -40,6 +40,20 @@ jQuery ->
 				errors = $.parseJSON(data.responseText).errors
 				alert(errors.join('\n'))
 		})
+    
+	$('body').on 'change', "#loadout_banner_id", (event) ->
+		$.ajax({
+			url: $('#loadout_banner_id').data('url'),
+			data: { item: {id: this.value}},
+			type: 'get',
+			dataType: 'json',
+			success: (data) ->
+	    	$('#banner_piercing').text(data.piercing)
+		    $('#banner_resistance').text(data.resistance)
+			error: (data) ->
+				errors = $.parseJSON(data.responseText).errors
+				alert(errors.join('\n'))
+		})
 
 	$('body').on 'change', "#loadout_helmet_id", (event) ->
 		$.ajax({

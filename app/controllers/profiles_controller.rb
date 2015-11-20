@@ -48,6 +48,7 @@ class ProfilesController < ApplicationController
     @div_amulets = @profile.div_items('amulet')
     @div_gloves = @profile.div_items('glove')
     @div_boots = @profile.div_items('boot')
+    @div_banners = @profile.div_items('banner')
     
     respond_to do |format|
       format.html { render partial: 'div_stats'}
@@ -76,6 +77,7 @@ class ProfilesController < ApplicationController
     @war_amulets = @profile.war_items('amulet')
     @war_gloves = @profile.war_items('glove')
     @war_boots = @profile.war_items('boot')
+    @war_banners = @profile.war_items('banner')
     
     respond_to do |format|
       format.html { render partial: 'war_stats'}
@@ -588,6 +590,7 @@ class ProfilesController < ApplicationController
       @duel_amulets = @profile.duel_items('amulet')
       @duel_gloves = @profile.duel_items('glove')
       @duel_boots = @profile.duel_items('boot')
+      @duel_banners = @profile.duel_items('banner')
     end
 
     def parse_generals(doc=nil,load=nil,my_hash=nil)

@@ -66,6 +66,7 @@ Copter2::Application.routes.draw do
     resources :helmets, :only => [:index, :show]
     resources :gloves, :only => [:index, :show]
     resources :shields, :only => [:index, :show]
+    resources :banners, :only => [:index, :show]
   end
   
   namespace :admin do
@@ -89,6 +90,7 @@ Copter2::Application.routes.draw do
       resources :helmets, :except => [:show]
       resources :gloves, :except => [:show]
       resources :shields, :except => [:show]
+      resources :banners, :except => [:show]
     end
   end
   # The priority is based upon order of creation:

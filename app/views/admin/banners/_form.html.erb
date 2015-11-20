@@ -1,0 +1,91 @@
+<% url = @banner.new_record? ? admin_banners_path : admin_banner_path(@banner) %>
+<%= form_for(@banner, :as => :banner, :url => url, :html => { :multipart => true }) do |f| %>
+  <% if @banner.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@banner.errors.count, "error") %> prohibited this banner from being saved:</h2>
+
+      <ul>
+      <% @banner.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+	  <%= f.label 'name' %><br/>
+	  <%= f.text_field :name %>
+	</p>
+
+	<p>
+	  <%= f.label 'attack', 'Attack' %><br/>
+	  <%= f.text_field :attack, :size => 10 %>
+	</p>
+
+	<p>
+	  <%= f.label 'defense', 'Defense' %><br/>
+	  <%= f.text_field :defense, :size => 10 %>
+	</p>
+
+	<p>
+	  <%= f.label 'base_cost', 'Base Cost' %><br/>
+	  <%= f.text_field :base_cost, :onblur => "changeFormat(this)" %>
+	</p>
+
+	<p>
+	  <%= f.label 'upkeep' %><br/>
+	  <%= f.text_field :upkeep, :onblur => "changeFormat(this)" %>
+	</p>
+	
+	<p>
+	  <%= f.label 'div_power', 'Divine Power' %><br/>
+	  <%= f.text_field :div_power, :size => 10 %>
+	</p>
+	
+	<p>
+	  <%= f.label 'slots', 'Forge slots' %><br/>
+	  <%= f.text_field :slots, :size => 10 %>
+	</p>
+  
+	<p>
+	  <%= f.label 'piercing', 'Piercing' %><br/>
+	  <%= f.text_field :piercing, :size => 10 %>
+	</p>
+	
+	<p>
+	  <%= f.label 'resistance', 'Resistance' %><br/>
+	  <%= f.text_field :resistance, :size => 10 %>
+	</p>
+
+	<p>
+		<%= f.label 'general_id', 'Bonus applies to general:' %><br/>
+		<%= f.collection_select :general_id, General.order(:name), :id, :name, {:include_blank => true} %>
+	</p>
+	
+	<p>
+	  <%= f.label 'bonus_type', 'Bonus Type' %><br/>
+	  <%= f.select :bonus_type, options_for_select(['','attack','defense','energy','stamina','health','crit','other'],@banner.bonus_type) %>
+	</p>
+	
+	<p>
+	  <%= f.label 'bonus', 'Bonus' %><br/>
+	  <%= f.text_field :bonus, :size => 10 %>
+	</p>
+	
+	<p>
+		<%= f.label 'url', 'URL to Wikia Image' %>
+		<%= f.text_field :url, :size => 100 %>
+	</p>
+
+	<script type="text/javascript" language="Javascript">
+	  function changeFormat(f)
+	  {
+	    value = f.value.replace(/,/g,"");
+	    f.value = value;
+	  }
+	</script>
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

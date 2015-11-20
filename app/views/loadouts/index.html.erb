@@ -58,6 +58,9 @@
 				<% unless loadout.power.nil? %>
 					<%= image_tag loadout.power.image_path(:thumb), :alt  => "#{loadout.power.name}", :size => "25x25" %>
 				<% end %>
+				<% unless loadout.banner.nil? %>
+					<%= image_tag loadout.banner.image_path(:thumb), :alt  => "#{loadout.banner.name}", :size => "25x25" %>
+				<% end %>
 			</td>
 			<td>
 				<%= link_to '[Edit]', edit_profile_loadout_path(@profile,loadout) %>

@@ -19,6 +19,7 @@ class Item < ActiveRecord::Base
   scope :helmet, :conditions => "type = 'Item::Helmet'"
   scope :glove, :conditions => "type = 'Item::Glove'"
   scope :shield, :conditions => "type = 'Item::Shield'"
+  scope :banner, :conditions => "type = 'Item::Banner'"
   scope :attack, -> { where(bonus_type: 'attack') }
   scope :defense, -> { where(bonus_type: 'defense') }
   

@@ -1,0 +1,44 @@
+<h1 class="pagetitle">Banners</h1>
+
+<table class="non-fixed">
+	<%= will_paginate @banners %>
+	<caption><%= link_to 'Add Banner', new_admin_banner_path %></caption>
+	<thead>
+		<th class="top" scope="col"><%= sort_link 'Name', :name %></th>
+		<th class="top" scope="col"><%= sort_link 'Attack', :attack %></th>
+		<th class="top" scope="col"><%= sort_link 'Defense', :defense %></th>
+		<th class="top" scope="col"><%= sort_link 'eAttack', :e_attack %></th>
+		<th class="top" scope="col"><%= sort_link 'eDefense', :e_defense %></th>
+		<th class="top" scope="col"><%= sort_link 'Base Cost', :base_cost %></th>
+		<th class="top" scope="col"><%= sort_link 'Upkeep', :upkeep %></th>
+		<th class="top" scope="col"><%= sort_link 'DP', :div_power %></th>
+		<th class="top" scope="col"><%= sort_link 'Pierce', :piercing %></th>
+		<th class="top" scope="col"><%= sort_link 'Res', :resistance %></th>
+		<th class="top" scope="col">Options</th>
+	</thead>
+	
+	<% @banners.each do |banner| %>
+		<tr>
+			<th scope="row">
+				<%= image_tag banner.image_path(:thumb), :alt  => "#{banner.name}",
+					:style => 'float:left', :size => "50x50" %>
+				<%= link_to banner.name, banner_path(banner) %>
+			</th>
+			<td><%= banner.attack %></td>
+			<td><%= banner.defense %></td>
+			<td><%= banner.e_attack %></td>
+			<td><%= banner.e_defense %></td>
+			<td><%= number_to_currency(banner.base_cost) %></td>
+			<td><%= number_to_currency(banner.upkeep) %></td>
+			<td><%= banner.div_power %></td>
+			<td><%= banner.piercing %></td>
+			<td><%= banner.resistance %></td>
+			<td>
+				<%= link_to '[Edit]', edit_admin_banner_path(banner) %>
+				<% if current_user.is_admin? && banner.is_unowned? %>
+        	<%= link_to '[Destroy]', admin_banner_path(banner), :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+</table>

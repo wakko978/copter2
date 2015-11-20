@@ -170,4 +170,15 @@
 				better: @war_boots[:better_defense], obj: 'boot', stat: 'def'} %>
 		</td>
  	</tr>
+	<tr>
+		<td><b>Banners:</b></td>
+		<td>
+ 			<%= render :partial => 'war_line', :locals => {best: @war_banners[:best_attack],
+				better: @war_banners[:better_attack], obj: 'banner', stat: 'att'} %>
+		</td>
+		<td>
+			<%= render :partial => 'war_line', :locals => {best: @war_banners[:best_defense],
+				better: @war_banners[:better_defense], obj: 'banner', stat: 'def'} %>
+		</td>
+ 	</tr>
 </table>

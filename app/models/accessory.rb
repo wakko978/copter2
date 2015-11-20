@@ -13,4 +13,5 @@ class Accessory < ActiveRecord::Base
   scope :helmet, :joins => :item, :conditions => "type = 'Item::Helmet'"
   scope :glove, :joins => :item, :conditions => "type = 'Item::Glove'"
   scope :shield, :joins => :item, :conditions => "type = 'Item::Shield'"
+  scope :banner, :joins => :item, :conditions => "type = 'Item::Banner'"
 end
